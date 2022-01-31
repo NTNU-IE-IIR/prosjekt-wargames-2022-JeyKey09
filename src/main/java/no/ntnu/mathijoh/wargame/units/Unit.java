@@ -1,7 +1,7 @@
 package no.ntnu.mathijoh.wargame.units;
 
 /**
- * Baseclass for every Unit class. 
+ * Base class for every Unit class. 
  */
 public class Unit {
 
