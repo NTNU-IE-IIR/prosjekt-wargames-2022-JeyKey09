@@ -49,7 +49,6 @@ public class Unit {
         } else {
             this.health = health;
         }
-        
     }
 
     /**
@@ -86,13 +85,21 @@ public class Unit {
      * @param opponent the opponent getting attacked
      */
     public void attack(Unit opponent) {
-        int oHealth = opponent.getHealth();
-        int oArmorBonus = opponent.getResistBonus(); 
-        int attackBonus = this.getAttackBonus();
-        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
-        if (oHealthAfterAttack < oHealth){
-            opponent.setHealth(oHealthAfterAttack);
+        if(opponent != null){
+            int oHealth = opponent.getHealth();
+            int oArmorBonus = opponent.getResistBonus(); 
+            int attackBonus = this.getAttackBonus();
+            int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
+            if (oHealthAfterAttack < oHealth){
+                opponent.setHealth(oHealthAfterAttack);
+            }
         }
     }
+
+    @Override
+    public String toString() {
+        return "Unit [armor=" + armor + ", attack=" + attack + ", health=" + health + ", name=" + name + "]";
+    }
+    
     
 }
