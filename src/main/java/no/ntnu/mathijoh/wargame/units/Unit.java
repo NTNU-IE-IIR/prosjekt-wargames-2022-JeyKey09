@@ -3,7 +3,7 @@ package no.ntnu.mathijoh.wargame.units;
 /**
  * Base class for every Unit class. 
  */
-public class Unit {
+public abstract class Unit {
 
     private String name;
     private int health;
@@ -17,7 +17,8 @@ public class Unit {
      * @param attack power of the unit
      * @param armor of the unit
      */
-    public Unit(String name, int health, int attack, int armor) {
+    
+    protected Unit(String name, int health, int attack, int armor) {
         this.name = name;
         this.health = health;
         this.attack = attack;
@@ -68,17 +69,12 @@ public class Unit {
     /**
      * @return attackBonus to the unit
      */
-    public int getAttackBonus() {
-        return 0;
-    }
+    public abstract int getAttackBonus();
 
     /**
-     * Will be used on the 
      * @return resistBonus to the unit
      */
-    public int getResistBonus() {
-        return 0;
-    }
+    public abstract int getResistBonus();
 
     /**
      * Calculates the damage done to the opponent and sets the health to it
