@@ -18,7 +18,6 @@ public class RangedUnitTest {
     @Test
     public void testGetAttackBonus() {
         RangedUnit testObject = new RangedUnit("name", 11);
-        
         assertEquals(3, testObject.getAttackBonus());
     }
 

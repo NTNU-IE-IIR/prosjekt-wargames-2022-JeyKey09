@@ -16,13 +16,24 @@ public abstract class Unit {
      * @param health to the unit
      * @param attack power of the unit
      * @param armor of the unit
+     * @throws IllegalArgumentException if name is null
      */
     
-    protected Unit(String name, int health, int attack, int armor) {
-        this.name = name;
-        this.health = health;
-        this.attack = attack;
-        this.armor = armor;
+    protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
+        if(name != null){
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Name can't be null");
+        }
+        
+        setHealth(health);
+
+        if(attack >= 0){
+            this.attack = attack;
+        }
+        if(armor >= 0){
+            this.armor = armor;
+        }
     }
 
     /**
@@ -79,8 +90,9 @@ public abstract class Unit {
     /**
      * Calculates the damage done to the opponent and sets the health to it
      * @param opponent the opponent getting attacked
+     * @exception IllegalArgumentException if opponent is null
      */
-    public void attack(Unit opponent) {
+    public void attack(Unit opponent) throws IllegalArgumentException{
         if(opponent != null){
             int oHealth = opponent.getHealth();
             int oArmorBonus = opponent.getResistBonus(); 
@@ -89,9 +101,15 @@ public abstract class Unit {
             if (oHealthAfterAttack < oHealth){
                 opponent.setHealth(oHealthAfterAttack);
             }
+        }else {
+            throw new IllegalArgumentException("Opponent can't be null");
         }
     }
 
+    /**
+     * Converts the object to String and returns it
+     * @return String of the variables to unit
+     */
     @Override
     public String toString() {
         return "Unit [armor=" + armor + ", attack=" + attack + ", health=" + health + ", name=" + name + "]";

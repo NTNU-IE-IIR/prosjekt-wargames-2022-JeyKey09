@@ -4,11 +4,11 @@ public class CavalryUnit extends Unit{
 
     private boolean firstAttack = true;
 
-    public CavalryUnit(String name, int health, int attack, int armor) {
+    public CavalryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
     }
     
-    public CavalryUnit(String name, int health) {
+    public CavalryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 20, 12);
     }
 

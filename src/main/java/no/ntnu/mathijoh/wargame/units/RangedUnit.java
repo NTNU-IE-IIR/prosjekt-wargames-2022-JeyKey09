@@ -4,11 +4,11 @@ public class RangedUnit extends Unit{
     
     private int amountOfAttacks = 0;
 
-    public RangedUnit(String name, int health, int attack, int armor) {
+    public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
     }
 
-    public RangedUnit(String name, int health) {
+    public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
     }
     

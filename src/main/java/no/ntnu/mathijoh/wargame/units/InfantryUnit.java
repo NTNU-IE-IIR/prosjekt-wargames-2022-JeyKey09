@@ -2,11 +2,11 @@ package no.ntnu.mathijoh.wargame.units;
 
 public class InfantryUnit extends Unit{
 
-    public InfantryUnit(String name, int health, int attack, int armor) {
+    public InfantryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
     }
 
-    public InfantryUnit(String name, int health) {
+    public InfantryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 10);
     }
  
