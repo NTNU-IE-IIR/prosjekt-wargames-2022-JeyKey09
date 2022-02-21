@@ -31,21 +31,21 @@ public class Battle {
      * @return the army that still has units after the battle
      */
     public Army simulate() {
-        boolean unitOneTurn = true;
-        Army victouriesArmy;
+        boolean isUnitOneAttacking = true;
+        Army victoryArmy;
 
         while (armyOne.hasUnits() && armyTwo.hasUnits()) {
             Army attackingArmy;
             Army defendingArmy;
 
-            if (unitOneTurn) {
+            if (isUnitOneAttacking) {
                 attackingArmy = this.armyOne;
                 defendingArmy = this.armyTwo;
             } else {
                 attackingArmy = this.armyTwo;
                 defendingArmy = this.armyOne;
             }
-            unitOneTurn = !(unitOneTurn);
+            isUnitOneAttacking = !(isUnitOneAttacking);
 
             Unit defendingUnit = defendingArmy.getRandom();
             attackingArmy.getRandom().attack(defendingUnit);
@@ -53,18 +53,17 @@ public class Battle {
             if (defendingUnit.getHealth() == 0) {
                 defendingArmy.remove(defendingUnit);
             }
-
         }
 
         if (armyOne.hasUnits()) {
-            victouriesArmy = armyOne;
+            victoryArmy = armyOne;
         } else {
-            victouriesArmy = armyTwo;
+            victoryArmy = armyTwo;
         }
 
-        return victouriesArmy;
+        return victoryArmy;
     }
-    
+
     @Override
     public String toString() {
         return "Battle [armyOne=" + armyOne + ", armyTwo=" + armyTwo + "]";

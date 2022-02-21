@@ -2,7 +2,9 @@ package no.ntnu.mathijoh.wargame;
 
 import no.ntnu.mathijoh.wargame.units.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +34,39 @@ public class BattleTest {
     }
 
     @Test
-    public void posetivTestConstructor() {
-        
+    public void testPosetivAndNegativConstructor() {
+        Battle testBattle = null;
+        try {
+            testBattle = new Battle(null, null);   
+        } catch (IllegalArgumentException e) {
+            assertEquals("None of the argument can be null", e.getMessage());
+        }
+        assertNull(testBattle);
+        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
+        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));
+        testBattle = new Battle(armyOne, armyTwo);
+        assertNotNull(testBattle);
+
     }
 
     @Test
     public void testSimulate() {
-        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1000, "commander"));
-        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 1, "commander"));
+        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
+        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 10000, "commander"));
         Battle battle = new Battle(armyOne, armyTwo);
-        assertNotNull(battle.simulate());
+        assertEquals(armyTwo,battle.simulate());
+        
+        armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
+        armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 1, "commander"));
+        battle = new Battle(armyOne, armyTwo);
+        assertEquals(armyOne,battle.simulate());
     }
 
     @Test
     public void testToString() {
-
+        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
+        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));
+        Battle battle = new Battle(armyOne, armyTwo);
+        assertEquals(battle.toString(), "Battle [armyOne=" + armyOne + ", armyTwo=" + armyTwo + "]");
     }
 }

@@ -48,7 +48,6 @@ public class UnitTest {
                     return 0;
                 }
             };
-            System.out.println("I didn't expect to get this far");
         } catch (IllegalArgumentException e) {
             
         }

@@ -1,7 +1,6 @@
 package no.ntnu.mathijoh.wargame.units;
 /**
  * CavalryUnit that is a type of unit. 
- * It is 
  */
 public class CavalryUnit extends Unit{
 

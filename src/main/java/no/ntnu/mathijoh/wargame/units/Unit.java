@@ -16,12 +16,12 @@ public abstract class Unit {
      * @param health to the unit
      * @param attack power of the unit
      * @param armor of the unit
-     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if any of the parameters is null 
      */
     
     protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
-        if(name == null){
-            throw new IllegalArgumentException("Name can't be null");
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Name can't be null or nothing");
         }
         if(attack < 0){
             throw new IllegalArgumentException("Attack can't be less then 0");
@@ -79,7 +79,6 @@ public abstract class Unit {
     public int getArmor() {
         return armor;
     }
-
 
     /**
      * @return attackBonus to the unit

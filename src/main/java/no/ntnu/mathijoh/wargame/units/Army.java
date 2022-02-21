@@ -19,7 +19,7 @@ public class Army {
      * @throws IllegalArgumentException if name is null
      */
     public Army(String name) throws IllegalArgumentException {
-        if(name == null){
+        if(name == null || name.isEmpty()){
             throw new IllegalArgumentException("Name can't be null");
         }
         this.name = name;
