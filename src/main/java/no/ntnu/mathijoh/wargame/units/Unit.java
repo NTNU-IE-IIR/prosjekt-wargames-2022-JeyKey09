@@ -20,20 +20,23 @@ public abstract class Unit {
      */
     
     protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
-        if(name != null){
-            this.name = name;
-        } else {
+        if(name == null){
             throw new IllegalArgumentException("Name can't be null");
         }
+        if(attack < 0){
+            throw new IllegalArgumentException("Attack can't be less then 0");
+        }
+        if(armor < 0){
+            throw new IllegalArgumentException("Armor can't be less then 0");
+        }
+        if(health < 0){
+            throw new IllegalArgumentException("Health can't be less then 0");
+        }
         
-        setHealth(health);
-
-        if(attack >= 0){
-            this.attack = attack;
-        }
-        if(armor >= 0){
-            this.armor = armor;
-        }
+        this.name = name;
+        this.attack = attack;
+        this.armor = armor;
+        this.health = health;
     }
 
     /**
@@ -77,6 +80,7 @@ public abstract class Unit {
         return armor;
     }
 
+
     /**
      * @return attackBonus to the unit
      */
@@ -93,27 +97,55 @@ public abstract class Unit {
      * @exception IllegalArgumentException if opponent is null
      */
     public void attack(Unit opponent) throws IllegalArgumentException{
-        if(opponent != null){
-            int oHealth = opponent.getHealth();
-            int oArmorBonus = opponent.getResistBonus(); 
-            int attackBonus = this.getAttackBonus();
-            int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
-            if (oHealthAfterAttack < oHealth){
-                opponent.setHealth(oHealthAfterAttack);
-            }
-        }else {
+        if(opponent == null){
             throw new IllegalArgumentException("Opponent can't be null");
+        }
+        int oHealth = opponent.getHealth();
+        int oArmorBonus = opponent.getResistBonus(); 
+        int attackBonus = this.getAttackBonus();
+        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
+        if (oHealthAfterAttack < oHealth){
+            opponent.setHealth(oHealthAfterAttack);
         }
     }
 
-    /**
-     * Converts the object to String and returns it
-     * @return String of the variables to unit
-     */
     @Override
     public String toString() {
         return "Unit [armor=" + armor + ", attack=" + attack + ", health=" + health + ", name=" + name + "]";
     }
     
-    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + armor;
+        result = prime * result + attack;
+        result = prime * result + health;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Unit other = (Unit) obj;
+        if (armor != other.armor)
+            return false;
+        if (attack != other.attack)
+            return false;
+        if (health != other.health)
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
+
 }

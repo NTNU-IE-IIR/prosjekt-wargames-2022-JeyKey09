@@ -50,6 +50,7 @@ public class UnitTest {
             };
             System.out.println("I didn't expect to get this far");
         } catch (IllegalArgumentException e) {
+            
         }
 
         assertNull(testObject);
@@ -189,7 +190,6 @@ public class UnitTest {
         assertEquals(0, testObjUnit.getResistBonus());
     }
 
-
     @Test
     public void testToString() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
@@ -207,5 +207,13 @@ public class UnitTest {
 
         
 
+    }
+
+    @Test
+    public void testEqualsAndHashcode() {
+        Unit testUnit1 = new InfantryUnit("name", 10);
+        Unit testUnit2 = new InfantryUnit("name", 10);
+        assertEquals(testUnit1, testUnit2);
+        assertEquals(testUnit1.hashCode(), testUnit2.hashCode());
     }
 }
