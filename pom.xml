@@ -9,8 +9,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>wargame</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -69,6 +67,14 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.3.1</version>
+          <configuration>
+            <reportOutputDirectory>JavaDOC</reportOutputDirectory>
+          </configuration>
+        </plugin>  
       </plugins>
     </pluginManagement>
   </build>
