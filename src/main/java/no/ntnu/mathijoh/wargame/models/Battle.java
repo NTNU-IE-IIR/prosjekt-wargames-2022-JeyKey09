@@ -1,7 +1,9 @@
-package no.ntnu.mathijoh.wargame;
+package no.ntnu.mathijoh.wargame.models;
 
-import no.ntnu.mathijoh.wargame.units.Army;
-import no.ntnu.mathijoh.wargame.units.Unit;
+import java.util.ArrayList;
+import java.util.List;
+
+import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
  * This class is used to simulate a battle between 2 armies

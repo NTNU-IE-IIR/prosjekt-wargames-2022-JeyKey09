@@ -1,9 +1,15 @@
-package no.ntnu.mathijoh.wargame.units;
+package no.ntnu.mathijoh.wargame.models;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
+import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
+import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
+import no.ntnu.mathijoh.wargame.models.units.RangedUnit;
+import no.ntnu.mathijoh.wargame.models.units.Unit;
 /** 
  * Army is a holder for units to be later used in the battle class
  */
@@ -16,11 +22,11 @@ public class Army {
     /**
      * Creates a new army with no units
      * @param name The name of the army
-     * @throws IllegalArgumentException if name is null
+     * @throws IllegalArgumentException if name is null or empty
      */
     public Army(String name) throws IllegalArgumentException {
-        if(name == null || name.isEmpty()){
-            throw new IllegalArgumentException("Name can't be null");
+        if(!checkValidParameter(name)){
+            throw new IllegalArgumentException("Name can't be null or empty");
         }
         this.name = name;
         this.units = new ArrayList<>();
@@ -30,10 +36,10 @@ public class Army {
      * Creates a new army and puts the units 
      * @param name The name of the army
      * @param units a list of units you want to include
-     * @throws IllegalArgumentException if units or name i null
+     * @throws IllegalArgumentException if units or name is null
      */
     public Army(String name, List<Unit> units) throws IllegalArgumentException {
-        if(name == null || units == null){
+        if(!checkValidParameter(name) && !checkValidParameter(units)) {
             throw new IllegalArgumentException("None of the parameter can be null");
         }
         this.name = name;
@@ -43,10 +49,10 @@ public class Army {
     /**
      * Adds a unit to the army
      * @param unit the unit that is being added
-     * @exception IllegalArgumentException if unit is null
+     * @throws IllegalArgumentException if unit is null
      */
     public void add(Unit unit) throws IllegalArgumentException{
-        if(unit == null){
+        if(!checkValidParameter(unit)){
             throw new IllegalArgumentException("Unit can't be null");
         }
         units.add(unit);
@@ -55,32 +61,31 @@ public class Army {
     /**
      * Adds multiple units in a list 
      * @param units a list of Units that is being added
-     * @exception IllegalArgumentException if units is null
+     * @throws IllegalArgumentException if units is null
      */
     public void addAll(List<Unit> units) throws IllegalArgumentException {
-        if(units == null){
+        if(!checkValidParameter(units)){
             throw new IllegalArgumentException("Unit list can't be null");
             }
-        Iterator<Unit> itUnits = units.iterator();
-        while(itUnits.hasNext()){
-            Unit currenUnit = itUnits.next();
-            this.add(currenUnit);
-        }
+            units.stream().forEach(unit -> this.units.add(unit));
     }
 
     /**
      * Removes a unit from the army
      * @param unit the unit that is gonna be removed
-     * @exception IllegalArgumentException if unit is null
+     * @throws IllegalArgumentException if unit is null
      */
     public void remove(Unit unit) throws IllegalArgumentException {
-        if (unit == null){
+        if (!checkValidParameter(unit)){
             throw new IllegalArgumentException("Unit can't be null");
         }
-        this.units.remove(unit);
+        if(!this.units.remove(unit)){
+            throw new IllegalArgumentException("Unit was not in Army");
+        }
     }
 
     /**
+     * Returns if it has units or not
      * @return true if it has units
      */
     public boolean hasUnits() {
@@ -96,12 +101,12 @@ public class Army {
     }
 
     /**
-     * Gets a random from the army
+     * Gets a random unit from the army
      * @return A unit
-     * @exception IllegalStateException if the list is empty
+     * @throws IllegalStateException if the list is empty
      */
     public Unit getRandom() throws IllegalStateException {
-        Unit returnUnit = null;
+        Unit returnUnit;
         if(units.isEmpty()){
             throw new IllegalStateException("There is no units in the Army");
         }
@@ -109,6 +114,50 @@ public class Army {
         returnUnit = units.get(number);
         return returnUnit;
     }
+
+    /**
+     * Gets the every cavalary unit the army
+     * @return a list of cavalry units in the army
+     */
+    public List<Unit> getCavalryUnit() {
+        return getUnit(CavalryUnit.class);
+    }
+
+    /**
+     * Gets the every infantry unit the army
+     * @return a list of infantry units in the army
+     */
+    public List<Unit> getInfantryUnit() {
+        return getUnit(InfantryUnit.class);
+    }
+
+    /**
+     * Gets the every cavalary unit the army
+     * @return a list of ranged units in the army
+     */
+    public List<Unit> getRangedUnit() {
+        return getUnit(RangedUnit.class);
+    }
+
+    /**
+     * Gets the every commander unit the army
+     * @return a list of commander units in the army
+     */
+    public List<Unit> getCommanderUnit() {
+        return getUnit(CommanderUnit.class);
+    }
+
+    /**
+     * A private function meant to filter out some units
+     * @param unitClass the unit class that the person wants to filter
+     * @return a list of the specified class of unit
+     */
+    private List<Unit> getUnit (Class unitClass) {
+        List<Unit> placeholderUnits = new ArrayList<>();
+        units.stream().filter(unit -> unit.getClass() == unitClass).forEach(unit -> placeholderUnits.add(unit));
+        return placeholderUnits;
+    }
+
 
     /**
      * Gets the name of the Army
@@ -147,5 +196,17 @@ public class Army {
         } else if (!units.equals(other.units))
             return false;
         return true;
+    }
+    private boolean checkValidParameter(Object object) {
+        boolean isValid = true;
+        if(object == null) {
+            isValid = false;
+        }
+        else {
+            if(object.getClass() == String.class && ((String) object).isEmpty()){
+                isValid = false;
+            }
+        }
+        return isValid;
     }
 }

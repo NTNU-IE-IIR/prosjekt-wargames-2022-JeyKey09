@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="975.0" stylesheets="@../scenes/scene.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.cardgame.controlleres.CardController">
+   <right>
+      <VBox prefHeight="461.0" prefWidth="200.0" styleClass="button-location" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="newHandButton" mnemonicParsing="false" onAction="#newHand" text="New Hand" />
+            <Button fx:id="drawButton" mnemonicParsing="false" onAction="#drawCard" text="Draw Card" />
+            <Button fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset" />
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <FlowPane fx:id="board" prefHeight="200.0" prefWidth="200.0" styleClass="board" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <GridPane styleClass="grid-buttom" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="flow-buttom">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sum of the faces:" />
+                  <Text fx:id="sumOfFaces" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="9.0" prefHeight="100.0" prefWidth="200.0" styleClass="flow-buttom" GridPane.columnIndex="1">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cards of hearts:" />
+                  <Text fx:id="cardsOfHearts" strokeType="OUTSIDE" strokeWidth="0.0" text="No hearts" />
+               </children>
+            </HBox>
+            <HBox layoutX="335.0" layoutY="9.0" prefHeight="100.0" prefWidth="200.0" styleClass="flow-buttom" GridPane.rowIndex="1">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Flush?" />
+                  <Text fx:id="flush" strokeType="OUTSIDE" strokeWidth="0.0" text="no" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="40.0" prefHeight="100.0" prefWidth="200.0" styleClass="flow-buttom" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Queen of spades" />
+                  <Text fx:id="queenOfSpades" strokeType="OUTSIDE" strokeWidth="0.0" text="no" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="flow-buttom" GridPane.columnIndex="2">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cards Left:" />
+                  <Text fx:id="cardsLeft" strokeType="OUTSIDE" strokeWidth="0.0" text="52" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>

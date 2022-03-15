@@ -1,9 +1,11 @@
-package no.ntnu.mathijoh.wargame.units;
+package no.ntnu.mathijoh.wargame.models.units;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 public class UnitTest {
 
@@ -58,7 +60,7 @@ public class UnitTest {
     @Test
     public void testAttack() {
 
-        Unit testObject = new Unit("name", 10, 2, 0) {
+        Unit testObject = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
                 return 0;
@@ -69,7 +71,7 @@ public class UnitTest {
                 return 0;
             }
         };
-        Unit testObject2 = new Unit("name", 10, 2, 0) {
+        Unit testObject2 = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
                 return 0;
@@ -84,7 +86,7 @@ public class UnitTest {
 
         testObject.attack(testObject2);
         assertEquals(10, testObject.getHealth());
-        assertEquals(8, testObject2.getHealth());
+        assertEquals(9, testObject2.getHealth());
     }
 
     @Test
@@ -203,16 +205,34 @@ public class UnitTest {
             }
         };
         assertEquals("Unit [armor=1, attack=2, health=10, name=name]", testObjUnit.toString());
-
-        
-
     }
 
+    // Can't test equals in this class since the reference point between the 2 testunit classes is "different"
     @Test
-    public void testEqualsAndHashcode() {
-        Unit testUnit1 = new InfantryUnit("name", 10);
-        Unit testUnit2 = new InfantryUnit("name", 10);
-        assertEquals(testUnit1, testUnit2);
+    public void testHashcode() {
+        Unit testUnit1 = new Unit("name", 10, 2, 1) {
+            @Override
+            public int getAttackBonus() {
+                return 0;
+            }
+
+            @Override
+            public int getResistBonus() {
+                return 0;
+            }
+        };
+        Unit testUnit2 = new Unit("name", 10, 2, 1) {
+            @Override
+            public int getAttackBonus() {
+                return 0;
+            }
+
+            @Override
+            public int getResistBonus() {
+                return 0;
+            }
+        };
+        
         assertEquals(testUnit1.hashCode(), testUnit2.hashCode());
     }
 }

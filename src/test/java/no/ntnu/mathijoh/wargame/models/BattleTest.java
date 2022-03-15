@@ -1,15 +1,17 @@
-package no.ntnu.mathijoh.wargame;
+package no.ntnu.mathijoh.wargame.models;
 
-import no.ntnu.mathijoh.wargame.units.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import no.ntnu.mathijoh.wargame.models.Army;
+import no.ntnu.mathijoh.wargame.models.Battle;
+import no.ntnu.mathijoh.wargame.models.units.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
 
 public class BattleTest {
 

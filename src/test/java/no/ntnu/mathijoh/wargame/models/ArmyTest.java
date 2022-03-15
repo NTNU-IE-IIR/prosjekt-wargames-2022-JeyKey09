@@ -1,29 +1,32 @@
-package no.ntnu.mathijoh.wargame.units;
+package no.ntnu.mathijoh.wargame.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import no.ntnu.mathijoh.wargame.models.units.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 public class ArmyTest {
 
-    public List<Unit> sampleUnitList(int infantryNumber, String infantryName, int rangedNumber, String rangedName, 
-        int cavalryNumber, String cavalryName, int commanderNumber, String commanderName)  {
+    public List<Unit> sampleUnitList(int infantryNumber, int rangedNumber, 
+        int cavalryNumber, int commanderNumber)  {
         
         List<Unit> placeholderList = new ArrayList<>();
         for (int i = 0; i < infantryNumber; i++) {
-            placeholderList.add(new InfantryUnit(infantryName, 100));
+            placeholderList.add(new InfantryUnit("infantryName", 100));
         }
         for (int i = 0; i < rangedNumber; i++) {
-            placeholderList.add(new RangedUnit(rangedName, 100));
+            placeholderList.add(new RangedUnit("rangedName", 100));
         }
         for (int i = 0; i < cavalryNumber; i++) {
-            placeholderList.add(new CavalryUnit(cavalryName, 100));
+            placeholderList.add(new CavalryUnit("cavalryName", 100));
         }
         for (int i = 0; i < commanderNumber; i++) {
-            placeholderList.add(new CommanderUnit(commanderName, 180));
+            placeholderList.add(new CommanderUnit("commanderName", 180));
         }
 
         return placeholderList;
@@ -43,18 +46,27 @@ public class ArmyTest {
         } catch (IllegalArgumentException e) {
             assertEquals("Unit can't be null", e.getMessage());
         }
+        assertEquals(0, testArmy.getAllUnits().size());
+
         try {
             testArmy.add(null);
         } catch (IllegalArgumentException e) {
             assertEquals("Unit can't be null", e.getMessage());
         }
+        assertEquals(0, testArmy.getAllUnits().size());
     }
 
     @Test
     public void testAddAllAndGetAll() {
         Army testArmy = new Army("testArmy");
-        List<Unit> sampleList = sampleUnitList(10, "inf", 3, "rang", 6, "cav", 3, "commander");
+        List<Unit> sampleList = sampleUnitList(10, 3,  6, 3);
         testArmy.addAll(sampleList);
+        assertEquals(testArmy.getAllUnits(), sampleList);
+        try {
+            testArmy.addAll(null);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Unit list can't be null", e.getMessage());
+        }
         assertEquals(testArmy.getAllUnits(), sampleList);
     }
 
@@ -104,4 +116,33 @@ public class ArmyTest {
         assertEquals(testArmy, testArmy2);
         assertEquals(testArmy.hashCode(), testArmy2.hashCode());
     }
+
+    @Test
+    public void testGetRangedUnit() {
+        Army testArmy = new Army("Test");
+        testArmy.addAll(sampleUnitList(10,20,30,40));
+        assertEquals(20,testArmy.getRangedUnit().size());
+    }
+    
+    @Test
+    public void testGetInfantryUnit() {
+        Army testArmy = new Army("Test");
+        testArmy.addAll(sampleUnitList(10,20,30,40));
+        assertEquals(10,testArmy.getInfantryUnit().size());
+    }
+    
+    @Test
+    public void testGetCommanderUnit() {
+        Army testArmy = new Army("Test");
+        testArmy.addAll(sampleUnitList(10,20,30,40));
+        assertEquals(40,testArmy.getCommanderUnit().size());
+    }
+    
+    @Test
+    public void testGetCavalryUnit() {
+        Army testArmy = new Army("Test");
+        testArmy.addAll(sampleUnitList(10,20,30,40));
+        assertEquals(30,testArmy.getCavalryUnit().size());
+    }
+
 }

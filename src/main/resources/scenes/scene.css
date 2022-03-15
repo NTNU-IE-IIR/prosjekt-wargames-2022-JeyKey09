@@ -1,0 +1,59 @@
+.button {
+    -fx-background-color: darkslategray;
+    -fx-text-fill: white;
+}
+
+.border-pane {
+    -fx-backgroundcolor: white;
+}
+
+.text {
+    -fx-font: "sans-serif";
+    -fx-font-size: 16;
+}
+
+.right-size {
+    -fx-padding: 60,60,200,30;
+    -fx-spacing: 50;
+}
+
+.button-location {
+    -fx-background-color: rgb(160, 160, 160);
+    -fx-border-color: black;
+    -fx-border-inset: 100;
+    -fx-spacing: 40;
+    -fx-alignment: center;
+}
+
+.board {
+    -fx-padding: 20;
+    -fx-border-color: black;
+    -fx-border-inset: 100;
+    -fx-padding: 50, 60, 60, 50;
+    -fx-background-color: rgb(201, 216, 132);
+}
+
+.info-menu {
+    -fx-background-color: white;
+    -fx-padding: 0,100,100,0;
+    -fx-spacing: 40;
+}
+
+.vbox-bottom-menu {
+    -fx-padding: 50;
+    -fx-border-inset: 100;
+    -fx-spacing: 40;
+}
+
+.button-vbox-menu {
+    -fx-spacing: 30;
+}
+
+.info-menu {
+    -fx-alignment: center;
+}
+
+.flow-buttom {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+}

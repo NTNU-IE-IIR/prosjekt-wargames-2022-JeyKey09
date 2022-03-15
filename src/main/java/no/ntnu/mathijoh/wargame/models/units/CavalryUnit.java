@@ -1,4 +1,4 @@
-package no.ntnu.mathijoh.wargame.units;
+package no.ntnu.mathijoh.wargame.models.units;
 /**
  * CavalryUnit that is a type of unit. 
  */

@@ -1,5 +1,4 @@
-package no.ntnu.mathijoh.wargame.units;
-
+package no.ntnu.mathijoh.wargame.models.units;
 /**
  * Base class for every Unit class. 
  */
@@ -18,19 +17,18 @@ public abstract class Unit {
      * @param armor of the unit
      * @throws IllegalArgumentException if any of the parameters is null 
      */
-    
     protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
-        if(name == null || name.isEmpty()){
+        if(!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
         }
-        if(attack < 0){
+        if(!checkValidParameter(health)){
+            throw new IllegalArgumentException("Health can't be less then 0");
+        }
+        if(!checkValidParameter(attack)){
             throw new IllegalArgumentException("Attack can't be less then 0");
         }
-        if(armor < 0){
+        if(!checkValidParameter(armor)){
             throw new IllegalArgumentException("Armor can't be less then 0");
-        }
-        if(health < 0){
-            throw new IllegalArgumentException("Health can't be less then 0");
         }
         
         this.name = name;
@@ -40,6 +38,7 @@ public abstract class Unit {
     }
 
     /**
+     * Returns the name of the unit
      * @return name of the unit
      */
     public String getName() {
@@ -47,6 +46,7 @@ public abstract class Unit {
     }
 
     /**
+     * Returns the health of the unit
      * @return health of the unit
      */
     public int getHealth() {
@@ -59,11 +59,7 @@ public abstract class Unit {
      * @param health the new health of the unit
      */
     public void setHealth(int health) {
-        if(health < 0 ){
-            this.health = 0;
-        } else {
-            this.health = health;
-        }
+        this.health = Math.max(health, 0);
     }
 
     /**
@@ -74,6 +70,7 @@ public abstract class Unit {
     }
 
     /**
+     * Returns the armor of the unit
      * @return armor to the unit
      */
     public int getArmor() {
@@ -81,11 +78,13 @@ public abstract class Unit {
     }
 
     /**
+     * Returns the Attackbonus to the unit
      * @return attackBonus to the unit
      */
     public abstract int getAttackBonus();
 
     /**
+     * Returns the resistbonus of the unit
      * @return resistBonus to the unit
      */
     public abstract int getResistBonus();
@@ -93,10 +92,10 @@ public abstract class Unit {
     /**
      * Calculates the damage done to the opponent and sets the health to it
      * @param opponent the opponent getting attacked
-     * @exception IllegalArgumentException if opponent is null
+     * @throws IllegalArgumentException if opponent is null
      */
     public void attack(Unit opponent) throws IllegalArgumentException{
-        if(opponent == null){
+        if(!checkValidParameter(opponent)){
             throw new IllegalArgumentException("Opponent can't be null");
         }
         int oHealth = opponent.getHealth();
@@ -147,4 +146,20 @@ public abstract class Unit {
         return true;
     }
 
+    private boolean checkValidParameter(Object object) {
+        boolean isValid = true;
+        if(object == null) {
+            isValid = false;
+        }
+        else {
+            if(object.getClass() == String.class && ((String) object).isEmpty()){
+                isValid = false;
+            }
+        }
+        return isValid;
+    }
+
+    private boolean checkValidParameter(int number) {
+        return (number > 0);
+    }
 }
