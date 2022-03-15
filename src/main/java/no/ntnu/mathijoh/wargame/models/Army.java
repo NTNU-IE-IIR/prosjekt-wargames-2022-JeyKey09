@@ -93,6 +93,14 @@ public class Army {
     }
 
     /**
+     * Returns the size of the army
+     * @return int size of the army
+     */
+    public int getSize() {
+        return this.units.size();
+    }
+
+    /**
      * Gets the list of every unit in the army
      * @return List<Unit> with every Unit in the army
      */

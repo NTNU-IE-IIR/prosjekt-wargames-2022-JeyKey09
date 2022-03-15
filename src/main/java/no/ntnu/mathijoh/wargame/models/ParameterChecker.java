@@ -1,6 +1,10 @@
-package no.ntnu.mathijoh.wargame;
+package no.ntnu.mathijoh.wargame.models;
 
 public class ParameterChecker {
+    
+    private ParameterChecker() {
+    }
+
     public static boolean checkValidParameter(Object object) {
         boolean isValid = true;
         if (object == null) {
@@ -13,7 +17,7 @@ public class ParameterChecker {
         return isValid;
     }
 
-    private boolean checkValidParameter(int number) {
+    public static boolean checkValidParameter(int number) {
         return (number > 0);
     }
 }
