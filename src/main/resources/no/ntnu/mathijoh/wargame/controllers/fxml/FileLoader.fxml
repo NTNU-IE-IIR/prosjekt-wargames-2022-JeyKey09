@@ -27,7 +27,11 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delimiter" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Army to replace" GridPane.columnIndex="1" />
             <TextField fx:id="delimiterBox" promptText="Write the delimiter, standard ;" GridPane.rowIndex="1" />
-            <MenuButton fx:id="armyButton" mnemonicParsing="false" styleClass="choose-army" text="Select Army" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <MenuButton fx:id="armyButton" mnemonicParsing="false" styleClass="choose-army" text="Select Army" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+               </items></MenuButton>
          </children>
       </GridPane>
       <HBox prefHeight="12.0" prefWidth="600.0" styleClass="bottom-area">

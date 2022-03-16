@@ -22,8 +22,8 @@
 }
 
 .button, .choose-army {
-    -fx-border-radius: 10%;
-    -fx-background-radius: 10%;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-background-insets: 1;
     -fx-border-color: rgba(0,0,0,0.6);
 }

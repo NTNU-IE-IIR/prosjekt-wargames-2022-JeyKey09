@@ -3,6 +3,8 @@ package no.ntnu.mathijoh.wargame.controllers;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import javafx.event.ActionEvent;
@@ -12,52 +14,66 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 import no.ntnu.mathijoh.wargame.models.Army;
 
 public class FileController {
-    
-    Army army1 = new Army("Army1");
 
-    Army army2 = new Army("Army2");
+    ArrayList<Army> armyList;
 
     @FXML
     TextField filePathBox;
 
     @FXML
     TextField delimiterBox;
-    
+
     @FXML
     MenuButton armyButton;
-    
+
     @FXML
     private void closeWindow(ActionEvent e) {
 
-    }  
-    
+    }
+
     @FXML
     private void loadArmy(ActionEvent e) throws FileNotFoundException, IllegalArgumentException {
         File file = new File(filePathBox.getText());
         String delimiter = delimiterBox.getText();
         String replacingArmy = armyButton.getText();
-        if(file.exists() && (replacingArmy == army1.getName() || replacingArmy == army2.getName())){
+        if (file.exists() && !replacingArmy.equals("Select Army")) {
             try {
                 Army csvArmy = getArmyOfCSVFile(file);
+                boolean switchedArmy = false;
+                if (replacingArmy.equals("New Army")) {
+                    armyList.add(csvArmy);
+                } else {
+                    for (int i = 0; i < armyList.size() && !switchedArmy; i++) {
+                        if (armyList.get(i).getName().equals(replacingArmy)) {
+                            armyList.remove(i);
+                            armyList.add(csvArmy);
+                            switchedArmy = true;
+                        }
+                    }
+                }
             } catch (Exception error) {
-                //TODO: handle exception
+                // TODO: handle exception
             }
             armyButton.setText("Select Army");
+            updateMenuButton();
         }
     }
-    
+
     @FXML
     private void browse(ActionEvent e) {
         FileChooser browser = new FileChooser();
-        browser.setInitialFileName(".csv");
+        browser.setSelectedExtensionFilter(new ExtensionFilter("CSV", "*.csv"));
         Stage newStage = new Stage();
         File file = browser.showOpenDialog(newStage);
-        filePathBox.setText(file.toPath().toString());
+        if (file != null) {
+            filePathBox.setText(file.toPath().toString());
+        }
     }
 
     /**
@@ -95,33 +111,22 @@ public class FileController {
         }
         return placeholderArmy;
     }
-    
+
     /**
      * Sets the first army within the controller
+     * 
      * @param Army object
      */
-    public void setArmy1(Army army) {
-        if (!ParameterChecker.checkValidParameter(army)) {
+    public void setArmyList(ArrayList<Army> armyList) {
+        if (!ParameterChecker.checkValidParameter(armyList)) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
-        this.army1 = army;
+        this.armyList = armyList;
         updateMenuButton();
     }
 
     /**
-     * Sets the second army within the controller
-     * @param Army object
-     */
-    public void setArmy2(Army army) {
-        if (!ParameterChecker.checkValidParameter(army)) {
-            throw new IllegalArgumentException("Army is not a valid type");
-        }
-        this.army2 = army;
-        updateMenuButton();
-    }
-    
-    /**
-     * Updates the menuButton with the new Armies 
+     * Updates the menuButton with the new Armies
      */
     private void updateMenuButton() {
         if (!armyButton.getItems().isEmpty()) {
@@ -132,14 +137,14 @@ public class FileController {
                 MenuItem optionPressed = (MenuItem) e.getTarget();
                 armyButton.setText(optionPressed.getText());
             }
-        }; 
-        MenuItem menuItem1 = (new MenuItem(army1.getName()));
-        MenuItem menuItem2 = (new MenuItem(army2.getName()));
-        
-        menuItem1.setOnAction(eventHandler);
-        menuItem2.setOnAction(eventHandler);
-
-        armyButton.getItems().add(menuItem1);
-        armyButton.getItems().add(menuItem2);
+        };
+        for (Army army : armyList) {
+            MenuItem menuItem = (new MenuItem(army.getName()));
+            menuItem.setOnAction(eventHandler);
+            armyButton.getItems().add(menuItem);
+        }
+        MenuItem menuItem = (new MenuItem("New Army"));
+        menuItem.setOnAction(eventHandler);
+        armyButton.getItems().add(menuItem);
     }
 }

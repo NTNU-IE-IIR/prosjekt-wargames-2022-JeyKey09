@@ -1,6 +1,8 @@
 package no.ntnu.mathijoh.wargame.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +19,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class MainMenuController {
 
-    Army army1 = new Army("Army1");
-    Army army2 = new Army("Army2");
+    ArrayList<Army> armyList = new ArrayList<>(2);
 
     @FXML
     BorderPane root;
@@ -54,8 +55,7 @@ public class MainMenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/FileLoader.fxml"));
             Parent newRoot = loader.load();
             FileController fileController = loader.getController();
-            fileController.setArmy1(army1);
-            fileController.setArmy2(army2); 
+            fileController.setArmyList(armyList);
             Scene scene = new Scene(newRoot);
             stage.setScene(scene);
             stage.initOwner(root.getScene().getWindow());
@@ -63,6 +63,7 @@ public class MainMenuController {
             stage.setTitle("Load army from File");
             stage.show();
         } catch (IOException e1) {
+            System.out.println(e1.toString());
             //TODO: Handle exception
         }
     }

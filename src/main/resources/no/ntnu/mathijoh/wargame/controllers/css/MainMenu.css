@@ -1,28 +1,32 @@
-.army1-box, .army2-box{
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-inset: 100;
-    -fx-background-color: rgb(119, 126, 150);
+.army2-box, .army1-box {
     -fx-spacing: 20;
     -fx-alignment: top-center;
     -fx-padding: 10 0 0 0;
 }
 
-.button-location , .battle-map {
+
+.army2-box{
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 0 1;
+}
+
+.button-location, .battle-map, .army-box{
     -fx-border-color: black;
     -fx-border-style: solid;
     -fx-border-inset: 100;
+    -fx-background-color: rgba(119, 126, 150, 0.6);
+    -fx-border-width: 1 0 1 1;
 }
 
-.button-location {
-   /* -fx-background-color: rgb(44, 97, 116); */
-}
 
-.reset-button, .battle-button{
-    -fx-text-alignment: center;
-    -fx-pref-height: 30;
+.reset-button, .battle-button {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-insets: 1;
+    -fx-border-color: rgba(0,0,0,0.6);
     -fx-pref-width: 200;
-    -fx-border-color: black;
+    -fx-alignment: center;
 }
 
 .battle-button {
@@ -32,12 +36,13 @@
 
 .reset-button {
     -fx-background-color: green;
-    -fx-pref-width: 50;
 }
 
 
-.hbox-button-location {
-    -fx-alignment: center-right;
+.button-location {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-background-color: rgba(0, 0, 0, 0.4)
 }
 
 .box-title-army {
