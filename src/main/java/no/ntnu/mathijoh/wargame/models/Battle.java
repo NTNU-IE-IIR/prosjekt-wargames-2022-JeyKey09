@@ -1,8 +1,5 @@
 package no.ntnu.mathijoh.wargame.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**

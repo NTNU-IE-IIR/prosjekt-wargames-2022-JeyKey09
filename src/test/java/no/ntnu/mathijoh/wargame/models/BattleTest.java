@@ -2,8 +2,6 @@ package no.ntnu.mathijoh.wargame.models;
 
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

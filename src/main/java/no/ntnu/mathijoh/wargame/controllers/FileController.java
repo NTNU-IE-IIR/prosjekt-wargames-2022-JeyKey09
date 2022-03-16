@@ -2,7 +2,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
@@ -19,7 +18,7 @@ public class FileController {
      */
     public Army getArmyOfCSVFile(File file) throws FileNotFoundException, IllegalArgumentException {
         Army placeholderArmy = null;
-        try (Scanner cs = new Scanner(file, StandardCharsets.UTF_8)) {
+        try (Scanner cs = new Scanner(file)) {
             cs.useDelimiter(";");
             placeholderArmy = new Army(cs.nextLine());
             while (cs.hasNext()) {
@@ -45,4 +44,5 @@ public class FileController {
         }
         return placeholderArmy;
     }
+
 }

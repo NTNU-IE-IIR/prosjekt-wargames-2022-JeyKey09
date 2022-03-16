@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
+   <right>
+      <HBox id="army-box" prefHeight="100.0" prefWidth="400.0" styleClass="army-box" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
+               <children>
+                  <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="125.0" text="UnitType" />
+                            <TableColumn prefWidth="75.0" text="Total" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="unitArmy1Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                           <columns>
+                              <TableColumn prefWidth="125.0" text="Name" />
+                              <TableColumn prefWidth="75.0" text="Health" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+               </children></VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
+               <children>
+                  <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                           <columns>
+                              <TableColumn prefWidth="125.0" text="UnitType" />
+                              <TableColumn prefWidth="75.0" text="Total" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="unitArmy2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                           <columns>
+                              <TableColumn prefWidth="125.0" text="Name" />
+                              <TableColumn prefWidth="75.0" text="Health" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </right>
+   <bottom>
+      <VBox prefHeight="100.0" prefWidth="600.0" styleClass="button-location" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="hbox-button-location" />
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="hbox-button-location">
+               <children>
+                  <Button mnemonicParsing="false" styleClass="battle-button" text="Battle" />
+               </children></HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Load Army" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

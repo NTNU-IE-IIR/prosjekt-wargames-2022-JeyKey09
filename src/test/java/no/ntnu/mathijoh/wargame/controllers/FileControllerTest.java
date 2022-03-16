@@ -22,7 +22,6 @@ public class FileControllerTest {
             assertEquals(2, placeholderArmy.getCavalryUnit().size());
             assertEquals(1, placeholderArmy.getCommanderUnit().size());
         } catch (Exception e) {
-            System.out.println(e.toString());
             assertTrue(false);
         }
     }
