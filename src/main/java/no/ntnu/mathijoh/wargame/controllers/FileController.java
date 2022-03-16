@@ -4,11 +4,24 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 public class FileController {
+    
+    @FXML
+    private void closeWindow(ActionEvent e) {
+
+    }  
+    
+    @FXML
+    private void loadArmy(ActionEvent e) {
+
+    }
+    
     /**
      * 
      * @param file a file object of a CSV file. Delimiter used is ";"
@@ -44,5 +57,4 @@ public class FileController {
         }
         return placeholderArmy;
     }
-
 }

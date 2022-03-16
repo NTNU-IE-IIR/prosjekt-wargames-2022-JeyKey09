@@ -15,18 +15,26 @@
 }
 
 .button-location {
-    -fx-background-color: rgb(44, 97, 116);
+   /* -fx-background-color: rgb(44, 97, 116); */
+}
+
+.reset-button, .battle-button{
+    -fx-text-alignment: center;
+    -fx-pref-height: 30;
+    -fx-pref-width: 200;
+    -fx-border-color: black;
 }
 
 .battle-button {
     -fx-background-color: red;
-    -fx-text-alignment: center;
-    -fx-pref-width: 200;
-    -fx-pref-height: 30;
-    -fx-border-color: black;
-    -fx-opacity: 70%;
     -fx-wrap-text: true;
 }
+
+.reset-button {
+    -fx-background-color: green;
+    -fx-pref-width: 50;
+}
+
 
 .hbox-button-location {
     -fx-alignment: center-right;
