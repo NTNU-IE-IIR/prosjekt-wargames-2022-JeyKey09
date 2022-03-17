@@ -3,8 +3,8 @@ package no.ntnu.mathijoh.wargame.controllers;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import javafx.event.ActionEvent;
@@ -12,8 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
@@ -21,20 +21,23 @@ import no.ntnu.mathijoh.wargame.models.Army;
 
 public class FileController {
 
-    ArrayList<Army> armyList;
+    private ArrayList<Army> armyList;
 
     @FXML
-    TextField filePathBox;
+    private TextField filePathBox;
 
     @FXML
-    TextField delimiterBox;
+    private VBox root;
 
     @FXML
-    MenuButton armyButton;
+    private TextField delimiterBox;
+
+    @FXML
+    private MenuButton armyButton;
 
     @FXML
     private void closeWindow(ActionEvent e) {
-
+        root.getScene().getWindow().onCloseRequestProperty();
     }
 
     @FXML
@@ -46,15 +49,11 @@ public class FileController {
             try {
                 Army csvArmy = getArmyOfCSVFile(file);
                 boolean switchedArmy = false;
-                if (replacingArmy.equals("New Army")) {
-                    armyList.add(csvArmy);
-                } else {
-                    for (int i = 0; i < armyList.size() && !switchedArmy; i++) {
-                        if (armyList.get(i).getName().equals(replacingArmy)) {
-                            armyList.remove(i);
-                            armyList.add(csvArmy);
-                            switchedArmy = true;
-                        }
+                for (int i = 0; i < armyList.size() && !switchedArmy; i++) {
+                    if (armyList.get(i).getName().equals(replacingArmy)) {
+                        armyList.remove(i);
+                        armyList.add(csvArmy);
+                        switchedArmy = true;
                     }
                 }
             } catch (Exception error) {
@@ -68,9 +67,8 @@ public class FileController {
     @FXML
     private void browse(ActionEvent e) {
         FileChooser browser = new FileChooser();
-        browser.setSelectedExtensionFilter(new ExtensionFilter("CSV", "*.csv"));
-        Stage newStage = new Stage();
-        File file = browser.showOpenDialog(newStage);
+        browser.getExtensionFilters().add(new ExtensionFilter("CSV", "*.csv"));
+        File file = browser.showOpenDialog(root.getScene().getWindow());
         if (file != null) {
             filePathBox.setText(file.toPath().toString());
         }
@@ -83,23 +81,24 @@ public class FileController {
      * @throws FileNotFoundException    if the file couldn't be found
      * @throws IllegalArgumentException if the CSV file contained invalid parameters
      */
-    public Army getArmyOfCSVFile(File file) throws FileNotFoundException, IllegalArgumentException {
+    public Army getArmyOfCSVFile(File file) throws FileNotFoundException, IllegalArgumentException, UnknownError {
+        // TODO: Add functionality for multiple Delimiters
         Army placeholderArmy = null;
         try (Scanner cs = new Scanner(file)) {
             cs.useDelimiter(";");
             placeholderArmy = new Army(cs.nextLine());
             while (cs.hasNext()) {
                 String[] info = cs.nextLine().split(";");
-                if (info.length == 3) {
+                if (info.length == 3 && ParameterChecker.checkValidParameter(info[0]) && ParameterChecker.checkValidParameter(info[1])
+                && ParameterChecker.checkValidParameter(Integer.parseInt(info[2]))) {
                     String unittype = info[0];
                     String unitName = info[1];
                     String healthString = info[2];
                     int unitHealth = Integer.parseInt(healthString);
-                    if (ParameterChecker.checkValidParameter(unittype) && ParameterChecker.checkValidParameter(unitName)
-                            && ParameterChecker.checkValidParameter(Integer.parseInt(healthString))) {
-                        placeholderArmy.add((Unit) Class.forName("no.ntnu.mathijoh.wargame.models.units." + unittype)
+                    placeholderArmy.add((Unit) Class.forName("no.ntnu.mathijoh.wargame.models.units." + unittype)
                                 .getConstructor(String.class, int.class).newInstance(unitName, unitHealth));
-                    }
+                } else {
+                    throw new IllegalArgumentException("This file contains none valid arguments");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -110,6 +109,22 @@ public class FileController {
             placeholderArmy = null;
         }
         return placeholderArmy;
+    }
+
+    public void saveArmyInCSV(File file, Army army) throws FileNotFoundException, IllegalArgumentException {
+        if(file.getAbsolutePath().matches("/^.*\\.(csv)$/ig")) {
+            throw new IllegalArgumentException("This is not a csv File");
+        }
+        try (PrintWriter outFile = new PrintWriter(file)) {
+            outFile.println(army.getName());
+            for (Unit unit : army.getAllUnits()) {
+                String unitInText = String.format("%s;%s;%d", unit.getClass().getSimpleName(), unit.getName(),
+                        unit.getHealth());
+                outFile.println(unitInText);
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Couldn't write to this file location");
+        } catch (Exception e) {}
     }
 
     /**
@@ -143,8 +158,5 @@ public class FileController {
             menuItem.setOnAction(eventHandler);
             armyButton.getItems().add(menuItem);
         }
-        MenuItem menuItem = (new MenuItem("New Army"));
-        menuItem.setOnAction(eventHandler);
-        armyButton.getItems().add(menuItem);
     }
 }

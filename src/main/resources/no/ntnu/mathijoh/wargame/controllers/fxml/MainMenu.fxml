@@ -16,8 +16,8 @@
                      <children>
                         <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="125.0" text="UnitType" />
-                            <TableColumn prefWidth="75.0" text="Total" />
+                            <TableColumn fx:id="army1Type" prefWidth="125.0" text="UnitType" />
+                            <TableColumn fx:id="army1Total" prefWidth="75.0" text="Total" />
                           </columns>
                         </TableView>
                      </children>
@@ -26,8 +26,8 @@
                      <children>
                         <TableView fx:id="unitArmy1Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
                            <columns>
-                              <TableColumn prefWidth="125.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Health" />
+                              <TableColumn fx:id="army1UnitName" editable="false" prefWidth="125.0" text="Name" />
+                              <TableColumn fx:id="army1UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
                            </columns>
                         </TableView>
                      </children>
@@ -40,8 +40,8 @@
                      <children>
                         <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
                            <columns>
-                              <TableColumn prefWidth="125.0" text="UnitType" />
-                              <TableColumn prefWidth="75.0" text="Total" />
+                              <TableColumn fx:id="army2Type" prefWidth="125.0" text="UnitType" />
+                              <TableColumn fx:id="army2Total" prefWidth="75.0" text="Total" />
                            </columns>
                         </TableView>
                      </children>
@@ -50,8 +50,8 @@
                      <children>
                         <TableView fx:id="unitArmy2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
                            <columns>
-                              <TableColumn prefWidth="125.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Health" />
+                              <TableColumn fx:id="army2UnitName" editable="false" prefWidth="125.0" text="Name" />
+                              <TableColumn fx:id="army2UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
                            </columns>
                         </TableView>
                      </children>
@@ -89,8 +89,8 @@
             <FlowPane prefHeight="422.0" prefWidth="500.0" />
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="button-location">
                <children>
-                  <Button fx:id="resetButton" mnemonicParsing="false" styleClass="reset-button" text="Reset" />
-                  <Button fx:id="battleButton1" mnemonicParsing="false" styleClass="battle-button" text="Battle" />
+                  <Button fx:id="resetButton" disable="true" mnemonicParsing="false" styleClass="reset-button" text="Reset" />
+                  <Button fx:id="battleButton1" disable="true" mnemonicParsing="false" styleClass="battle-button" text="Battle" />
                </children>
             </HBox>
          </children>
