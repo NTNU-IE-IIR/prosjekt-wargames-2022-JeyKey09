@@ -36,14 +36,27 @@ public class FileControllerTest {
     return placeholderList;
 }
 
-
     @Test
     void testGetArmyOfFile() {
         File file = new File(getClass().getResource("test.csv").getPath().replace("%20", " "));
-        FileController fileController = new FileController();
         Army placeholderArmy = null;
         try {
-            placeholderArmy = fileController.getArmyOfCSVFile(file);    
+            placeholderArmy = FileController.getArmyOfCSVFile(file, "");    
+            assertEquals("Human-army", placeholderArmy.getName());
+            assertEquals(true, placeholderArmy.hasUnits());
+            assertEquals(2, placeholderArmy.getCavalryUnit().size());
+            assertEquals(1, placeholderArmy.getCommanderUnit().size());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testGetArmyOfFileAnotherDelimiter() {
+        File file = new File(getClass().getResource("testotherdelimiter.csv").getPath().replace("%20", " "));
+        Army placeholderArmy = null;
+        try {
+            placeholderArmy = FileController.getArmyOfCSVFile(file, ",");    
             assertEquals("Human-army", placeholderArmy.getName());
             assertEquals(true, placeholderArmy.hasUnits());
             assertEquals(2, placeholderArmy.getCavalryUnit().size());
@@ -56,10 +69,9 @@ public class FileControllerTest {
     @Test
     void testGetArmyOfFileWithWrongFormat() {
         File file = new File(getClass().getResource("wrongtest.csv").getPath().replace("%20", " "));
-        FileController fileController = new FileController();
         Army placeholderArmy = null;
         try {
-            placeholderArmy = fileController.getArmyOfCSVFile(file);    
+            placeholderArmy = FileController.getArmyOfCSVFile(file, "");    
             assertTrue(false);
         } catch (Exception e) {
             assertEquals(e.getClass(), IllegalArgumentException.class);
@@ -70,32 +82,33 @@ public class FileControllerTest {
     @Test
     void testSaveArmyToFile() {
         File folder = new File(getClass().getResource("").getPath().replace("%20", " "));   
-        FileController fileController = new FileController();
         File savelocation = new File(folder.getAbsolutePath()+"/save.csv");
         Army testArmy = new Army("Army1",sampleUnitList(10, 20, 30, 1));
         try {
-            fileController.saveArmyInCSV(savelocation, testArmy);
+           FileController.saveArmyInCSV(savelocation, testArmy);
         } catch (Exception e) {
-            System.out.print(e.toString());
+            assertTrue(false);
         }
         assertTrue(savelocation.exists());
         Army loadedArmy = null;
         try {
-            loadedArmy = fileController.getArmyOfCSVFile(savelocation);
+            loadedArmy = FileController.getArmyOfCSVFile(savelocation, "");
         } catch (Exception e) {
-            System.out.print(e.toString());
+
         }
         assertEquals(testArmy, loadedArmy);
     }
 
+    
+
     @Test
     void testSaveArmyToWrongFileType() {
         File folder = new File(getClass().getResource("").getPath().replace("%20", " "));   
-        FileController fileController = new FileController();
         File savelocation = new File(folder.getAbsolutePath()+"/save.csv.txt");
         Army testArmy = new Army("Army1",sampleUnitList(10, 20, 30, 1));
         try {
-            fileController.saveArmyInCSV(savelocation, testArmy);
+            FileController.saveArmyInCSV(savelocation, testArmy);
+            assertTrue(false);
         } catch (Exception e) {
             assertEquals(e.getClass(), IllegalArgumentException.class);
         }

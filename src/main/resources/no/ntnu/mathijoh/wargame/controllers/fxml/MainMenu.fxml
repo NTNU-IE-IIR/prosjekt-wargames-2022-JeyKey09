@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
    <right>
       <HBox id="army-box" prefHeight="100.0" prefWidth="400.0" styleClass="army-box" BorderPane.alignment="CENTER">
          <children>
@@ -24,7 +24,7 @@
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="unitArmy1Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                        <TableView fx:id="army1UnitTable" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
                            <columns>
                               <TableColumn fx:id="army1UnitName" editable="false" prefWidth="125.0" text="Name" />
                               <TableColumn fx:id="army1UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
@@ -48,7 +48,7 @@
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="unitArmy2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                        <TableView fx:id="army2UnitTable" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
                            <columns>
                               <TableColumn fx:id="army2UnitName" editable="false" prefWidth="125.0" text="Name" />
                               <TableColumn fx:id="army2UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
@@ -84,7 +84,7 @@
       </MenuBar>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
          <children>
             <FlowPane prefHeight="422.0" prefWidth="500.0" />
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="button-location">

@@ -3,8 +3,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
@@ -31,7 +27,7 @@ public class MainMenuController {
     private BorderPane root;
 
     @FXML
-    private Text army1Name;
+    private Text army1Title;
 
     @FXML
     private TableView<Army> army1Table;
@@ -43,7 +39,7 @@ public class MainMenuController {
     private TableColumn<Unit,Integer> army1Total; 
 
     @FXML
-    private TableView<Unit> armyUnit1Table;
+    private TableView<Unit> army1UnitTable;
 
     @FXML
     private TableColumn<Unit,String> army1UnitName; 
@@ -52,7 +48,7 @@ public class MainMenuController {
     private TableColumn<Unit,Integer> army1UnitHealth; 
 
     @FXML
-    private Text army2Name;
+    private Text army2Title;
 
     @FXML
     private TableView<Army> army2Table;
@@ -64,7 +60,7 @@ public class MainMenuController {
     private TableColumn<Unit,Integer> army2Total; 
 
     @FXML
-    private TableView<Unit> armyUnit2Table;
+    private TableView<Unit> army2UnitTable;
 
     @FXML
     private TableColumn<Unit,String> army2UnitName; 
@@ -85,25 +81,12 @@ public class MainMenuController {
         armyList.add(new Army("Army 1"));
         armyList.add(new Army("Army 2"));
         
-        Callback<CellDataFeatures<Unit, String>, ObservableValue<String>> getClassUnit = new Callback<CellDataFeatures<Unit, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Unit, String> p) {
-              return new SimpleStringProperty(p.getClass().getName());
-              }
-            };
-
-            Callback<CellDataFeatures<Army, Integer>, ObservableValue<String>> getCavalryAmount = new Callback<CellDataFeatures<Army, Integer>, ObservableValue<String>>() {
-                public ObservableValue<String> call(CellDataFeatures<Army, Integer> p) {
-                  return new SimpleStringProperty(String.valueOf(p.getValue().getCavalryUnit().size()));
-                  }
-                };
-        
         army1UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
         army2UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
 
         army1UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
         army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        
         updateInfo();
     }
 
@@ -113,22 +96,32 @@ public class MainMenuController {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/FileLoader.fxml"));
             Parent newRoot = loader.load();
-            FileController fileController = loader.getController();
-            fileController.setArmyList(armyList);
+            LoadController loadController = loader.getController();
+            loadController.setArmyList(armyList);
             Scene scene = new Scene(newRoot);
             stage.setScene(scene);
             stage.initOwner(root.getScene().getWindow());
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setTitle("Load army from File");
             stage.showAndWait();
+            purgeTables();
+            updateInfo();
         } catch (IOException e1) {
             System.out.println(e1.toString());
             //TODO: Handle exception
         }
     }
 
-    public void updateInfo() {
+    private void updateInfo() {
+        army1Title.setText(armyList.get(0).getName());
+        army2Title.setText(armyList.get(1).getName());
+        armyList.get(0).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
     }
 
-
+    private void purgeTables() {
+        army1Table.getItems().remove(army1Table.getItems());
+        army2Table.getItems().remove(army2Table.getItems());
+        army1UnitTable.getItems().remove(army1UnitTable.getItems());
+        army2UnitTable.getItems().remove(army2UnitTable.getItems());
+    }
 }
