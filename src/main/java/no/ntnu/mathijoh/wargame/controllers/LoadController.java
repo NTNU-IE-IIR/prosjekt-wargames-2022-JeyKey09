@@ -3,6 +3,7 @@ import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,11 +77,11 @@ public class LoadController {
      * 
      * @param Army object
      */
-    public void setArmyList(ArrayList<Army> armyList) {
+    public void setArmyList(List<Army> armyList) {
         if (!ParameterChecker.checkValidParameter(armyList)) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
-        this.armyList = armyList;
+        this.armyList = new ArrayList<Army>(armyList);
         updateMenuButton();
     }
 
@@ -93,8 +94,7 @@ public class LoadController {
         }
         EventHandler<ActionEvent> eventHandler = new EventHandler<>() {
             public void handle(ActionEvent e) {
-                MenuItem optionPressed = (MenuItem) e.getTarget();
-                armyButton.setText(optionPressed.getText());
+                armyButton.setText(((MenuItem) e.getTarget()).getText());
             }
         };
         for (Army army : armyList) {

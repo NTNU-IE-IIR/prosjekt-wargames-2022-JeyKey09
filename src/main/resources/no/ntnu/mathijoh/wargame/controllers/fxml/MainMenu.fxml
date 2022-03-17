@@ -6,61 +6,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
-   <right>
-      <HBox id="army-box" prefHeight="100.0" prefWidth="400.0" styleClass="army-box" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
-               <children>
-                  <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn fx:id="army1Type" prefWidth="125.0" text="UnitType" />
-                            <TableColumn fx:id="army1Total" prefWidth="75.0" text="Total" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army1UnitTable" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn fx:id="army1UnitName" editable="false" prefWidth="125.0" text="Name" />
-                              <TableColumn fx:id="army1UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-               </children></VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
-               <children>
-                  <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn fx:id="army2Type" prefWidth="125.0" text="UnitType" />
-                              <TableColumn fx:id="army2Total" prefWidth="75.0" text="Total" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army2UnitTable" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn fx:id="army2UnitName" editable="false" prefWidth="125.0" text="Name" />
-                              <TableColumn fx:id="army2UnitHealth" editable="false" prefWidth="75.0" sortType="DESCENDING" text="Health" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </right>
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -68,16 +13,6 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#loadArmy" text="Load Army From CSV" />
               <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
@@ -96,4 +31,78 @@
          </children>
       </VBox>
    </center>
+   <right>
+      <TabPane prefHeight="500.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="General">
+               <content>
+                  <HBox id="army-box" prefHeight="100.0" prefWidth="400.0" styleClass="army-box">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
+                           <children>
+                              <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn fx:id="army1Type" prefWidth="125.0" text="UnitType" />
+                                        <TableColumn fx:id="army1Total" prefWidth="75.0" text="Total" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
+                           <children>
+                              <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                                       <columns>
+                                          <TableColumn fx:id="army2Type" prefWidth="125.0" text="UnitType" />
+                                          <TableColumn fx:id="army2Total" prefWidth="75.0" text="Total" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+          </Tab>
+          <Tab text="Army1">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TableView prefHeight="200.0" prefWidth="400.0">
+                          <columns>
+                            <TableColumn prefWidth="110.0" text="Class" />
+                            <TableColumn minWidth="0.0" prefWidth="187.0" text="Name" />
+                              <TableColumn minWidth="0.0" prefWidth="102.0" text="Health" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+            <Tab text="Army2">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TableView prefHeight="200.0" prefWidth="400.0">
+                           <columns>
+                              <TableColumn prefWidth="110.0" text="Class" />
+                              <TableColumn minWidth="0.0" prefWidth="187.0" text="Name" />
+                              <TableColumn minWidth="0.0" prefWidth="102.0" text="Health" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </right>
 </BorderPane>

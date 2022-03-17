@@ -12,7 +12,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class FileController {
 
-        /**
+    /**
      * 
      * @param file a file object of a CSV file. Defualt Delimiter used is ";"
      * @return a Army with every soldier from the CSV
@@ -20,7 +20,6 @@ public class FileController {
      * @throws IllegalArgumentException if the CSV file contained invalid parameters or it is not a CSV file
      */
     public static Army getArmyOfCSVFile(File file, String pattern) throws FileNotFoundException, IllegalArgumentException, UnknownError {
-        // TODO: Add functionality for multiple Delimiters
         if(!file.getAbsolutePath().matches("^.*\\.(csv)$")) {
             throw new IllegalArgumentException("This is not a CSV file");
         }
