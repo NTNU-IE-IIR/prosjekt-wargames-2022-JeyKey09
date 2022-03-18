@@ -3,6 +3,8 @@ package no.ntnu.mathijoh.wargame.models;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
 import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
@@ -126,32 +128,32 @@ public class Army {
      * Gets the every cavalary unit the army
      * @return a list of cavalry units in the army
      */
-    public List<Unit> getCavalryUnit() {
-        return getUnit(CavalryUnit.class);
+    public List<Unit> getCavalryUnits() {
+        return getUnits(CavalryUnit.class);
     }
 
     /**
      * Gets the every infantry unit the army
      * @return a list of infantry units in the army
      */
-    public List<Unit> getInfantryUnit() {
-        return getUnit(InfantryUnit.class);
+    public List<Unit> getInfantryUnits() {
+        return getUnits(InfantryUnit.class);
     }
 
     /**
      * Gets the every cavalary unit the army
      * @return a list of ranged units in the army
      */
-    public List<Unit> getRangedUnit() {
-        return getUnit(RangedUnit.class);
+    public List<Unit> getRangedUnits() {
+        return getUnits(RangedUnit.class);
     }
 
     /**
      * Gets the every commander unit the army
      * @return a list of commander units in the army
      */
-    public List<Unit> getCommanderUnit() {
-        return getUnit(CommanderUnit.class);
+    public List<Unit> getCommanderUnits() {
+        return getUnits(CommanderUnit.class);
     }
 
     /**
@@ -159,12 +161,9 @@ public class Army {
      * @param unitClass the unit class that the person wants to filter
      * @return a list of the specified class of unit
      */
-    private List<Unit> getUnit (Class unitClass) {
-        List<Unit> placeholderUnits = new ArrayList<>();
-        units.stream().filter(unit -> unit.getClass() == unitClass).forEach(unit -> placeholderUnits.add(unit));
-        return placeholderUnits;
+    private List<Unit> getUnits(Class unitClass) {
+        return units.stream().filter(unit -> unit.getClass() == unitClass).collect(Collectors.toList());
     }
-
 
     /**
      * Gets the name of the Army
@@ -204,6 +203,7 @@ public class Army {
             return false;
         return true;
     }
+
     private boolean checkValidParameter(Object object) {
         boolean isValid = true;
         if(object == null) {

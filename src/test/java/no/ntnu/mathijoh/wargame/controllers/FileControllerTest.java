@@ -44,8 +44,8 @@ public class FileControllerTest {
             placeholderArmy = FileController.getArmyOfCSVFile(file, "");    
             assertEquals("Human-army", placeholderArmy.getName());
             assertEquals(true, placeholderArmy.hasUnits());
-            assertEquals(2, placeholderArmy.getCavalryUnit().size());
-            assertEquals(1, placeholderArmy.getCommanderUnit().size());
+            assertEquals(2, placeholderArmy.getCavalryUnits().size());
+            assertEquals(1, placeholderArmy.getCommanderUnits().size());
         } catch (Exception e) {
             assertTrue(false);
         }
@@ -59,8 +59,8 @@ public class FileControllerTest {
             placeholderArmy = FileController.getArmyOfCSVFile(file, ",");    
             assertEquals("Human-army", placeholderArmy.getName());
             assertEquals(true, placeholderArmy.hasUnits());
-            assertEquals(2, placeholderArmy.getCavalryUnit().size());
-            assertEquals(1, placeholderArmy.getCommanderUnit().size());
+            assertEquals(2, placeholderArmy.getCavalryUnits().size());
+            assertEquals(1, placeholderArmy.getCommanderUnits().size());
         } catch (Exception e) {
             assertTrue(false);
         }

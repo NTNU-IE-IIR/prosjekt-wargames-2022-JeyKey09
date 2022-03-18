@@ -121,28 +121,28 @@ public class ArmyTest {
     public void testGetRangedUnit() {
         Army testArmy = new Army("Test");
         testArmy.addAll(sampleUnitList(10,20,30,40));
-        assertEquals(20,testArmy.getRangedUnit().size());
+        assertEquals(20,testArmy.getRangedUnits().size());
     }
     
     @Test
     public void testGetInfantryUnit() {
         Army testArmy = new Army("Test");
         testArmy.addAll(sampleUnitList(10,20,30,40));
-        assertEquals(10,testArmy.getInfantryUnit().size());
+        assertEquals(10,testArmy.getInfantryUnits().size());
     }
     
     @Test
     public void testGetCommanderUnit() {
         Army testArmy = new Army("Test");
         testArmy.addAll(sampleUnitList(10,20,30,40));
-        assertEquals(40,testArmy.getCommanderUnit().size());
+        assertEquals(40,testArmy.getCommanderUnits().size());
     }
     
     @Test
     public void testGetCavalryUnit() {
         Army testArmy = new Army("Test");
         testArmy.addAll(sampleUnitList(10,20,30,40));
-        assertEquals(30,testArmy.getCavalryUnit().size());
+        assertEquals(30,testArmy.getCavalryUnits().size());
     }
 
 }
