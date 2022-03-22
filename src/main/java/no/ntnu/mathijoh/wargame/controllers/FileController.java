@@ -12,6 +12,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class FileController {
 
+    private FileController(){}
     /**
      * 
      * @param file a file object of a CSV file. Defualt Delimiter used is ";"
@@ -68,7 +69,9 @@ public class FileController {
             }
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Couldn't write to this file location");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            //TOODO: Handle excepction
+        }
     }
 
 }

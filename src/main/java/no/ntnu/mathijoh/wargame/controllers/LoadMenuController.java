@@ -2,7 +2,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -17,8 +16,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
 
-public class LoadController {
-    private ArrayList<Army> armyList;
+public class LoadMenuController {
+    private List<Army> armyList;
 
     @FXML
     private TextField filePathBox;
@@ -81,7 +80,7 @@ public class LoadController {
         if (!ParameterChecker.checkValidParameter(armyList)) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
-        this.armyList = new ArrayList<Army>(armyList);
+        this.armyList = armyList;
         updateMenuButton();
     }
 

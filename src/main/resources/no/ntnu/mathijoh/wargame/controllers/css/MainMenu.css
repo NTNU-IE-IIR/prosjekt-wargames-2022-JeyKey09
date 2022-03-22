@@ -1,16 +1,10 @@
-.army2-box, .army1-box {
+.army-box {
     -fx-spacing: 20;
     -fx-alignment: top-center;
     -fx-padding: 10 0 0 0;
 }
 
-.army2-box{
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 0 1;
-}
-
-.button-location, .battle-map, .army-box{
+.button-location, .battle-map, .tab-box {
     -fx-border-color: black;
     -fx-border-style: solid;
     -fx-border-inset: 100;
