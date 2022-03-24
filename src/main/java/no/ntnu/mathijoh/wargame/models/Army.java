@@ -129,7 +129,7 @@ public class Army {
      * @return a list of cavalry units in the army
      */
     public List<Unit> getCavalryUnits() {
-        return getUnits(CavalryUnit.class);
+        return new UnitList("CavalryUnit",getUnits(CavalryUnit.class)) ;
     }
 
     /**
@@ -137,7 +137,7 @@ public class Army {
      * @return a list of infantry units in the army
      */
     public List<Unit> getInfantryUnits() {
-        return getUnits(InfantryUnit.class);
+        return new UnitList("Infantry",getUnits(InfantryUnit.class));
     }
 
     /**
@@ -145,7 +145,7 @@ public class Army {
      * @return a list of ranged units in the army
      */
     public List<Unit> getRangedUnits() {
-        return getUnits(RangedUnit.class);
+        return new UnitList("Ranged",getUnits(RangedUnit.class));
     }
 
     /**
@@ -153,7 +153,7 @@ public class Army {
      * @return a list of commander units in the army
      */
     public List<Unit> getCommanderUnits() {
-        return getUnits(CommanderUnit.class);
+        return new UnitList("Commander",getUnits(CommanderUnit.class)) ;
     }
 
     /**

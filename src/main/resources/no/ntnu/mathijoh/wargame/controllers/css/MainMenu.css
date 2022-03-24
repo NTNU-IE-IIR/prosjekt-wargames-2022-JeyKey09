@@ -2,6 +2,7 @@
     -fx-spacing: 20;
     -fx-alignment: top-center;
     -fx-padding: 10 0 0 0;
+    -fx-background-color: transparent;
 }
 
 .button-location, .battle-map, .tab-box {
@@ -38,7 +39,7 @@
 .button-location {
     -fx-alignment: center;
     -fx-spacing: 10;
-    -fx-background-color: rgba(0, 0, 0, 0.4)
+    -fx-background-color: rgba(0, 0, 0, 0.4);
 }
 
 .box-title-army {
@@ -46,43 +47,40 @@
 }
 
 .title-army {
-    -fx-font: "fantasy";
     -fx-font-weight: bold;
 }
 
-.table-view{
-    -fx-background-color: transparent;
- }
- 
- .table-view:focused{
-     -fx-background-color: transparent;
- }
- 
- .table-view .column-header-background{
-     -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
- }
  
  .table-view .column-header-background .label{
-     -fx-background-color: transparent;
-     -fx-text-fill: white;
+     -fx-cell-size: 0;
+ }
+
+ .table-view *.increment-button,
+ .table-view *.decrement-button,
+ .table-view *.increment-arrow,
+ .table-view *.decrement-arrow
+ {
+     -fx-padding: 0;
+     -fx-shape: "";
  }
  
- .table-view .column-header {
-     -fx-background-color: transparent;
+ .table-row-cell {
+     -fx-border-color: rgba(0,0,0,0);
+     -fx-border-width: 2;
  }
- 
- .table-view .table-cell{
-     -fx-text-fill: white;
- }
- 
- .table-row-cell{
-     -fx-background-color: -fx-table-cell-border-color, #616161;
-     -fx-background-insets: 0, 0 0 1 0;
-     -fx-padding: 0.0em; /* 0 */
- }
- 
- .table-row-cell:odd{
-     -fx-background-color: -fx-table-cell-border-color, #424242;
-     -fx-background-insets: 0, 0 0 1 0;
-     -fx-padding: 0.0em; /* 0 */  
- }
+
+.table-row-cell:odd{
+
+}
+
+.table-row-cell:even{
+
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}

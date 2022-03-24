@@ -36,13 +36,13 @@ public class MainMenuController {
     private Text army1Title;
 
     @FXML
-    private TableView<Army> army1Table;
+    private TableView<List<Unit>> army1Table;
     
     @FXML
-    private TableColumn<Unit,String> army1Type; 
+    private TableColumn<List<Unit>,String> army1Type; 
 
     @FXML
-    private TableColumn<Unit,Integer> army1Total; 
+    private TableColumn<List<Unit>,Integer> army1Total; 
 
     @FXML
     private TableView<Unit> army1UnitTable;
@@ -60,13 +60,13 @@ public class MainMenuController {
     private Text army2Title;
 
     @FXML
-    private TableView<Army> army2Table;
+    private TableView<List<Unit>> army2Table;
     
     @FXML
-    private TableColumn<Unit,String> army2Type; 
+    private TableColumn<List<Unit>,String> army2Type; 
 
     @FXML
-    private TableColumn<Unit,Integer> army2Total; 
+    private TableColumn<List<Unit>,Integer> army2Total; 
 
     @FXML
     private TableView<Unit> army2UnitTable;
@@ -98,7 +98,7 @@ public class MainMenuController {
                 return new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName());
             }
          };
-        
+
         army1UnitClass.setCellValueFactory(getUnitClass);
         army2UnitClass.setCellValueFactory(getUnitClass);
         
@@ -107,6 +107,19 @@ public class MainMenuController {
 
         army1UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
         army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+         Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>> getSize = new Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>>() {
+            public ObservableValue<Integer> call(CellDataFeatures<List<Unit>, Integer> list) {
+                return new ReadOnlyObjectWrapper<>(list.getValue().size());
+            }
+         };
+
+         army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+         army1Total.setCellValueFactory(getSize);
+
+         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+         army2Total.setCellValueFactory(getSize);
+
 
         updateTableInfo(this.armyList);
     }
@@ -125,7 +138,6 @@ public class MainMenuController {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.setTitle("Load army from File");
             stage.showAndWait();
-            purgeTables();
             updateTableInfo(this.armyList);
         } catch (IOException e1) {
             //TODO: Handle the errors
@@ -141,16 +153,32 @@ public class MainMenuController {
 
 
     private void updateTableInfo(List<Army> aList) {
-        army1Title.setText(aList.get(0).getName());
-        army2Title.setText(aList.get(1).getName());
+        
+        purgeArmyTables();
+        injectArmyTableView(army1Table, armyList.get(0));
+        injectArmyTableView(army2Table, armyList.get(1));
+        
+        purgeUnitTables();
         aList.get(0).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
         aList.get(1).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
+
+        army1Title.setText(aList.get(0).getName());
+        army2Title.setText(aList.get(1).getName());
     }
 
-    private void purgeTables() {
-        army1Table.getItems().clear();
-        army2Table.getItems().clear();
+    private void injectArmyTableView(TableView<List<Unit>> tableView, Army army) {
+        tableView.getItems().add(army.getCavalryUnits());
+        tableView.getItems().add(army.getCommanderUnits());
+        tableView.getItems().add(army.getInfantryUnits());
+        tableView.getItems().add(army.getRangedUnits());
+    }
+
+    private void purgeUnitTables() {
         army1UnitTable.getItems().clear();
         army2UnitTable.getItems().clear();
+    }
+    private void purgeArmyTables() {
+        army1Table.getItems().clear();
+        army2Table.getItems().clear();
     }
 }
