@@ -1,6 +1,5 @@
 package no.ntnu.mathijoh.wargame.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +7,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,17 +14,19 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
+/**
+ * The main menu controller
+ * The controller that contains all the information needed
+ */
 public class MainMenuController {
 
     private ArrayList<Army> armyList;
-    
+
     @FXML
     private BorderPane root;
 
@@ -37,60 +35,60 @@ public class MainMenuController {
 
     @FXML
     private TableView<List<Unit>> army1Table;
-    
-    @FXML
-    private TableColumn<List<Unit>,String> army1Type; 
 
     @FXML
-    private TableColumn<List<Unit>,Integer> army1Total; 
+    private TableColumn<List<Unit>, String> army1Type;
+
+    @FXML
+    private TableColumn<List<Unit>, Integer> army1Total;
 
     @FXML
     private TableView<Unit> army1UnitTable;
 
     @FXML
-    private TableColumn<Unit,String> army1UnitClass; 
+    private TableColumn<Unit, String> army1UnitClass;
 
     @FXML
-    private TableColumn<Unit,String> army1UnitName; 
+    private TableColumn<Unit, String> army1UnitName;
 
     @FXML
-    private TableColumn<Unit,Integer> army1UnitHealth; 
+    private TableColumn<Unit, Integer> army1UnitHealth;
 
     @FXML
     private Text army2Title;
 
     @FXML
     private TableView<List<Unit>> army2Table;
-    
-    @FXML
-    private TableColumn<List<Unit>,String> army2Type; 
 
     @FXML
-    private TableColumn<List<Unit>,Integer> army2Total; 
+    private TableColumn<List<Unit>, String> army2Type;
+
+    @FXML
+    private TableColumn<List<Unit>, Integer> army2Total;
 
     @FXML
     private TableView<Unit> army2UnitTable;
 
     @FXML
-    private TableColumn<Unit,String> army2UnitClass; 
+    private TableColumn<Unit, String> army2UnitClass;
 
     @FXML
-    private TableColumn<Unit,String> army2UnitName; 
+    private TableColumn<Unit, String> army2UnitName;
 
     @FXML
-    private TableColumn<Unit,Integer> army2UnitHealth; 
+    private TableColumn<Unit, Integer> army2UnitHealth;
 
     @FXML
     private Button battleButton;
 
     @FXML
     private Button resetButton;
-    
+
     @FXML
     public void initialize() {
 
         armyList = new ArrayList<>(2);
-        
+
         armyList.add(new Army("Army 1"));
         armyList.add(new Army("Army 2"));
 
@@ -98,60 +96,79 @@ public class MainMenuController {
             public ObservableValue<String> call(CellDataFeatures<Unit, String> unit) {
                 return new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName());
             }
-         };
+        };
 
         army1UnitClass.setCellValueFactory(getUnitClass);
         army2UnitClass.setCellValueFactory(getUnitClass);
-        
+
         army1UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
         army2UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
 
         army1UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
         army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-         Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>> getSize = new Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>>() {
+        Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>> getSize = new Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>>() {
             public ObservableValue<Integer> call(CellDataFeatures<List<Unit>, Integer> list) {
                 return new ReadOnlyObjectWrapper<>(list.getValue().size());
             }
-         };
+        };
 
-         army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-         army1Total.setCellValueFactory(getSize);
+        army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        army1Total.setCellValueFactory(getSize);
 
-         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-         army2Total.setCellValueFactory(getSize);
+        army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        army2Total.setCellValueFactory(getSize);
 
-        updateTableInfo(this.armyList);
+        updateTableInfo();
     }
 
+    /**
+     * Gets new armies from loadMenu trough CentralController
+     * 
+     * @param e
+     */
     @FXML
     private void loadArmy(ActionEvent e) {
-        this.armyList = new ArrayList<Army>(CentralController.loadMenu(armyList, root));
-        updateTableInfo(this.armyList);
+        this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
+        updateTableInfo();
     }
 
-
-    private void battle(){
+    /**
+     * Makes the armies attack each other
+     * 
+     * @param e
+     */
+    private void battle() {
         ArrayList<Army> armylist = new ArrayList<>(this.armyList);
-        Battle battle = new Battle(armylist.get(0),armylist.get(1));
-       // Thread battleThread = new ThreadLocal<>();
+        Battle battle = new Battle(armylist.get(0), armylist.get(1));
+        // Thread battleThread = new ThreadLocal<>();
     }
 
-
-    private void updateTableInfo(List<Army> aList) {
+    /**
+     * Purges the tables and updates them
+     * 
+     * @param aList
+     */
+    private void updateTableInfo() {
 
         purgeArmyTables();
-        injectArmyTableView(army1Table, armyList.get(0));
-        injectArmyTableView(army2Table, armyList.get(1));
-        
-        purgeUnitTables();
-        aList.get(0).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
-        aList.get(1).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
+        injectArmyTableView(army1Table, this.armyList.get(0));
+        injectArmyTableView(army2Table, this.armyList.get(1));
 
-        army1Title.setText(aList.get(0).getName());
-        army2Title.setText(aList.get(1).getName());
+        purgeUnitTables();
+        this.armyList.get(0).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
+        this.armyList.get(1).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
+
+        army1Title.setText(this.armyList.get(0).getName());
+        army2Title.setText(this.armyList.get(1).getName());
     }
 
+    /**
+     * Injects a army unit within the tableview
+     * 
+     * @param tableView its gonna inject
+     * @param army      its gonna get troops from
+     */
     private void injectArmyTableView(TableView<List<Unit>> tableView, Army army) {
         tableView.getItems().add(army.getCavalryUnits());
         tableView.getItems().add(army.getCommanderUnits());
@@ -159,11 +176,17 @@ public class MainMenuController {
         tableView.getItems().add(army.getRangedUnits());
     }
 
+    /**
+     * Cleans the UnitTables
+     */
     private void purgeUnitTables() {
         army1UnitTable.getItems().clear();
         army2UnitTable.getItems().clear();
     }
 
+    /**
+     * Cleans the ArmyTables
+     */
     private void purgeArmyTables() {
         army1Table.getItems().clear();
         army2Table.getItems().clear();

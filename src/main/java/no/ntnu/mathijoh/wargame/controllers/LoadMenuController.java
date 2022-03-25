@@ -70,7 +70,6 @@ public class LoadMenuController {
         }
     }
 
-
     /**
      * Sets the first army within the controller
      * 

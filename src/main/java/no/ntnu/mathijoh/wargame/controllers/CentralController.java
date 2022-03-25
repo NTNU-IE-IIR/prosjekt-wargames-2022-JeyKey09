@@ -1,7 +1,6 @@
 package no.ntnu.mathijoh.wargame.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXMLLoader;
@@ -11,12 +10,27 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import no.ntnu.mathijoh.wargame.models.Army;
 
+/**
+ * A class that main premise is to work as a communication and creation tool for
+ * the MainMenuController
+ * All code that creates a new instance of a scene are within this class for
+ * better readabilty within
+ * the MainMenuController
+ */
 public class CentralController {
-    
-    private CentralController() {}
 
-    public static List<Army> loadMenu(ArrayList<Army> armyList, Parent root) {
-        try{
+    private CentralController() {
+    }
+
+    /**
+     * Creation and loading of the loadMenu
+     * 
+     * @param armyList that is gonna be used as a reference for the load menu
+     * @param root     the parent menu or main menu to lock the window within
+     * @return List<Army> Back to Main Menu
+     */
+    public static List<Army> runLoadMenu(List<Army> armyList, Parent root) {
+        try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getResource("fxml/FileLoader.fxml"));
             Parent newRoot = loader.load();
@@ -29,12 +43,12 @@ public class CentralController {
             stage.setTitle("Load army from File");
             stage.showAndWait();
         } catch (Exception exception) {
-            System.out.println(exception.toString());
+            // TODO: handle exception
         }
         return armyList;
     }
 
-    private static URL getResource(String filePath){
+    private static URL getResource(String filePath) {
         return CentralController.class.getResource(filePath);
     }
 }
