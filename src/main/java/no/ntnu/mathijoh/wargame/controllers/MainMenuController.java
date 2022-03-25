@@ -88,8 +88,9 @@ public class MainMenuController {
     
     @FXML
     public void initialize() {
-        armyList = new ArrayList<>(2);
 
+        armyList = new ArrayList<>(2);
+        
         armyList.add(new Army("Army 1"));
         armyList.add(new Army("Army 2"));
 
@@ -120,28 +121,13 @@ public class MainMenuController {
          army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
          army2Total.setCellValueFactory(getSize);
 
-
         updateTableInfo(this.armyList);
     }
 
     @FXML
     private void loadArmy(ActionEvent e) {
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/FileLoader.fxml"));
-            Parent newRoot = loader.load();
-            LoadMenuController loadController = loader.getController();
-            loadController.setArmyList(armyList);
-            Scene scene = new Scene(newRoot);
-            stage.setScene(scene);
-            stage.initOwner(root.getScene().getWindow());
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.setTitle("Load army from File");
-            stage.showAndWait();
-            updateTableInfo(this.armyList);
-        } catch (IOException e1) {
-            //TODO: Handle the errors
-        }
+        this.armyList = new ArrayList<Army>(CentralController.loadMenu(armyList, root));
+        updateTableInfo(this.armyList);
     }
 
 
@@ -153,7 +139,7 @@ public class MainMenuController {
 
 
     private void updateTableInfo(List<Army> aList) {
-        
+
         purgeArmyTables();
         injectArmyTableView(army1Table, armyList.get(0));
         injectArmyTableView(army2Table, armyList.get(1));
@@ -177,6 +163,7 @@ public class MainMenuController {
         army1UnitTable.getItems().clear();
         army2UnitTable.getItems().clear();
     }
+
     private void purgeArmyTables() {
         army1Table.getItems().clear();
         army2Table.getItems().clear();

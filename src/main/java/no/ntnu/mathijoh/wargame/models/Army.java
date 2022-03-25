@@ -3,7 +3,6 @@ package no.ntnu.mathijoh.wargame.models;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
