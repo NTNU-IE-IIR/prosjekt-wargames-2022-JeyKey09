@@ -32,6 +32,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="terrain-chooser">
+               <children>
+                  <Button mnemonicParsing="false" text="Button" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="terrain" text="Text" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="button-location">
                <children>
                   <Button fx:id="resetButton" disable="true" mnemonicParsing="false" styleClass="reset-button" text="Reset" />

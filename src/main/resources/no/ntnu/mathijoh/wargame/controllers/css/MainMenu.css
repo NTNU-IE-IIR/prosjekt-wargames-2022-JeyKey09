@@ -1,3 +1,7 @@
+@font-face {
+    src: url('fonts/StorybookEnding-nRLX0.ttf');
+}
+
 .army-box {
     -fx-spacing: 20;
     -fx-alignment: top-center;
@@ -35,6 +39,23 @@
     -fx-background-color: green;
 }
 
+.terrain-chooser {
+    -fx-alignment: center;
+    -fx-border: solid;
+    -fx-border-size: 0 0 1 0;
+    -fx-border-color: black;
+    -fx-spacing: 30;
+}
+
+.terrain-chooser .button {
+    -fx-background-color: transparent;
+    -fx-font-size: 15;
+}
+
+.terrain {
+    -fx-font-size: 20;
+    -fx-font-family: 'Storybook Ending';
+}
 
 .button-location {
     -fx-alignment: center;

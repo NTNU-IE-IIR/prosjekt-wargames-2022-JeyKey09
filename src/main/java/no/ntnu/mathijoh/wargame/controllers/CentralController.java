@@ -14,8 +14,7 @@ import no.ntnu.mathijoh.wargame.models.Army;
  * A class that main premise is to work as a communication and creation tool for
  * the MainMenuController
  * All code that creates a new instance of a scene are within this class for
- * better readabilty within
- * the MainMenuController
+ * better readabilty as if they would be normally in the MainMenuController
  */
 public class CentralController {
 
@@ -31,12 +30,12 @@ public class CentralController {
      */
     public static List<Army> runLoadMenu(List<Army> armyList, Parent root) {
         try {
-            Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getResource("fxml/FileLoader.fxml"));
             Parent newRoot = loader.load();
             LoadMenuController loadController = loader.getController();
             loadController.setArmyList(armyList);
             Scene scene = new Scene(newRoot);
+            Stage stage = new Stage();
             stage.setScene(scene);
             stage.initOwner(root.getScene().getWindow());
             stage.initModality(Modality.WINDOW_MODAL);
