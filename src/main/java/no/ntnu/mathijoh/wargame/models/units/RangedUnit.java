@@ -2,32 +2,39 @@ package no.ntnu.mathijoh.wargame.models.units;
 
 /**
  * A unit that focuses in ranged attacked.
- * They start with high attack but gets lower for every attack until the second 
+ * They start with high attack but gets lower for every attack until the second
  */
-public class RangedUnit extends Unit{
-    
+public class RangedUnit extends Unit {
+
     private int amountOfAttacks = 0;
+
     /**
      * 
-     * @param name of the unit
+     * @param name   of the unit
      * @param health of the unit
      * @param attack of the unit
-     * @param armor of the unit
+     * @param armor  of the unit
      * @throws IllegalArgumentException if any values are null
      */
     public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
+        this.putTerrainAttackBonus('H', 2);
+        this.putTerrainAttackBonus('T', -1);
     }
+
     /**
      * Creates a new ranged unit with 15 in attack and 8 in armor
-     * @param name of the unit
+     * 
+     * @param name   of the unit
      * @param health of the unit
      * @throws IllegalArgumentException if any values are null
      */
     public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
+        this.putTerrainAttackBonus('H', 2);
+        this.putTerrainAttackBonus('T', -1);
     }
-    
+
     @Override
     public int getAttackBonus() {
         return 3;
@@ -36,7 +43,7 @@ public class RangedUnit extends Unit{
     @Override
     public int getResistBonus() {
         int resist;
-        switch(amountOfAttacks){
+        switch (amountOfAttacks) {
             case 0:
                 resist = 6;
                 break;

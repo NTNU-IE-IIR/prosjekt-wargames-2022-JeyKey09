@@ -1,0 +1,41 @@
+.root {
+    -fx-padding: 50 30 10 30;
+    -fx-spacing: 10;
+    -fx-aligment: center;
+    -fx-background-color: rgba(73, 104, 182, 0.165);
+}
+
+.path-box {
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.grid {
+    -fx-margin: 20;
+    -fx-hgap: 10;
+    -fx-alignment: center-left;
+}
+
+.bottom-area {
+    -fx-spacing: 20;
+    -fx-alignment: center-right;
+}
+
+.button, .choose-army {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-insets: 1;
+    -fx-border-color: rgba(0,0,0,0.6);
+}
+
+.load-button, .cancel-button {
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.load-button {
+    -fx-background-color: rgba(77, 208, 120, 0.6);
+}
+.cancel-button {
+    -fx-background-color: rgba(202, 78, 78, 0.6);
+}

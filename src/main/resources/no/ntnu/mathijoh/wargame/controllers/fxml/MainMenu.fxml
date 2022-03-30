@@ -5,96 +5,123 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
-   <right>
-      <HBox id="army-box" prefHeight="100.0" prefWidth="400.0" styleClass="army-box" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
-               <children>
-                  <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn prefWidth="125.0" text="UnitType" />
-                            <TableColumn prefWidth="75.0" text="Total" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="unitArmy1Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn prefWidth="125.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Health" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-               </children></VBox>
-            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army1-box">
-               <children>
-                  <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn prefWidth="125.0" text="UnitType" />
-                              <TableColumn prefWidth="75.0" text="Total" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="unitArmy2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
-                           <columns>
-                              <TableColumn prefWidth="125.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Health" />
-                           </columns>
-                        </TableView>
-                     </children>
-                  </StackPane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </right>
-   <bottom>
-      <VBox prefHeight="100.0" prefWidth="600.0" styleClass="button-location" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="hbox-button-location" />
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="hbox-button-location">
-               <children>
-                  <Button mnemonicParsing="false" styleClass="battle-button" text="Battle" />
-               </children></HBox>
-         </children>
-      </VBox>
-   </bottom>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/MainMenu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.MainMenuController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Load Army" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadArmy" text="Load Army From CSV" />
               <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="center" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane prefHeight="448.0" prefWidth="500.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="terrain-chooser">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#previousTerrain" text="&lt;-" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="terrain" text="Text" />
+                  <Button mnemonicParsing="false" onAction="#nextTerrain" text="-&gt;" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="button-location">
+               <children>
+                  <Button fx:id="resetButton" disable="true" mnemonicParsing="false" styleClass="reset-button" text="Reset" />
+                  <Button fx:id="battleButton1" disable="true" mnemonicParsing="false" styleClass="battle-button" text="Battle" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </center>
+   <right>
+      <TabPane prefHeight="500.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="General">
+               <content>
+                  <HBox prefHeight="100.0" prefWidth="400.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
+                           <children>
+                              <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="army1Table" prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn fx:id="army1Type" prefWidth="125.0" text="UnitType" />
+                                        <TableColumn fx:id="army1Total" prefWidth="75.0" text="Total" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
+                           <children>
+                              <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="army2Table" prefHeight="200.0" prefWidth="200.0" styleClass="unit-table">
+                                       <columns>
+                                          <TableColumn fx:id="army2Type" prefWidth="125.0" text="UnitType" />
+                                          <TableColumn fx:id="army2Total" prefWidth="75.0" text="Total" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+          </Tab>
+          <Tab text="Army1">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="army-box">
+                     <children>
+                        <Text fx:id="army1TabTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
+                        <TableView fx:id="army1UnitTable" prefHeight="200.0" prefWidth="400.0">
+                          <columns>
+                            <TableColumn fx:id="army1UnitClass" prefWidth="110.0" text="Class" />
+                            <TableColumn fx:id="army1UnitName" minWidth="0.0" prefWidth="187.0" text="Name" />
+                              <TableColumn fx:id="army1UnitHealth" minWidth="0.0" prefWidth="102.0" text="Health" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+          </Tab>
+            <Tab text="Army2">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="army-box">
+                     <children>
+                        <Text fx:id="army2TabTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
+                        <TableView fx:id="army2UnitTable" prefHeight="200.0" prefWidth="400.0">
+                           <columns>
+                              <TableColumn fx:id="army2UnitClass" prefWidth="110.0" text="Class" />
+                              <TableColumn fx:id="army2UnitName" minWidth="0.0" prefWidth="187.0" text="Name" />
+                              <TableColumn fx:id="army2UnitHealth" minWidth="0.0" prefWidth="102.0" text="Health" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </right>
 </BorderPane>

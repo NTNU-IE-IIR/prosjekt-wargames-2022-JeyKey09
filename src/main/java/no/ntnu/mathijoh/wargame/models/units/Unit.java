@@ -1,6 +1,9 @@
 package no.ntnu.mathijoh.wargame.models.units;
+
+import java.util.HashMap;
+
 /**
- * Base class for every Unit class. 
+ * Base class for every Unit class.
  */
 public abstract class Unit {
 
@@ -8,37 +11,64 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
-    
+    private HashMap<Character, Integer> terrainAttackBonus;
+    private HashMap<Character, Integer> terrainDefenseBonus;
+
     /**
      * Constructor of the Unit Class
-     * @param name of the unit
+     * 
+     * @param name   of the unit
      * @param health to the unit
      * @param attack power of the unit
-     * @param armor of the unit
-     * @throws IllegalArgumentException if any of the parameters is null 
+     * @param armor  of the unit
+     * @throws IllegalArgumentException if any of the parameters is null
      */
-    protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
-        if(!checkValidParameter(name)) {
+    protected Unit(String name, int health, int attack, int armor, HashMap<Character, Integer> unitTerrainAttackBonus,
+            HashMap<Character, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
+        if (!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
         }
-        if(!checkValidParameter(health)){
+        if (!checkValidParameter(health)) {
             throw new IllegalArgumentException("Health can't be less then 0");
         }
-        if(!checkValidParameter(attack)){
+        if (!checkValidParameter(attack)) {
             throw new IllegalArgumentException("Attack can't be less then 0");
         }
-        if(!checkValidParameter(armor)){
+        if (!checkValidParameter(armor)) {
             throw new IllegalArgumentException("Armor can't be less then 0");
         }
-        
         this.name = name;
         this.attack = attack;
         this.armor = armor;
         this.health = health;
+        this.terrainAttackBonus = new HashMap<>(unitTerrainAttackBonus);
+        this.terrainDefenseBonus = new HashMap<>(unitTerrainDefenceBonus);
+    }
+
+    protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
+        if (!checkValidParameter(name)) {
+            throw new IllegalArgumentException("Name can't be null or nothing");
+        }
+        if (!checkValidParameter(health)) {
+            throw new IllegalArgumentException("Health can't be less then 0");
+        }
+        if (!checkValidParameter(attack)) {
+            throw new IllegalArgumentException("Attack can't be less then 0");
+        }
+        if (!checkValidParameter(armor)) {
+            throw new IllegalArgumentException("Armor can't be less then 0");
+        }
+        this.name = name;
+        this.attack = attack;
+        this.armor = armor;
+        this.health = health;
+        this.terrainAttackBonus = new HashMap<>();
+        this.terrainDefenseBonus = new HashMap<>();
     }
 
     /**
      * Returns the name of the unit
+     * 
      * @return name of the unit
      */
     public String getName() {
@@ -47,6 +77,7 @@ public abstract class Unit {
 
     /**
      * Returns the health of the unit
+     * 
      * @return health of the unit
      */
     public int getHealth() {
@@ -54,8 +85,9 @@ public abstract class Unit {
     }
 
     /**
-     * Sets the health of the unit. 
-     * if the value is lower then 0, then sets it to 0 
+     * Sets the health of the unit.
+     * if the value is lower then 0, then sets it to 0
+     * 
      * @param health the new health of the unit
      */
     public void setHealth(int health) {
@@ -69,8 +101,10 @@ public abstract class Unit {
         return attack;
     }
 
+
     /**
      * Returns the armor of the unit
+     * 
      * @return armor to the unit
      */
     public int getArmor() {
@@ -79,39 +113,74 @@ public abstract class Unit {
 
     /**
      * Returns the Attackbonus to the unit
+     * 
      * @return attackBonus to the unit
      */
     public abstract int getAttackBonus();
 
-    /**
-     * Returns the resistbonus of the unit
-     * @return resistBonus to the unit
-     */
+
     public abstract int getResistBonus();
+
+    public void putTerrainAttackBonus(Character terrain, Integer bonus) throws IllegalArgumentException{
+        this.terrainAttackBonus.put(terrain, bonus);
+    }
+
+    public void putTerrainDefenceBonus(Character terrain, Integer bonus) {
+        this.terrainDefenseBonus.put(terrain, bonus);
+    }
+
+    public Integer getTerrainAttackBonus(Character terrain) {
+        return terrainAttackBonus.get(terrain);
+    }
+
+    public Integer getTerrainDefeneceBonus(Character terrain) {
+        return terrainAttackBonus.get(terrain);
+    }
 
     /**
      * Calculates the damage done to the opponent and sets the health to it
+     * 
      * @param opponent the opponent getting attacked
      * @throws IllegalArgumentException if opponent is null
      */
-    public void attack(Unit opponent) throws IllegalArgumentException{
-        if(!checkValidParameter(opponent)){
+    public void attack(Unit opponent,Character terrain) throws IllegalArgumentException {
+        if (!checkValidParameter(opponent)) {
             throw new IllegalArgumentException("Opponent can't be null");
         }
         int oHealth = opponent.getHealth();
-        int oArmorBonus = opponent.getResistBonus(); 
+        int oArmorBonus = opponent.getResistBonus();
         int attackBonus = this.getAttackBonus();
         int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
-        if (oHealthAfterAttack < oHealth){
+        if (oHealthAfterAttack < oHealth) {
             opponent.setHealth(oHealthAfterAttack);
         }
     }
+
+    /**
+     * Calculates the damage done to the opponent and sets the health to it
+     * 
+     * @param opponent the opponent getting attacked
+     * @throws IllegalArgumentException if opponent is null
+     */
+    public void attack(Unit opponent) throws IllegalArgumentException {
+        if (!checkValidParameter(opponent)) {
+            throw new IllegalArgumentException("Opponent can't be null");
+        }
+        int oHealth = opponent.getHealth();
+        int oArmorBonus = opponent.getResistBonus();
+        int attackBonus = this.getAttackBonus();
+        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
+        if (oHealthAfterAttack < oHealth) {
+            opponent.setHealth(oHealthAfterAttack);
+        }
+    }
+
 
     @Override
     public String toString() {
         return "Unit [armor=" + armor + ", attack=" + attack + ", health=" + health + ", name=" + name + "]";
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -148,11 +217,10 @@ public abstract class Unit {
 
     private boolean checkValidParameter(Object object) {
         boolean isValid = true;
-        if(object == null) {
+        if (object == null) {
             isValid = false;
-        }
-        else {
-            if(object.getClass() == String.class && ((String) object).isEmpty()){
+        } else {
+            if (object.getClass() == String.class && ((String) object).isEmpty()) {
                 isValid = false;
             }
         }

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="231.0" prefWidth="600.0" styleClass="root" stylesheets="@../css/FileLoader.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.LoadMenuController">
+   <children>
+      <HBox prefHeight="12.0" prefWidth="600.0" styleClass="path-box">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FilePath" />
+            <TextField fx:id="filePathBox" prefHeight="25.0" prefWidth="400.0" promptText="Path to the file that is gonna be imported" styleClass="path-textArea" />
+            <Button fx:id="browse" mnemonicParsing="false" onAction="#browse" styleClass="browse-button" text="Browse" />
+         </children>
+      </HBox>
+      <GridPane styleClass="grid">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delimiter" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Army to replace" GridPane.columnIndex="1" />
+            <TextField fx:id="delimiterBox" promptText="Write the delimiter, standard ;" GridPane.rowIndex="1" />
+            <MenuButton fx:id="armyButton" mnemonicParsing="false" styleClass="choose-army" text="Select Army" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+               </items></MenuButton>
+         </children>
+      </GridPane>
+      <HBox prefHeight="12.0" prefWidth="600.0" styleClass="bottom-area">
+         <children>
+            <Button mnemonicParsing="false" onAction="#closeWindow" styleClass="cancel-button" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#loadArmy" styleClass="load-button" text="Load" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
