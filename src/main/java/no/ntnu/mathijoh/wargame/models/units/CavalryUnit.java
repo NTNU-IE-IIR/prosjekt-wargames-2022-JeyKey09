@@ -1,5 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
+import java.util.HashMap;
+
 /**
  * CavalryUnit that is a type of unit.
  */
@@ -18,6 +20,8 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
+        this.putTerrainAttackBonus('P', 2);
+        this.putTerrainDefenceBonus('F', -getResistBonus());
     }
 
     /**
@@ -29,6 +33,8 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 20, 12);
+        this.putTerrainAttackBonus('P', 2);
+        this.putTerrainDefenceBonus('F', -getResistBonus());
     }
 
     @Override

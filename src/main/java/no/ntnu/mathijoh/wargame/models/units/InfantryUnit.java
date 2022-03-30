@@ -1,5 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
+import java.util.HashMap;
+
 /**
  * Infantry units, normal foot soldiers basically
  */
@@ -17,6 +19,9 @@ public class InfantryUnit extends Unit {
 
     public InfantryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
+        this.putTerrainAttackBonus('T', 2);
+        this.putTerrainDefenceBonus('T', 2);
+        
     }
 
     /**

@@ -1,5 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
+import java.util.HashMap;
+
 /**
  * Base class for every Unit class.
  */
@@ -9,6 +11,8 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
+    private HashMap<Character, Integer> terrainAttackBonus;
+    private HashMap<Character, Integer> terrainDefenseBonus;
 
     /**
      * Constructor of the Unit Class
@@ -19,6 +23,28 @@ public abstract class Unit {
      * @param armor  of the unit
      * @throws IllegalArgumentException if any of the parameters is null
      */
+    protected Unit(String name, int health, int attack, int armor, HashMap<Character, Integer> unitTerrainAttackBonus,
+            HashMap<Character, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
+        if (!checkValidParameter(name)) {
+            throw new IllegalArgumentException("Name can't be null or nothing");
+        }
+        if (!checkValidParameter(health)) {
+            throw new IllegalArgumentException("Health can't be less then 0");
+        }
+        if (!checkValidParameter(attack)) {
+            throw new IllegalArgumentException("Attack can't be less then 0");
+        }
+        if (!checkValidParameter(armor)) {
+            throw new IllegalArgumentException("Armor can't be less then 0");
+        }
+        this.name = name;
+        this.attack = attack;
+        this.armor = armor;
+        this.health = health;
+        this.terrainAttackBonus = new HashMap<>(unitTerrainAttackBonus);
+        this.terrainDefenseBonus = new HashMap<>(unitTerrainDefenceBonus);
+    }
+
     protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         if (!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
@@ -32,11 +58,12 @@ public abstract class Unit {
         if (!checkValidParameter(armor)) {
             throw new IllegalArgumentException("Armor can't be less then 0");
         }
-
         this.name = name;
         this.attack = attack;
         this.armor = armor;
         this.health = health;
+        this.terrainAttackBonus = new HashMap<>();
+        this.terrainDefenseBonus = new HashMap<>();
     }
 
     /**
@@ -74,6 +101,7 @@ public abstract class Unit {
         return attack;
     }
 
+
     /**
      * Returns the armor of the unit
      * 
@@ -90,12 +118,43 @@ public abstract class Unit {
      */
     public abstract int getAttackBonus();
 
-    /**
-     * Returns the resistbonus of the unit
-     * 
-     * @return resistBonus to the unit
-     */
+
     public abstract int getResistBonus();
+
+    public void putTerrainAttackBonus(Character terrain, Integer bonus) throws IllegalArgumentException{
+        this.terrainAttackBonus.put(terrain, bonus);
+    }
+
+    public void putTerrainDefenceBonus(Character terrain, Integer bonus) {
+        this.terrainDefenseBonus.put(terrain, bonus);
+    }
+
+    public Integer getTerrainAttackBonus(Character terrain) {
+        return terrainAttackBonus.get(terrain);
+    }
+
+    public Integer getTerrainDefeneceBonus(Character terrain) {
+        return terrainAttackBonus.get(terrain);
+    }
+
+    /**
+     * Calculates the damage done to the opponent and sets the health to it
+     * 
+     * @param opponent the opponent getting attacked
+     * @throws IllegalArgumentException if opponent is null
+     */
+    public void attack(Unit opponent,Character terrain) throws IllegalArgumentException {
+        if (!checkValidParameter(opponent)) {
+            throw new IllegalArgumentException("Opponent can't be null");
+        }
+        int oHealth = opponent.getHealth();
+        int oArmorBonus = opponent.getResistBonus();
+        int attackBonus = this.getAttackBonus();
+        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
+        if (oHealthAfterAttack < oHealth) {
+            opponent.setHealth(oHealthAfterAttack);
+        }
+    }
 
     /**
      * Calculates the damage done to the opponent and sets the health to it
@@ -115,6 +174,7 @@ public abstract class Unit {
             opponent.setHealth(oHealthAfterAttack);
         }
     }
+
 
     @Override
     public String toString() {

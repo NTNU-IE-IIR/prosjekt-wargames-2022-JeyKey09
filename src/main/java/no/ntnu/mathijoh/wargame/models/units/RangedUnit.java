@@ -18,6 +18,8 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
+        this.putTerrainAttackBonus('H', 2);
+        this.putTerrainAttackBonus('T', -1);
     }
 
     /**
@@ -29,6 +31,8 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
+        this.putTerrainAttackBonus('H', 2);
+        this.putTerrainAttackBonus('T', -1);
     }
 
     @Override
