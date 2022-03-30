@@ -34,9 +34,9 @@
             </GridPane>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="terrain-chooser">
                <children>
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#previousTerrain" text="&lt;-" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="terrain" text="Text" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#nextTerrain" text="-&gt;" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="button-location">

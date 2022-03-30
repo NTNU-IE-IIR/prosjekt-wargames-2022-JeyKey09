@@ -3,7 +3,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -68,7 +67,6 @@ public class FileControllerTest {
     void testGetArmyOfFileWithWrongFormat() {
         File file = new File(getClass().getResource("wrongtest.csv").getPath().replace("%20", " "));
         assertThrows(IllegalArgumentException.class, () -> FileController.getArmyOfCSVFile(file, ""));
-
     }
 
     @Test
