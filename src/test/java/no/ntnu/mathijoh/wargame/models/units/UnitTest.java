@@ -2,6 +2,7 @@ package no.ntnu.mathijoh.wargame.models.units;
 
 import org.junit.jupiter.api.Test;
 
+import no.ntnu.mathijoh.wargame.models.Terrain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -234,5 +235,52 @@ public class UnitTest {
         };
         
         assertEquals(testUnit1.hashCode(), testUnit2.hashCode());
+    }
+
+    @Test
+    void testAttackWithTerraint() {
+        Unit testUnit1 = new Unit("name", 10, 2, 1) {
+            @Override
+            public int getAttackBonus() {
+                return 0;
+            }
+
+            @Override
+            public int getResistBonus() {
+                return 0;
+            }
+        };
+        Unit testUnit2 = new Unit("name", 10, 2, 1) {
+            @Override
+            public int getAttackBonus() {
+                return 0;
+            }
+
+            @Override
+            public int getResistBonus() {
+                return 0;
+            }
+        };
+        testUnit1.attack(testUnit2,Terrain.FOREST);
+    }
+
+    @Test
+    void testGetTerrainAttackBonus() {
+        
+    }
+
+    @Test
+    void testGetTerrainDefenseBonus() {
+        
+    }
+
+    @Test
+    void testPutTerrainAttackBonus() {
+        
+    }
+
+    @Test
+    void testPutTerrainDefenceBonus() {
+        
     }
 }

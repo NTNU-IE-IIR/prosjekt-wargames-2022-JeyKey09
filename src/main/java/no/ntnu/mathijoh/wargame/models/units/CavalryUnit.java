@@ -1,13 +1,13 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
-import java.util.HashMap;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 
 /**
  * CavalryUnit that is a type of unit.
  */
 public class CavalryUnit extends Unit {
 
-    private boolean firstAttack = true;
+    private boolean firstAttack;
 
     /**
      * Creates a Unit of type CavalryUnit
@@ -20,8 +20,9 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
-        this.putTerrainAttackBonus('P', 2);
-        this.putTerrainDefenceBonus('F', -getResistBonus());
+        this.putTerrainAttackBonus(Terrain.PLAINS, 2);
+        this.putTerrainDefenceBonus(Terrain.FOREST, -getResistBonus());
+        this.firstAttack = true;
     }
 
     /**
@@ -33,20 +34,29 @@ public class CavalryUnit extends Unit {
      */
     public CavalryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 20, 12);
-        this.putTerrainAttackBonus('P', 2);
-        this.putTerrainDefenceBonus('F', -getResistBonus());
+        this.putTerrainAttackBonus(Terrain.PLAINS, 2);
+        this.putTerrainDefenceBonus(Terrain.FOREST, -getResistBonus());
     }
 
     @Override
     public int getAttackBonus() {
-        int attackBonus;
+        int attackBonus = 2;
         if (firstAttack) {
             attackBonus = 6;
-            this.firstAttack = false;
-        } else {
-            attackBonus = 2;
         }
         return attackBonus;
+    }
+
+    @Override
+    public void attack(Unit target, Terrain terrain) {
+        super.attack(target, terrain);
+        firstAttack = false;
+    }
+
+    @Override
+    public void attack(Unit targetUnit) {
+        super.attack(targetUnit);
+        firstAttack = false;
     }
 
     @Override

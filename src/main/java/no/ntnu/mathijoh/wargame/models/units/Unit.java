@@ -1,6 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
 import java.util.HashMap;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 
 /**
  * Base class for every Unit class.
@@ -14,20 +15,22 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
-    private HashMap<Character, Integer> terrainAttackBonus;
-    private HashMap<Character, Integer> terrainDefenseBonus;
+    private HashMap<Terrain, Integer> terrainAttackBonus;
+    private HashMap<Terrain, Integer> terrainDefenseBonus;
 
     /**
      * Constructor of the Unit Class
      * 
-     * @param name   of the unit
-     * @param health to the unit
-     * @param attack power of the unit
-     * @param armor  of the unit
+     * @param name                of the unit
+     * @param health              to the unit
+     * @param attack              power of the unit
+     * @param armor               of the unit
+     * @param terrainAttackBonus  of the unit
+     * @param terrainDefenseBonus of the unit
      * @throws IllegalArgumentException if any of the parameters is null
      */
-    protected Unit(String name, int health, int attack, int armor, HashMap<Character, Integer> unitTerrainAttackBonus,
-            HashMap<Character, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
+    protected Unit(String name, int health, int attack, int armor, HashMap<Terrain, Integer> unitTerrainAttackBonus,
+            HashMap<Terrain, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
         if (!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
         }
@@ -40,6 +43,12 @@ public abstract class Unit {
         if (!checkValidParameter(armor)) {
             throw new IllegalArgumentException("Armor can't be less then 0");
         }
+        if (!checkValidParameter(unitTerrainAttackBonus)) {
+            throw new IllegalArgumentException("TerrainAttackBonus can't be null");
+        }
+        if (!checkValidParameter(unitTerrainDefenceBonus)) {
+            throw new IllegalArgumentException("TerrainDefenseBonus can't be null");
+        }
         this.name = name;
         this.attack = attack;
         this.armor = armor;
@@ -48,6 +57,15 @@ public abstract class Unit {
         this.terrainDefenseBonus = new HashMap<>(unitTerrainDefenceBonus);
     }
 
+    /**
+     * Constructor of the Unit Class
+     * 
+     * @param name   of the unit
+     * @param health to the unit
+     * @param attack power of the unit
+     * @param armor  of the unit
+     * @throws IllegalArgumentException if any of the parameters is null
+     */
     protected Unit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         if (!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
@@ -106,7 +124,6 @@ public abstract class Unit {
         return attack;
     }
 
-
     /**
      * Returns the armor of the unit
      * 
@@ -123,39 +140,88 @@ public abstract class Unit {
      */
     public abstract int getAttackBonus();
 
-
+    /**
+     * Returns the Defensebonus to the unit
+     * 
+     * @return defenseBonus to the unit
+     */
     public abstract int getResistBonus();
 
-    public void putTerrainAttackBonus(Character terrain, Integer bonus) throws IllegalArgumentException{
+    /**
+     * Puts the terrain and the bonus in the hashmap
+     * 
+     * @param terrain the terrain
+     * @param bonus   the bonus
+     * @throws IllegalArgumentException if any of the parameters is null
+     */
+    public void putTerrainAttackBonus(Terrain terrain, int bonus) throws IllegalArgumentException {
+        if (terrain == null) {
+            throw new IllegalArgumentException("Terrain can't be null");
+        }
         this.terrainAttackBonus.put(terrain, bonus);
     }
 
-    public void putTerrainDefenceBonus(Character terrain, Integer bonus) {
+    /**
+     * Puts the terrain and the defencebonus in the hashmap
+     * 
+     * @param terrain the terrain
+     * @param bonus   the bonus
+     * @throws IllegalArgumentException if any of the parameters is null
+     */
+    public void putTerrainDefenceBonus(Terrain terrain, int bonus) {
+        if (terrain == null) {
+            throw new IllegalArgumentException("Terrain can't be null");
+        }
         this.terrainDefenseBonus.put(terrain, bonus);
     }
 
-    public Integer getTerrainAttackBonus(Character terrain) {
-        return terrainAttackBonus.get(terrain);
+    /**
+     * Returns the terrainAttackBonus of the terrain
+     * 
+     * @param terrain the terrain to fetch the bonus from
+     * @return the bonus to the terrain or 0 if the terrain is not specified
+     */
+    public Integer getTerrainAttackBonus(Terrain terrain) {
+        Integer bonus = this.terrainAttackBonus.get(terrain);
+        if (bonus == null) {
+            bonus = 0;
+        }
+        return bonus;
     }
 
-    public Integer getTerrainDefeneceBonus(Character terrain) {
-        return terrainAttackBonus.get(terrain);
+    /**
+     * Returns the terrain Defense Bonus of the terrain
+     * 
+     * @param terrain the terrain to fetch the bonus from
+     * @return the bonus to the terrain or 0 if the terrain is not specified
+     */
+    public Integer getTerrainDefenseBonus(Terrain terrain) {
+        Integer bonus = this.terrainDefenseBonus.get(terrain);
+        if (bonus == null) {
+            bonus = 0;
+        }
+        return bonus;
     }
 
     /**
      * Calculates the damage done to the opponent and sets the health to it
      * 
      * @param opponent the opponent getting attacked
-     * @throws IllegalArgumentException if opponent is null
+     * @param terrain  the terrain the unit is on
+     * @throws IllegalArgumentException if opponent is null or the terrain is null
      */
-    public void attack(Unit opponent,Character terrain) throws IllegalArgumentException {
+    public void attack(Unit opponent, Terrain terrain) throws IllegalArgumentException {
         if (!checkValidParameter(opponent)) {
             throw new IllegalArgumentException("Opponent can't be null");
+        }
+        if (terrain == null) {
+            throw new IllegalArgumentException("Terrain can't be null");
         }
         int oHealth = opponent.getHealth();
         int oArmorBonus = opponent.getResistBonus();
         int attackBonus = this.getAttackBonus();
-        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
+        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus + this.getTerrainAttackBonus(terrain))
+                + (opponent.getArmor() + oArmorBonus + opponent.getTerrainDefenseBonus(terrain));
         if (oHealthAfterAttack < oHealth) {
             opponent.setHealth(oHealthAfterAttack);
         }
@@ -165,6 +231,7 @@ public abstract class Unit {
      * Calculates the damage done to the opponent and sets the health to it
      * 
      * @param opponent the opponent getting attacked
+     * @param terrain  the terrain the unit is on
      * @throws IllegalArgumentException if opponent is null
      */
     public void attack(Unit opponent) throws IllegalArgumentException {
@@ -179,7 +246,6 @@ public abstract class Unit {
             opponent.setHealth(oHealthAfterAttack);
         }
     }
-
 
     @Override
     public String toString() {
@@ -219,6 +285,7 @@ public abstract class Unit {
             return false;
         return true;
     }
+
     /**
      * Checks if the parameter is valid
      * 
@@ -236,6 +303,7 @@ public abstract class Unit {
         }
         return isValid;
     }
+
     /**
      * Checks if the parameter is valid
      * 

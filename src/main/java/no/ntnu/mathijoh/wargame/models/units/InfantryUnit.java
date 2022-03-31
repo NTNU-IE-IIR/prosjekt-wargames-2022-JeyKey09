@@ -1,6 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
-import java.util.HashMap;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 
 /**
  * Infantry units, normal foot soldiers basically
@@ -19,9 +19,8 @@ public class InfantryUnit extends Unit {
 
     public InfantryUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
-        this.putTerrainAttackBonus('T', 2);
-        this.putTerrainDefenceBonus('T', 2);
-        
+        this.putTerrainAttackBonus(Terrain.FOREST, 2);
+        this.putTerrainDefenceBonus(Terrain.FOREST, 2);
     }
 
     /**
@@ -33,8 +32,8 @@ public class InfantryUnit extends Unit {
      */
     public InfantryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 10);
-        this.putTerrainAttackBonus('T', 2);
-        this.putTerrainDefenceBonus('T', 2);
+        this.putTerrainAttackBonus(Terrain.FOREST, 2);
+        this.putTerrainDefenceBonus(Terrain.FOREST, 2);
     }
 
     @Override

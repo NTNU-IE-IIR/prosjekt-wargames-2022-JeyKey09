@@ -1,5 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
+import no.ntnu.mathijoh.wargame.models.Terrain;
+
 /**
  * A unit that focuses in ranged attacked.
  * They start with high attack but gets lower for every attack until the second
@@ -9,6 +11,7 @@ public class RangedUnit extends Unit {
     private int amountOfAttacks = 0;
 
     /**
+     * Constructor for RangedUnit class
      * 
      * @param name   of the unit
      * @param health of the unit
@@ -18,12 +21,12 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health, int attack, int armor) throws IllegalArgumentException {
         super(name, health, attack, armor);
-        this.putTerrainAttackBonus('H', 2);
-        this.putTerrainAttackBonus('T', -1);
+        this.putTerrainAttackBonus(Terrain.FOREST, 2);
+        this.putTerrainAttackBonus(Terrain.FOREST, -1);
     }
 
     /**
-     * Creates a new ranged unit with 15 in attack and 8 in armor
+     * Constructor for RangedUnit class that gives it 15 in armor and 8 in attack
      * 
      * @param name   of the unit
      * @param health of the unit
@@ -31,13 +34,25 @@ public class RangedUnit extends Unit {
      */
     public RangedUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 8);
-        this.putTerrainAttackBonus('H', 2);
-        this.putTerrainAttackBonus('T', -1);
+        this.putTerrainAttackBonus(Terrain.FOREST, 2);
+        this.putTerrainAttackBonus(Terrain.FOREST, -1);
     }
 
     @Override
     public int getAttackBonus() {
         return 3;
+    }
+
+    @Override
+    public void attack(Unit target) {
+        super.attack(target);
+        this.amountOfAttacks++;
+    }
+
+    @Override
+    public void attack(Unit target,Terrain terrain) {
+        super.attack(target, terrain);
+        this.amountOfAttacks++;
     }
 
     @Override
@@ -53,7 +68,6 @@ public class RangedUnit extends Unit {
             default:
                 resist = 2;
         }
-        amountOfAttacks += 1;
         return resist;
     }
 }
