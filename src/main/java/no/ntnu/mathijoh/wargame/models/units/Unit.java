@@ -98,6 +98,8 @@ public abstract class Unit {
     }
 
     /**
+     * Returns the attack power of the unit
+     * 
      * @return attack to the unit
      */
     public int getAttack() {
@@ -217,7 +219,12 @@ public abstract class Unit {
             return false;
         return true;
     }
-
+    /**
+     * Checks if the parameter is valid
+     * 
+     * @param parameter the parameter to check
+     * @return true if the parameter is valid, false otherwise
+     */
     private boolean checkValidParameter(Object object) {
         boolean isValid = true;
         if (object == null) {
@@ -229,7 +236,12 @@ public abstract class Unit {
         }
         return isValid;
     }
-
+    /**
+     * Checks if the parameter is valid
+     * 
+     * @param parameter the parameter to check
+     * @return true if the parameter is valid, false otherwise
+     */
     private boolean checkValidParameter(int number) {
         return (number > 0);
     }
