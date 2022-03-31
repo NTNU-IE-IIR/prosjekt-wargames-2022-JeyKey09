@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 /**
  * Base class for every Unit class.
+ * 
+ * @author Mathias Johansen
+ * @version 2.0
  */
 public abstract class Unit {
 

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
+import no.ntnu.mathijoh.wargame.models.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -48,8 +49,7 @@ public class FileController {
                     String unitName = info[1];
                     String healthString = info[2];
                     int unitHealth = Integer.parseInt(healthString);
-                    placeholderArmy.add((Unit) Class.forName("no.ntnu.mathijoh.wargame.models.units." + unittype)
-                            .getConstructor(String.class, int.class).newInstance(unitName, unitHealth));
+                    placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.valueOf(unittype.toUpperCase()), unitName, unitHealth));
                 } else {
                     throw new IllegalArgumentException("This file contains none valid arguments");
                 }
@@ -76,7 +76,6 @@ public class FileController {
      */
     public static void saveArmyInCSV(File file, Army army) throws FileNotFoundException, IllegalArgumentException {
         if (!file.getAbsolutePath().matches("^.*\\.(csv)$")) {
-            file.delete();
             throw new IllegalArgumentException("This is not a CSV File");
         }
         if (army == null) {
@@ -92,8 +91,7 @@ public class FileController {
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Couldn't write to this file location");
         } catch (Exception e) {
-            // TOODO: Handle excepction
+            throw new IllegalArgumentException("The army is not valid");
         }
     }
-
 }

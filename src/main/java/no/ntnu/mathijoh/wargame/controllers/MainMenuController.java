@@ -133,6 +133,17 @@ public class MainMenuController {
         updateTableInfo();
     }
 
+
+    @FXML
+    private void nextTerrain(ActionEvent e) {
+        
+    }
+
+    @FXML
+    private void previousTerrain(ActionEvent e) {
+        
+    }
+
     /**
      * Makes the armies attack each other
      * 
@@ -150,7 +161,6 @@ public class MainMenuController {
      * @param aList
      */
     private void updateTableInfo() {
-
         purgeArmyTables();
         injectArmyTableView(army1Table, this.armyList.get(0));
         injectArmyTableView(army2Table, this.armyList.get(1));

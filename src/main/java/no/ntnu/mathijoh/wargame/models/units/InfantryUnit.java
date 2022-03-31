@@ -33,6 +33,8 @@ public class InfantryUnit extends Unit {
      */
     public InfantryUnit(String name, int health) throws IllegalArgumentException {
         super(name, health, 15, 10);
+        this.putTerrainAttackBonus('T', 2);
+        this.putTerrainDefenceBonus('T', 2);
     }
 
     @Override
