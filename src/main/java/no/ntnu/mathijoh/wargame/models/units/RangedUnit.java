@@ -43,17 +43,6 @@ public class RangedUnit extends Unit {
         return 3;
     }
 
-    @Override
-    public void attack(Unit target) {
-        super.attack(target);
-        this.amountOfAttacks++;
-    }
-
-    @Override
-    public void attack(Unit target,Terrain terrain) {
-        super.attack(target, terrain);
-        this.amountOfAttacks++;
-    }
 
     @Override
     public int getResistBonus() {
@@ -68,6 +57,7 @@ public class RangedUnit extends Unit {
             default:
                 resist = 2;
         }
+        amountOfAttacks++;
         return resist;
     }
 }

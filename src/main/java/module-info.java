@@ -9,6 +9,7 @@ module no.ntnu.mathijoh.wargame {
     requires javafx.fxml;
 
     opens no.ntnu.mathijoh.wargame.controllers to javafx.fxml;
+    exports no.ntnu.mathijoh.wargame.controllers;
     opens no.ntnu.mathijoh.wargame.models;
     opens no.ntnu.mathijoh.wargame.models.units;
     

@@ -36,6 +36,7 @@ public class CavalryUnit extends Unit {
         super(name, health, 20, 12);
         this.putTerrainAttackBonus(Terrain.PLAINS, 2);
         this.putTerrainDefenceBonus(Terrain.FOREST, -getResistBonus());
+        this.firstAttack = true;
     }
 
     @Override

@@ -10,9 +10,7 @@ public enum Terrain {
     PLAINS('P'),
     FOREST('F'),
     MOUNTAIN('M'),
-    WATER('W'),
-    HILL('H'),
-    DESERT('D');
+    HILL('H');
 
     private char terrainChar;
 

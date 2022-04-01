@@ -12,6 +12,7 @@ public class CavalryUnitTest {
         CavalryUnit testObject = new CavalryUnit("name", 10);
 
         assertEquals(6 ,testObject.getAttackBonus());
+        testObject.attack(new CavalryUnit("name", 2));
         assertEquals(2 ,testObject.getAttackBonus());
     }
 
