@@ -3,6 +3,7 @@ package no.ntnu.mathijoh.wargame.controllers;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,6 +15,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.Army;
+import no.ntnu.mathijoh.wargame.models.Map;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 public class FileControllerTest {
@@ -89,5 +92,14 @@ public class FileControllerTest {
         Army testArmy = new Army("Army1", sampleUnitList(10, 20, 30, 1));
         assertThrows(IllegalArgumentException.class, () -> FileController.saveArmyInCSV(savelocation, testArmy));
         assertFalse(savelocation.exists());
+    }
+
+    @Test
+    void testImportMapFromFile(){
+        File terrainfFile = new File(getClass().getResource("terrains/example.txt").getPath().replace("%20", " "));
+        assertDoesNotThrow(() -> {
+            Map map = FileController.importMapFromFile(terrainfFile);
+            assertNotNull(map);
+        });
     }
 }

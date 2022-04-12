@@ -106,13 +106,17 @@ public class FileController {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
             throw new IllegalArgumentException("This is not a txt file");
         }
-        Map map = new Map();
+        Map map = new Map(file.getName().split(".txt")[0]);
+        int xSize = 16;
         try (Scanner cs = new Scanner(file)) {
             int y = 0;
             while(cs.hasNext()) {
                 String line = cs.nextLine();
-                for(int i = 0; line.length() > i; i++) {
-                    map.setTerrain(String.format("%s-%s", i,y),Terrain.valueOf(String.format("%s", line.charAt(i))));
+                if (line.length() != xSize) {
+                    throw new IllegalArgumentException("The file is not a valid map");
+                }
+                for(int x = 0; line.length() > x; x++) {
+                    map.setTerrain(x,y,Terrain.getTerrainFromName(String.format("%s", line.charAt(x))));
                 }
                 y++;
             }

@@ -1,5 +1,9 @@
 package no.ntnu.mathijoh.wargame.models;
 
+import java.util.ArrayList;
+
+import javafx.util.converter.CharacterStringConverter;
+
 /**
  * The different Terrains that will exist in the game
  * 
@@ -7,9 +11,9 @@ package no.ntnu.mathijoh.wargame.models;
  * @version 1.0
  */
 public enum Terrain {
-    PLAINS('P',"6c974e"),
-    FOREST('F',"3a4d2d"),
-    HILL('H',"9a9c8c");
+    PLAINS('P',"rgba(108, 151, 78, 1)"),
+    FOREST('F',"rgba(58, 77, 45, 1)"),
+    HILL('H',"rgba(154, 156, 140, 1)");
 
     private char terrainChar;
     private String color;
@@ -34,5 +38,33 @@ public enum Terrain {
      */
     public String getColor() {
         return color;
+    }
+
+    public static Terrain getTerrainFromName(String name) {
+        Terrain result = null;
+        Terrain[] values = Terrain.values();
+
+        for(int i = 0; result == null && i < values.length; i++){
+            if(String.format("%s", values[i].getTerrainCharacter()).equals(name)){
+                result = values[i];
+            }
+        }
+
+        return result;
+
+    }
+
+    public static Terrain getTerrainFromName(Character name) {
+        Terrain result = null;
+        Terrain[] values = Terrain.values();
+
+        for(int i = 0; result == null && i < values.length; i++){
+            if(values[i].getTerrainCharacter() == name){
+                result = values[i];
+            }
+        }
+
+        return result;
+
     }
 }

@@ -75,3 +75,8 @@
 .table-view {
     -fx-background-color: transparent;
 }
+
+.tile { 
+    -fx-border-radius: 1;
+    -fx-border-color: black;
+}

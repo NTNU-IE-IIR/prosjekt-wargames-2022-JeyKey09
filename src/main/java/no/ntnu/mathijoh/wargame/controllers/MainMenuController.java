@@ -1,24 +1,37 @@
 package no.ntnu.mathijoh.wargame.controllers;
 
+import java.io.File;
+import java.lang.System.Logger;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Flow;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
+import no.ntnu.mathijoh.wargame.models.Map;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -28,70 +41,57 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 public class MainMenuController {
 
     private ArrayList<Army> armyList;
+    private int mapIndex;
+    private ArrayList<Map> mapList;
+    private Logger logger;
 
-    @FXML
-    private BorderPane root;
+    @FXML private Text mapText;
 
-    @FXML
-    private Text army1Title;
+    @FXML private BorderPane root;
 
-    @FXML
-    private TableView<List<Unit>> army1Table;
+    @FXML private Text army1Title;
 
-    @FXML
-    private TableColumn<List<Unit>, String> army1Type;
+    @FXML private TableView<List<Unit>> army1Table;
 
-    @FXML
-    private TableColumn<List<Unit>, Integer> army1Total;
+    @FXML private TableColumn<List<Unit>, String> army1Type;
 
-    @FXML
-    private TableView<Unit> army1UnitTable;
+    @FXML private TableColumn<List<Unit>, Integer> army1Total;
 
-    @FXML
-    private TableColumn<Unit, String> army1UnitClass;
+    @FXML private TableView<Unit> army1UnitTable;
 
-    @FXML
-    private TableColumn<Unit, String> army1UnitName;
+    @FXML private TableColumn<Unit, String> army1UnitClass;
 
-    @FXML
-    private TableColumn<Unit, Integer> army1UnitHealth;
+    @FXML private TableColumn<Unit, String> army1UnitName;
 
-    @FXML
-    private Text army2Title;
+    @FXML private TableColumn<Unit, Integer> army1UnitHealth;
 
-    @FXML
-    private TableView<List<Unit>> army2Table;
+    @FXML private Text army2Title;
 
-    @FXML
-    private TableColumn<List<Unit>, String> army2Type;
+    @FXML private TableView<List<Unit>> army2Table;
 
-    @FXML
-    private TableColumn<List<Unit>, Integer> army2Total;
+    @FXML private TableColumn<List<Unit>, String> army2Type;
 
-    @FXML
-    private TableView<Unit> army2UnitTable;
+    @FXML private TableColumn<List<Unit>, Integer> army2Total;
 
-    @FXML
-    private TableColumn<Unit, String> army2UnitClass;
+    @FXML private TableView<Unit> army2UnitTable;
 
-    @FXML
-    private TableColumn<Unit, String> army2UnitName;
+    @FXML private TableColumn<Unit, String> army2UnitClass;
 
-    @FXML
-    private TableColumn<Unit, Integer> army2UnitHealth;
+    @FXML private TableColumn<Unit, String> army2UnitName;
 
-    @FXML
-    private Button battleButton;
+    @FXML private TableColumn<Unit, Integer> army2UnitHealth;
 
-    @FXML
-    private Button resetButton;
+    @FXML private Button battleButton;
 
-    @FXML
-    private GridPane battleGrid;
+    @FXML private Button resetButton;
+
+    @FXML private GridPane battleGrid;
 
     @FXML
     public void initialize() {
-
+        mapIndex = 0;
+        logger = System.getLogger("Main Menu");
+        mapList = new ArrayList<>();
         armyList = new ArrayList<>(2);
 
         armyList.add(new Army("Army 1"));
@@ -124,10 +124,41 @@ public class MainMenuController {
         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
         army2Total.setCellValueFactory(getSize);
 
-
+        File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
+        for (File file : dir.listFiles()) {
+            try{mapList.add(FileController.importMapFromFile(file));}
+            catch(Exception e){
+                logger.log(Logger.Level.ERROR ,e.getMessage());
+            }
+        }
+        createBattlegrid(16, 16, mapList.get(0));
         battleGrid.setGridLinesVisible(true);
         battleGrid.add(new HBox(), 23, 31);
         updateTableInfo();
+    }
+
+    private void createBattlegrid(int x, int y) {
+        battleGrid.getChildren().removeAll(battleGrid.getChildren());
+        for(int i = 0; i < y; i++){
+            for(int j = 0; j < x; j++){
+                battleGrid.add(new FlowPane(), x, y);
+            }
+        }
+    }
+
+    private void createBattlegrid(int x, int y, Map map) {
+        mapText.setText(map.getName()); 
+        battleGrid.getChildren().removeAll(battleGrid.getChildren());
+        for(int i = 0; i < y; i++){
+            for(int j = 0; j < x; j++){
+                Terrain terrain = map.getTerrain(i,j);
+                FlowPane flowPane = new FlowPane();
+                flowPane.getStyleClass().clear();
+                flowPane.getStyleClass().add("tile");
+                flowPane.setBackground(new Background(new BackgroundFill(Color.web(terrain.getColor()), null, null)));
+                battleGrid.add(flowPane, i, j);
+            }
+        }
     }
 
     /**
@@ -144,12 +175,20 @@ public class MainMenuController {
 
     @FXML
     private void nextTerrain(ActionEvent e) {
-        
+        mapIndex++;
+        if(mapIndex >= mapList.size()){
+            mapIndex = 0;
+        }
+        createBattlegrid(16, 16, mapList.get(mapIndex));
     }
 
     @FXML
     private void previousTerrain(ActionEvent e) {
-        
+        mapIndex--;
+        if(mapIndex < 0){
+            mapIndex = mapList.size()-1;
+        }
+        createBattlegrid(16, 16, mapList.get(mapIndex));
     }
 
     /**
@@ -208,5 +247,17 @@ public class MainMenuController {
     private void purgeArmyTables() {
         army1Table.getItems().clear();
         army2Table.getItems().clear();
+    }
+
+    private Node findCellNode(int x, int y){
+        Node result = null;
+        Iterator<Node> it = battleGrid.getChildren().iterator();
+        while (it.hasNext() && result == null) {
+            Node node = it.next();
+            if(GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x){
+                result = node;
+            }
+        }
+        return result;
     }
 }

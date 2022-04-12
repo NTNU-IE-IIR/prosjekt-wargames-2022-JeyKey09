@@ -1,7 +1,6 @@
 package no.ntnu.mathijoh.wargame.models;
 /**
  * This is a class meant for keeping the different terrains in the game
- * The map is 
  */
 
 import java.util.HashMap;
@@ -14,7 +13,13 @@ public class Map {
      */
     private HashMap<String, Terrain> terrainMap;
 
-    public Map() {
+    private String name;
+
+    public Map(String name) throws IllegalArgumentException {
+        if(name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name can't be null or empty");
+        }
+        this.name = name;
         terrainMap = new HashMap<>();
     }
 
@@ -25,14 +30,11 @@ public class Map {
      * @param terrain the terrain in that conrdinate
      * @throws IllegalArgumentException if the key is invalid or the terrain is null
      */
-    public void setTerrain(String key, Terrain terrain) throws IllegalArgumentException{
-        if(key == null || key.split("-").length != 2) {
-            throw new IllegalArgumentException("Key must be in the format of X-Y");
-        }
+    public void setTerrain(int x, int y, Terrain terrain) throws IllegalArgumentException{
         if(terrain == null) {
             throw new IllegalArgumentException("Terrain cannot be null");
         }
-        terrainMap.put(key, terrain);
+        terrainMap.put(String.format("%s-%s",x,y), terrain);
     }
     
     /**
@@ -40,8 +42,8 @@ public class Map {
      * @param key the cordinates of the terrain type, in the format of X-Y
      * @return the terrain at that position
      */
-    public Terrain getTerrain(String key) {
-        return terrainMap.get(key);
+    public Terrain getTerrain(int x, int y) {
+        return terrainMap.get(String.format("%s-%s",x,y));
     }
 
     /**
@@ -58,5 +60,9 @@ public class Map {
             i++;
         }
         return terrains;
+    }
+
+    public String getName() {
+        return name;
     }
 }
