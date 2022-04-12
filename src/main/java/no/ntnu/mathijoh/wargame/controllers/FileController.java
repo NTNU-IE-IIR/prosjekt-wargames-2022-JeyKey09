@@ -7,11 +7,11 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.Map;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
-import no.ntnu.mathijoh.wargame.models.Terrain;
-import no.ntnu.mathijoh.wargame.models.factories.UnitFactory;
+import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**

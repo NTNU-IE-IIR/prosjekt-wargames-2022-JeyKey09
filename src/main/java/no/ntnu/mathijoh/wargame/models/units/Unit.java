@@ -1,7 +1,8 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
 import java.util.HashMap;
-import no.ntnu.mathijoh.wargame.models.Terrain;
+
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 
 /**
  * Base class for every Unit class.
@@ -202,6 +203,7 @@ public abstract class Unit {
         }
         return bonus;
     }
+    
 
     /**
      * Calculates the damage done to the opponent and sets the health to it
@@ -210,21 +212,32 @@ public abstract class Unit {
      * @param terrain  the terrain the unit is on
      * @throws IllegalArgumentException if opponent is null or the terrain is null
      */
-    public void attack(Unit opponent, Terrain terrain) throws IllegalArgumentException {
+    public void attack(Unit opponent, Terrain unitsTerrain, Terrain opponentsTerrains) throws IllegalArgumentException {
         if (!checkValidParameter(opponent)) {
             throw new IllegalArgumentException("Opponent can't be null");
         }
-        if (terrain == null) {
+        if (unitsTerrain == null || opponentsTerrains == null) {
             throw new IllegalArgumentException("Terrain can't be null");
         }
         int oHealth = opponent.getHealth();
         int oArmorBonus = opponent.getResistBonus();
         int attackBonus = this.getAttackBonus();
-        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus + this.getTerrainAttackBonus(terrain))
-                + (opponent.getArmor() + oArmorBonus + opponent.getTerrainDefenseBonus(terrain));
+        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus + this.getTerrainAttackBonus(unitsTerrain))
+                + (opponent.getArmor() + oArmorBonus + opponent.getTerrainDefenseBonus(opponentsTerrains));
         if (oHealthAfterAttack < oHealth) {
             opponent.setHealth(oHealthAfterAttack);
         }
+    }
+
+        /**
+     * Calculates the damage done to the opponent and sets the health to it
+     * 
+     * @param opponent the opponent getting attacked
+     * @param terrain  the terrain the unit is on
+     * @throws IllegalArgumentException if opponent is null or the terrain is null
+     */
+    public void attack(Unit opponent, Terrain terrain) throws IllegalArgumentException {
+        attack(opponent, terrain, terrain);
     }
 
     /**
@@ -235,16 +248,7 @@ public abstract class Unit {
      * @throws IllegalArgumentException if opponent is null
      */
     public void attack(Unit opponent) throws IllegalArgumentException {
-        if (!checkValidParameter(opponent)) {
-            throw new IllegalArgumentException("Opponent can't be null");
-        }
-        int oHealth = opponent.getHealth();
-        int oArmorBonus = opponent.getResistBonus();
-        int attackBonus = this.getAttackBonus();
-        int oHealthAfterAttack = oHealth - (this.getAttack() + attackBonus) + (opponent.getArmor() + oArmorBonus);
-        if (oHealthAfterAttack < oHealth) {
-            opponent.setHealth(oHealthAfterAttack);
-        }
+        attack(opponent, Terrain.NONE, Terrain.NONE);
     }
 
     @Override

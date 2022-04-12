@@ -14,5 +14,7 @@ module no.ntnu.mathijoh.wargame {
     exports no.ntnu.mathijoh.wargame.models;
     opens no.ntnu.mathijoh.wargame.models.units;
     exports no.ntnu.mathijoh.wargame.models.units;
+    opens no.ntnu.mathijoh.wargame.models.map;
+    exports no.ntnu.mathijoh.wargame.models.map;
     exports no.ntnu.mathijoh.wargame;
 }

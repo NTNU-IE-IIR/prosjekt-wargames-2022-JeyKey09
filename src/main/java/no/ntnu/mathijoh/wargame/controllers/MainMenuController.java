@@ -2,17 +2,14 @@ package no.ntnu.mathijoh.wargame.controllers;
 
 import java.io.File;
 import java.lang.System.Logger;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Flow;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -30,8 +27,8 @@ import javafx.scene.text.Text;
 import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
-import no.ntnu.mathijoh.wargame.models.Map;
-import no.ntnu.mathijoh.wargame.models.Terrain;
+import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.Tile;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -151,11 +148,11 @@ public class MainMenuController {
         battleGrid.getChildren().removeAll(battleGrid.getChildren());
         for(int i = 0; i < y; i++){
             for(int j = 0; j < x; j++){
-                Terrain terrain = map.getTerrain(i,j);
+                Tile tile = map.getTile(i,j);
                 FlowPane flowPane = new FlowPane();
                 flowPane.getStyleClass().clear();
                 flowPane.getStyleClass().add("tile");
-                flowPane.setBackground(new Background(new BackgroundFill(Color.web(terrain.getColor()), null, null)));
+                flowPane.setBackground(new Background(new BackgroundFill(Color.web(tile.getTerrain().getColor()), null, null)));
                 battleGrid.add(flowPane, i, j);
             }
         }

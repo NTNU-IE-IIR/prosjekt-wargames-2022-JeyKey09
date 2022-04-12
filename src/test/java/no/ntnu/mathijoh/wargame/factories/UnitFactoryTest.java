@@ -1,12 +1,12 @@
-package no.ntnu.mathijoh.wargame.models.factories;
+package no.ntnu.mathijoh.wargame.factories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.mathijoh.wargame.models.UnitList;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
+import no.ntnu.mathijoh.wargame.models.units.UnitList;
 
 public class UnitFactoryTest {
 

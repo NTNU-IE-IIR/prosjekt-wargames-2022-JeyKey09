@@ -1,6 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
-import no.ntnu.mathijoh.wargame.models.Terrain;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 
 /**
  * A unit that focuses in ranged attacked.

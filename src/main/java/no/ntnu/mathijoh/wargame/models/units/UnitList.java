@@ -1,9 +1,7 @@
-package no.ntnu.mathijoh.wargame.models;
+package no.ntnu.mathijoh.wargame.models.units;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class UnitList extends ArrayList<Unit>{
     

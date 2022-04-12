@@ -1,6 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
-import no.ntnu.mathijoh.wargame.models.Terrain;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 
 /**
  * CavalryUnit that is a type of unit.
@@ -49,16 +49,12 @@ public class CavalryUnit extends Unit {
     }
 
     @Override
-    public void attack(Unit target, Terrain terrain) {
-        super.attack(target, terrain);
+    public void attack(Unit target, Terrain terrain, Terrain targetTerrain) {
+        super.attack(target, terrain, targetTerrain);
         firstAttack = false;
     }
 
-    @Override
-    public void attack(Unit targetUnit) {
-        super.attack(targetUnit);
-        firstAttack = false;
-    }
+    
 
     @Override
     public int getResistBonus() {

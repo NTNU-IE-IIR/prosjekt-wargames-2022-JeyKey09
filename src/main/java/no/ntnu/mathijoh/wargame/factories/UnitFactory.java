@@ -1,7 +1,7 @@
-package no.ntnu.mathijoh.wargame.models.factories;
+package no.ntnu.mathijoh.wargame.factories;
 
-import no.ntnu.mathijoh.wargame.models.UnitList;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
+import no.ntnu.mathijoh.wargame.models.units.UnitList;
 /**
  * UnitFactory is a class that creates units.
  * It is used by FileController to create units from a file.

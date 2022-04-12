@@ -10,6 +10,7 @@ import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
 import no.ntnu.mathijoh.wargame.models.units.RangedUnit;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
+import no.ntnu.mathijoh.wargame.models.units.UnitList;
 
 /**
  * Army is a holder for units to be later used in the battle class

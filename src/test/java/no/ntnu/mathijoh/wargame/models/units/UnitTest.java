@@ -2,7 +2,7 @@ package no.ntnu.mathijoh.wargame.models.units;
 
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.mathijoh.wargame.models.Terrain;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

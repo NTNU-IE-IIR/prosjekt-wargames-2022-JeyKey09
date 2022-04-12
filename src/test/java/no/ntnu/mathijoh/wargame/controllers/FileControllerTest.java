@@ -15,8 +15,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.Map;
-import no.ntnu.mathijoh.wargame.models.Terrain;
+import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 public class FileControllerTest {
