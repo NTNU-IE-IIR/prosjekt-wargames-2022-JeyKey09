@@ -2,12 +2,15 @@ package no.ntnu.mathijoh.wargame.controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import no.ntnu.mathijoh.wargame.models.Army;
+import no.ntnu.mathijoh.wargame.models.Map;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
+import no.ntnu.mathijoh.wargame.models.Terrain;
 import no.ntnu.mathijoh.wargame.models.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
@@ -93,5 +96,33 @@ public class FileController {
         } catch (Exception e) {
             throw new IllegalArgumentException("The army is not valid");
         }
+    }
+
+    /**
+     * Reads a Terrain file that contains of 16x16 character that represents the terrain
+     * 
+     */
+    public static Map importMapFromFile(File file) throws IllegalArgumentException, IOException, FileNotFoundException {
+        if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
+            throw new IllegalArgumentException("This is not a txt file");
+        }
+        Map map = new Map();
+        try (Scanner cs = new Scanner(file)) {
+            int y = 0;
+            while(cs.hasNext()) {
+                String line = cs.nextLine();
+                for(int i = 0; line.length() > i; i++) {
+                    map.setTerrain(String.format("%s-%s", i,y),Terrain.valueOf(String.format("%s", line.charAt(i))));
+                }
+                y++;
+            }
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Couldn't find the file");
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("The file contains none valid characters");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("The file is not a 16x16 map");
+        }
+        return map;
     }
 }

@@ -13,6 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
@@ -85,6 +87,9 @@ public class MainMenuController {
     private Button resetButton;
 
     @FXML
+    private GridPane battleGrid;
+
+    @FXML
     public void initialize() {
 
         armyList = new ArrayList<>(2);
@@ -119,6 +124,9 @@ public class MainMenuController {
         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
         army2Total.setCellValueFactory(getSize);
 
+
+        battleGrid.setGridLinesVisible(true);
+        battleGrid.add(new HBox(), 23, 31);
         updateTableInfo();
     }
 
