@@ -1,5 +1,8 @@
 package no.ntnu.mathijoh.wargame.models;
 
+import javafx.scene.paint.Color;
+import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.Token;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -30,6 +33,51 @@ public class Battle {
      * @return the army that still has units after the battle
      */
     public Army simulate() {
+        boolean isUnitOneAttacking = true;
+        Army victoryArmy;
+
+        while (armyOne.hasUnits() && armyTwo.hasUnits()) {
+            Army attackingArmy;
+            Army defendingArmy;
+
+            if (isUnitOneAttacking) {
+                attackingArmy = this.armyOne;
+                defendingArmy = this.armyTwo;
+            } else {
+                attackingArmy = this.armyTwo;
+                defendingArmy = this.armyOne;
+            }
+            isUnitOneAttacking = !(isUnitOneAttacking);
+
+            Unit defendingUnit = defendingArmy.getRandom();
+            attackingArmy.getRandom().attack(defendingUnit);
+
+            if (defendingUnit.getHealth() == 0) {
+                defendingArmy.remove(defendingUnit);
+            }
+        }
+
+        if (armyOne.hasUnits()) {
+            victoryArmy = armyOne;
+        } else {
+            victoryArmy = armyTwo;
+        }
+
+        return victoryArmy;
+    }
+
+        /**
+     * Simulates the battle between the armies
+     * 
+     * @return the army that still has units after the battle
+     */
+    public Army simulate(Map map) {
+
+        //Start by placing units on the map
+        armyOne.getAllUnits().stream().forEach(unit -> map.placeUnit(new Token(unit, "Red")));
+        armyTwo.getAllUnits().stream().forEach(unit -> map.placeUnit(new Token(unit, "Blue")));
+
+
         boolean isUnitOneAttacking = true;
         Army victoryArmy;
 

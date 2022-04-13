@@ -11,10 +11,10 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 public class Map {
 
     /**
-     * The map of the game
-     * The key should follow the format of X-Y since the map consists of a grid
+     * The gridMap of the game
+     * The key should follow the format of X-Y since the gridMap consists of a grid
      */
-    private HashMap<String, Tile> map;
+    private HashMap<String, Tile> gridMap;
 
     private String name;
 
@@ -23,11 +23,11 @@ public class Map {
             throw new IllegalArgumentException("Name can't be null or empty");
         }
         this.name = name;
-        map = new HashMap<>();
+        gridMap = new HashMap<>();
     }
 
     /**
-     * Adds a terrain to the map
+     * Adds a terrain to the gridMap
      * The key shouød be in the format of X-Y
      * @param key the cordinates of the terrain type, in the format of X-Y
      * @param terrain the terrain in that conrdinate
@@ -37,7 +37,7 @@ public class Map {
         if(terrain == null) {
             throw new IllegalArgumentException("Terrain cannot be null");
         }
-        map.put(String.format("%s-%s",x,y), new Tile(terrain));
+        gridMap.put(getKey(x, y), new Tile(terrain));
     }
     
     /**
@@ -46,7 +46,7 @@ public class Map {
      * @return the terrain at that position
      */
     public Tile getTile(int x, int y) {
-        return map.get(String.format("%s-%s",x,y));
+        return gridMap.get(getKey(x, y));
     }
 
 
@@ -54,19 +54,56 @@ public class Map {
         return name;
     }
 
-    public int[] findUnitCordinates(Unit unit){
+    public int[] findUnitCordinates(Unit unit) throws IllegalArgumentException{
         int[] result = new int[2];
         boolean notFound = true;
-        Iterator<String> it = map.keySet().iterator();
+        Iterator<String> it = gridMap.keySet().iterator();
         while(it.hasNext() && notFound){
             String key = it.next();
-            if(map.get(key).getUnit().equals(unit)) {
+            if(gridMap.get(key).getToken().getUnit().equals(unit)){
                 notFound = false;
                 String[] cords = key.split("-");
                 result[0] = Integer.parseInt(cords[0]);
                 result[1] = Integer.parseInt(cords[1]);
             }
         }
+        if(notFound){
+            throw new IllegalArgumentException("Unit not found");
+        }
         return result;
+    }
+
+    public void moveUnit(Unit unit, int x,int y) throws IllegalArgumentException {
+        if(gridMap.get(getKey(x, y)).getToken() != null) {
+            throw new IllegalArgumentException("There is already a unit at that position");
+        }
+        try {
+            int[] cords = findUnitCordinates(unit);
+            Token token = gridMap.get(getKey(cords[0], cords[1])).getToken();
+            gridMap.get(String.format("%s-%s",cords[0],cords[1])).setToken(null);
+            gridMap.get(getKey(x, y)).setToken(token);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+
+    }
+
+    private String getKey(int x, int y) {
+        return String.format("%s-%s",x,y);
+    }
+
+    public void placeUnit(Token token) {
+        Iterator<String> it = gridMap.keySet().iterator();
+        boolean finished = false;
+        while(it.hasNext() && !finished) {
+            String key = it.next();
+            if(gridMap.get(key).getToken() == null) {
+                finished = true;
+                gridMap.get(key).setToken(token);
+            }
+        }
+        if(!finished) {
+            throw new IllegalArgumentException("No free space on the map");
+        }
     }
 }

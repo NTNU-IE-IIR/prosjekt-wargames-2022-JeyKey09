@@ -79,4 +79,15 @@
 .tile { 
     -fx-border-radius: 1;
     -fx-border-color: black;
+    -fx-alignment: center;
+}
+
+.token-red {
+    -fx-border-color: red;
+    -fx-border-radius: 2;
+}
+
+.token-blue {
+    -fx-border-color: blue;
+    -fx-border-radius: 2;
 }

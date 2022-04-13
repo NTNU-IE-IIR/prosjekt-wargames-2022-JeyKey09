@@ -5,17 +5,22 @@ import java.lang.System.Logger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Flow;
+
+import javax.net.ssl.HostnameVerifier;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +34,7 @@ import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.map.Map;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
+import no.ntnu.mathijoh.wargame.models.map.Token;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -149,11 +155,18 @@ public class MainMenuController {
         for(int i = 0; i < y; i++){
             for(int j = 0; j < x; j++){
                 Tile tile = map.getTile(i,j);
-                FlowPane flowPane = new FlowPane();
+                HBox flowPane = new HBox();
                 flowPane.getStyleClass().clear();
                 flowPane.getStyleClass().add("tile");
                 flowPane.setBackground(new Background(new BackgroundFill(Color.web(tile.getTerrain().getColor()), null, null)));
                 battleGrid.add(flowPane, i, j);
+                if(tile.getToken() != null){
+                    ImageView image = new ImageView(tile.getToken().getImage());
+                    FlowPane pane = new FlowPane(image);
+                    image.fitWidthProperty().bind(pane.widthProperty());
+                    pane.getStyleClass().add("token-"+tile.getToken().getColor().toLowerCase());
+                    flowPane.getChildren().add(pane);
+                }
             }
         }
     }
@@ -167,6 +180,9 @@ public class MainMenuController {
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
         updateTableInfo();
+        armyList.get(0).getAllUnits().stream().forEach(unit -> mapList.get(mapIndex).placeUnit(new Token(unit, "Red")));
+        armyList.get(1).getAllUnits().stream().forEach(unit -> mapList.get(mapIndex).placeUnit(new Token(unit, "Blue")));
+        createBattlegrid(16, 16, mapList.get(mapIndex));
     }
 
 

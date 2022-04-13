@@ -18,8 +18,7 @@ import no.ntnu.mathijoh.wargame.models.Army;
  */
 public class CentralController {
 
-    private CentralController() {
-    }
+    private CentralController() {}
 
     /**
      * Creation and loading of the loadMenu

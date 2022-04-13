@@ -1,7 +1,4 @@
 package no.ntnu.mathijoh.wargame.models.map;
-
-import no.ntnu.mathijoh.wargame.models.units.Unit;
-
 /**
  * A tile on the map
  * It will replace the terrain with Map to allow for both terrain and units to 
@@ -10,7 +7,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 public class Tile {
     
     private Terrain terrain;
-    private Unit unit;
+    private Token unit;
 
     /**
      * Creates a new tile
@@ -27,7 +24,7 @@ public class Tile {
      * @param terrain the terrain on the tile
      * @param unit the unit on the tile
      */
-    public Tile(Terrain terrain, Unit unit) throws IllegalArgumentException{
+    public Tile(Terrain terrain, Token unit) throws IllegalArgumentException{
         this.terrain = terrain;
         this.unit = null;
     }
@@ -40,14 +37,11 @@ public class Tile {
         this.terrain = terrain;
     }
 
-    public Unit getUnit() {
+    public Token getToken() {
         return unit;
     }
 
-    public void setUnit(Unit unit) {
-        this.unit = unit;
+    public void setToken(Token token) {
+        this.unit = token;
     }
-
-    
-
 }

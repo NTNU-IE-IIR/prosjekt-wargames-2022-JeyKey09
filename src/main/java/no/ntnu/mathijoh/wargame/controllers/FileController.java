@@ -102,7 +102,7 @@ public class FileController {
      * Reads a Terrain file that contains of 16x16 character that represents the terrain
      * 
      */
-    public static Map importMapFromFile(File file) throws IllegalArgumentException, IOException, FileNotFoundException {
+    public static Map importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
             throw new IllegalArgumentException("This is not a txt file");
         }
