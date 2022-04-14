@@ -7,14 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -24,7 +22,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.map.Map;
@@ -97,8 +94,8 @@ public class MainMenuController {
         armyList.add(new Army("Army 2"));
 
 
-        army1UnitClass.setCellValueFactory((unit) -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
-        army2UnitClass.setCellValueFactory((unit) -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
+        army1UnitClass.setCellValueFactory(unit -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
+        army2UnitClass.setCellValueFactory(unit -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
 
         army1UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
         army2UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
@@ -107,10 +104,10 @@ public class MainMenuController {
         army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army1Total.setCellValueFactory((list) -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
+        army1Total.setCellValueFactory(list -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
 
         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army2Total.setCellValueFactory((list) -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
+        army2Total.setCellValueFactory(list -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
 
         File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
         for (File file : dir.listFiles()) {

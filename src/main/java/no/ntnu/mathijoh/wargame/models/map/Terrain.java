@@ -1,4 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.map;
+//TODD: Add a test for the Tile class
+//TODD: Add movemnt cost for the terrain
 
 /**
  * The different Terrains that will exist in the game

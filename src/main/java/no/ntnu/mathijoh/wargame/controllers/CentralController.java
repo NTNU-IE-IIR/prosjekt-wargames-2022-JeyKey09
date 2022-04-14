@@ -3,9 +3,12 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.net.URL;
 import java.util.List;
 
+import javafx.stage.Popup;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import no.ntnu.mathijoh.wargame.models.Army;
@@ -41,7 +44,8 @@ public class CentralController {
             stage.setTitle("Load army from File");
             stage.showAndWait();
         } catch (Exception exception) {
-            // TODO: handle exception
+            Alert popup = new Alert(Alert.AlertType.ERROR, exception.getMessage());
+            popup.showAndWait();
         }
         return armyList;
     }

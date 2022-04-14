@@ -1,8 +1,9 @@
 package no.ntnu.mathijoh.wargame.models;
 
-import javafx.scene.paint.Color;
+import java.util.HashMap;
+
 import no.ntnu.mathijoh.wargame.models.map.Map;
-import no.ntnu.mathijoh.wargame.models.map.Token;
+import no.ntnu.mathijoh.wargame.models.map.Tile;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -52,6 +53,50 @@ public class Battle {
             Unit defendingUnit = defendingArmy.getRandom();
             attackingArmy.getRandom().attack(defendingUnit);
 
+            if (defendingUnit.getHealth() == 0) {
+                defendingArmy.remove(defendingUnit);
+            }
+        }
+
+        if (armyOne.hasUnits()) {
+            victoryArmy = armyOne;
+        } else {
+            victoryArmy = armyTwo;
+        }
+
+        return victoryArmy;
+    }
+
+        /**
+     * Simulates the battle between the armies
+     * 
+     * @return the army that still has units after the battle
+     */
+    public Army simulate(Map map) {
+        boolean isUnitOneAttacking = true;
+        Army victoryArmy;
+
+        while (armyOne.hasUnits() && armyTwo.hasUnits()) {
+            Army attackingArmy;
+            Army defendingArmy;
+
+            if (isUnitOneAttacking) {
+                attackingArmy = this.armyOne;
+                defendingArmy = this.armyTwo;
+            } else {
+                attackingArmy = this.armyTwo;
+                defendingArmy = this.armyOne;
+            }
+            
+            isUnitOneAttacking = !(isUnitOneAttacking);
+            
+            Unit attackingUnit = attackingArmy.getRandom();
+            HashMap<Tile,Unit> possibleTarget = map.getPossibleTargets(attackingUnit);
+            Tile toMove = possibleTarget.keySet().iterator().next();
+            Unit defendingUnit = possibleTarget.get(toMove);
+            int[] defendingUnitcord = map.findUnitCordinates(defendingUnit);
+            Tile defTile = map.getTile(defendingUnitcord[0], defendingUnitcord[1]);
+            attackingUnit.attack(defendingUnit, toMove.getTerrain(), defTile.getTerrain());
             if (defendingUnit.getHealth() == 0) {
                 defendingArmy.remove(defendingUnit);
             }
