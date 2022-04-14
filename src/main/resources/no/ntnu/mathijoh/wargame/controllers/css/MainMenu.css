@@ -76,18 +76,24 @@
     -fx-background-color: transparent;
 }
 
-.tile { 
+.tile{ 
     -fx-border-radius: 1;
     -fx-border-color: black;
     -fx-alignment: center;
 }
 
+.tile:center {
+    -fx-alignment: center;
+}
+
 .token-red {
     -fx-border-color: red;
+    -fx-alignment: center;
     -fx-border-radius: 2;
 }
 
-.token-blue {
+.token-blue{
     -fx-border-color: blue;
+    -fx-alignment: center;
     -fx-border-radius: 2;
 }

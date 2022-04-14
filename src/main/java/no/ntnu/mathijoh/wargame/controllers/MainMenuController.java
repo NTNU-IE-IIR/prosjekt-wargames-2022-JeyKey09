@@ -5,15 +5,11 @@ import java.lang.System.Logger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Flow;
-
-import javax.net.ssl.HostnameVerifier;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -24,7 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -45,6 +40,7 @@ public class MainMenuController {
 
     private ArrayList<Army> armyList;
     private int mapIndex;
+    private Map currentMap;
     private ArrayList<Map> mapList;
     private Logger logger;
 
@@ -100,14 +96,9 @@ public class MainMenuController {
         armyList.add(new Army("Army 1"));
         armyList.add(new Army("Army 2"));
 
-        Callback<CellDataFeatures<Unit, String>, ObservableValue<String>> getUnitClass = new Callback<CellDataFeatures<Unit, String>, ObservableValue<String>>() {
-            public ObservableValue<String> call(CellDataFeatures<Unit, String> unit) {
-                return new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName());
-            }
-        };
 
-        army1UnitClass.setCellValueFactory(getUnitClass);
-        army2UnitClass.setCellValueFactory(getUnitClass);
+        army1UnitClass.setCellValueFactory((unit) -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
+        army2UnitClass.setCellValueFactory((unit) -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
 
         army1UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
         army2UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
@@ -115,17 +106,11 @@ public class MainMenuController {
         army1UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
         army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>> getSize = new Callback<CellDataFeatures<List<Unit>, Integer>, ObservableValue<Integer>>() {
-            public ObservableValue<Integer> call(CellDataFeatures<List<Unit>, Integer> list) {
-                return new ReadOnlyObjectWrapper<>(list.getValue().size());
-            }
-        };
-
         army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army1Total.setCellValueFactory(getSize);
+        army1Total.setCellValueFactory((list) -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
 
         army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army2Total.setCellValueFactory(getSize);
+        army2Total.setCellValueFactory((list) -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
 
         File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
         for (File file : dir.listFiles()) {
@@ -134,38 +119,32 @@ public class MainMenuController {
                 logger.log(Logger.Level.ERROR ,e.getMessage());
             }
         }
-        createBattlegrid(16, 16, mapList.get(0));
+        createMap();
         battleGrid.setGridLinesVisible(true);
         battleGrid.add(new HBox(), 23, 31);
         updateTableInfo();
     }
 
-    private void createBattlegrid(int x, int y) {
-        battleGrid.getChildren().removeAll(battleGrid.getChildren());
-        for(int i = 0; i < y; i++){
-            for(int j = 0; j < x; j++){
-                battleGrid.add(new FlowPane(), x, y);
-            }
-        }
-    }
-
-    private void createBattlegrid(int x, int y, Map map) {
+    private void updateBattleGrid(int x, int y, Map map) {
         mapText.setText(map.getName()); 
-        battleGrid.getChildren().removeAll(battleGrid.getChildren());
+        battleGrid.getChildren().clear();
         for(int i = 0; i < y; i++){
             for(int j = 0; j < x; j++){
                 Tile tile = map.getTile(i,j);
-                HBox flowPane = new HBox();
-                flowPane.getStyleClass().clear();
-                flowPane.getStyleClass().add("tile");
-                flowPane.setBackground(new Background(new BackgroundFill(Color.web(tile.getTerrain().getColor()), null, null)));
-                battleGrid.add(flowPane, i, j);
+                BorderPane pane = new BorderPane();
+                pane.getStyleClass().clear();
+                pane.getStyleClass().add("tile");
+                pane.setBackground(new Background(new BackgroundFill(Color.web(tile.getTerrain().getColor()), null, null)));
+                battleGrid.add(pane, i, j);
                 if(tile.getToken() != null){
                     ImageView image = new ImageView(tile.getToken().getImage());
-                    FlowPane pane = new FlowPane(image);
-                    image.fitWidthProperty().bind(pane.widthProperty());
-                    pane.getStyleClass().add("token-"+tile.getToken().getColor().toLowerCase());
-                    flowPane.getChildren().add(pane);
+                    image.setPreserveRatio(true);
+                    BorderPane test = new BorderPane(image);
+                    test.getStyleClass().add("token-"+tile.getToken().getColor().toLowerCase());
+                    image.fitHeightProperty().bind(battleGrid.heightProperty().divide(y*6/4));
+                    test.maxHeightProperty().bind(image.fitHeightProperty());
+                    test.maxWidthProperty().bind(image.fitWidthProperty());
+                    pane.setCenter(test);
                 }
             }
         }
@@ -179,12 +158,9 @@ public class MainMenuController {
     @FXML
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
+        createMap();
         updateTableInfo();
-        armyList.get(0).getAllUnits().stream().forEach(unit -> mapList.get(mapIndex).placeUnit(new Token(unit, "Red")));
-        armyList.get(1).getAllUnits().stream().forEach(unit -> mapList.get(mapIndex).placeUnit(new Token(unit, "Blue")));
-        createBattlegrid(16, 16, mapList.get(mapIndex));
     }
-
 
     @FXML
     private void nextTerrain(ActionEvent e) {
@@ -192,7 +168,7 @@ public class MainMenuController {
         if(mapIndex >= mapList.size()){
             mapIndex = 0;
         }
-        createBattlegrid(16, 16, mapList.get(mapIndex));
+        createMap();
     }
 
     @FXML
@@ -201,7 +177,14 @@ public class MainMenuController {
         if(mapIndex < 0){
             mapIndex = mapList.size()-1;
         }
-        createBattlegrid(16, 16, mapList.get(mapIndex));
+        createMap();
+    }
+
+    private void createMap(){
+        currentMap = new Map(mapList.get(mapIndex));
+        armyList.get(0).getAllUnits().stream().forEach(unit -> currentMap.placeUnit(new Token(unit, "Red")));
+        armyList.get(1).getAllUnits().stream().forEach(unit -> currentMap.placeUnit(new Token(unit, "Blue")));
+        updateBattleGrid(16, 16, currentMap);
     }
 
     /**

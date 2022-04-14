@@ -18,12 +18,36 @@ public class Map {
 
     private String name;
 
+    /**
+     * The constructor for the Map class
+     * @param name The name of the map
+     */
     public Map(String name) throws IllegalArgumentException {
         if(name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be null or empty");
         }
         this.name = name;
         gridMap = new HashMap<>();
+    }
+
+    /**
+     * Constructer for the Map class
+     * @param map The map to be copied
+     */
+    public Map(Map map) {
+        this.name = map.getName();
+        this.gridMap = new HashMap<>();
+        for (String key : map.getGridMap().keySet()) {
+            this.gridMap.put(key, new Tile(map.getGridMap().get(key).getTerrain()));
+        }
+    }
+
+    /**
+     * Returns a copy of the GridMap
+     * @return a copy of the GridMap
+     */
+    private HashMap<String, Tile> getGridMap() {
+        return gridMap;
     }
 
     /**
@@ -106,4 +130,18 @@ public class Map {
             throw new IllegalArgumentException("No free space on the map");
         }
     }
+
+    public void removeUnit(int x, int y) {
+        gridMap.get(getKey(x, y)).setToken(null);
+    }
+
+    public void removeUnit(Unit unit) throws IllegalArgumentException{
+        try {
+            int[] cords = findUnitCordinates(unit);
+            gridMap.get(getKey(cords[0], cords[1])).setToken(null);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Unit not found");
+        }
+    }
+
 }

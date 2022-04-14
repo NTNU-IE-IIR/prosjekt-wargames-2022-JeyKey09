@@ -1,7 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.map;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class Token {

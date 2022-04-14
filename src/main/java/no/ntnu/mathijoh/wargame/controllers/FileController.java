@@ -2,7 +2,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -50,7 +49,7 @@ public class FileController {
                         && ParameterChecker.checkValidParameter(Integer.parseInt(info[2]))) {
                     String unittype = info[0];
                     String unitName = info[1];
-                    String healthString = info[2];
+                    String healthString = info[2];          
                     int unitHealth = Integer.parseInt(healthString);
                     placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.valueOf(unittype.toUpperCase()), unitName, unitHealth));
                 } else {

@@ -7,7 +7,7 @@ package no.ntnu.mathijoh.wargame.models.map;
 public class Tile {
     
     private Terrain terrain;
-    private Token unit;
+    private Token token;
 
     /**
      * Creates a new tile
@@ -16,17 +16,17 @@ public class Tile {
 
     public Tile(Terrain terrain) throws IllegalArgumentException{
         this.terrain = terrain;
-        this.unit = null;
+        this.token = null;
     }
 
     /**
      * Creates a new tile
      * @param terrain the terrain on the tile
-     * @param unit the unit on the tile
+     * @param token the token on the tile
      */
-    public Tile(Terrain terrain, Token unit) throws IllegalArgumentException{
+    public Tile(Terrain terrain, Token token) throws IllegalArgumentException{
         this.terrain = terrain;
-        this.unit = null;
+        this.token = null;
     }
  
     public Terrain getTerrain() {
@@ -38,10 +38,10 @@ public class Tile {
     }
 
     public Token getToken() {
-        return unit;
+        return token;
     }
 
     public void setToken(Token token) {
-        this.unit = token;
+        this.token = token;
     }
 }
