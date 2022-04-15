@@ -3,8 +3,6 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.net.URL;
 import java.util.List;
 
-import javafx.stage.Popup;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
-import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
@@ -101,11 +101,11 @@ public class FileController {
      * Reads a Terrain file that contains of 16x16 character that represents the terrain
      * 
      */
-    public static Map importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
+    public static BattleMap importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
             throw new IllegalArgumentException("This is not a txt file");
         }
-        Map map = new Map(file.getName().split(".txt")[0]);
+        BattleMap map = new BattleMap(file.getName().split(".txt")[0]);
         int xSize = 16;
         try (Scanner cs = new Scanner(file)) {
             int y = 0;

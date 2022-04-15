@@ -124,7 +124,7 @@
             <HBox styleClass="button-location">
                <children>
                   <Button fx:id="resetButton" disable="true" mnemonicParsing="false" styleClass="reset-button" text="Reset" />
-                  <Button fx:id="battleButton1" disable="true" mnemonicParsing="false" styleClass="battle-button" text="Battle" />
+                  <Button fx:id="battleButton" disable="true" mnemonicParsing="false" onAction="#battle" styleClass="battle-button" text="Battle" />
                </children>
             </HBox>
          </children>

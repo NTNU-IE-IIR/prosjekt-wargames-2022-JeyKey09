@@ -1,7 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.map;
 /**
  * A tile on the map
- * It will replace the terrain with Map to allow for both terrain and units to 
+ * It will replace the terrain with BattleMap to allow for both terrain and units to 
  * be stored on the same key
  */
 public class Tile {

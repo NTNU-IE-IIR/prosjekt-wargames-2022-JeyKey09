@@ -1,16 +1,17 @@
 package no.ntnu.mathijoh.wargame.models.map;
 
 /**
- * This is a class meant for keeping the different terrains in the game
+ * This is a class meant for keeping the different tiles in the game
  */
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
-public class Map {
+public class BattleMap {
 
     /**
      * The gridMap of the game
@@ -21,11 +22,11 @@ public class Map {
     private String name;
 
     /**
-     * The constructor for the Map class
+     * The constructor for the BattleMap class
      * 
      * @param name The name of the map
      */
-    public Map(String name) throws IllegalArgumentException {
+    public BattleMap(String name) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be null or empty");
         }
@@ -34,11 +35,11 @@ public class Map {
     }
 
     /**
-     * Constructer for the Map class
+     * Constructer for the BattleMap class
      * 
      * @param map The map to be copied
      */
-    public Map(Map map) {
+    public BattleMap(BattleMap map) {
         this.name = map.getName();
         this.gridMap = new HashMap<>();
         for (String key : map.getGridMap().keySet()) {
@@ -85,27 +86,36 @@ public class Map {
     }
 
     public int[] findUnitCordinates(Unit unit) throws IllegalArgumentException {
-        int[] result = new int[2];
-        boolean notFound = true;
-        Iterator<String> it = gridMap.keySet().iterator();
-        while (it.hasNext() && notFound) {
-            String key = it.next();
-            if (gridMap.get(key).getToken().getUnit().equals(unit)) {
-                notFound = false;
-                String[] cords = key.split("-");
-                result[0] = Integer.parseInt(cords[0]);
-                result[1] = Integer.parseInt(cords[1]);
-            }
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
         }
-        if (notFound) {
+        Tile tile = findUnitTile(unit);
+        if(tile == null) {
             throw new IllegalArgumentException("Unit not found");
+        }
+        return findTileCordinates(tile);
+    }
+
+
+    public Tile findUnitTile(Unit unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
+        Tile result = null;
+        Iterator<String> it = gridMap.keySet().iterator();
+        while (it.hasNext() && result == null) {
+            String key = it.next();
+            Tile tile = gridMap.get(key);
+            if (tile.getToken() != null && tile.getToken().getUnit() == unit) {
+                result = tile;
+            }
         }
         return result;
     }
-
     public void moveUnit(Unit unit, int x, int y) throws IllegalArgumentException {
-        if (gridMap.get(getKey(x, y)).getToken() != null) {
-            throw new IllegalArgumentException("There is already a unit at that position");
+        if (gridMap.get(getKey(x, y)).getToken() != null
+                && !gridMap.get(getKey(x, y)).getToken().getUnit().equals(unit)) {
+            throw new IllegalArgumentException("The5re is already a unit at that position");
         }
         try {
             int[] cords = findUnitCordinates(unit);
@@ -115,7 +125,41 @@ public class Map {
         } catch (IllegalArgumentException e) {
             throw e;
         }
+    }
 
+    public void moveUnit(Unit unit, Tile tile) throws IllegalArgumentException {
+        if (tile.getToken() != null && !tile.getToken().getUnit().equals(unit)) {
+            throw new IllegalArgumentException("There is already a unit at that position");
+        }
+        try {
+            int[] destination = findTileCordinates(tile);
+            moveUnit(unit, destination[0], destination[1]);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+
+    }
+
+    private int[] findTileCordinates(Tile tile) {
+        if(tile == null) {
+            throw new IllegalArgumentException("Tile cannot be null");
+        }
+        int[] result = new int[2];
+        boolean notFound = true;
+        Iterator<String> it = gridMap.keySet().iterator();
+        while (it.hasNext() && notFound) {
+            String key = it.next();
+            if (gridMap.get(key).equals(tile)) {
+                notFound = false;
+                String[] cords = key.split("-");
+                result[0] = Integer.parseInt(cords[0]);
+                result[1] = Integer.parseInt(cords[1]);
+            }
+        }
+        if (notFound) {
+            throw new IllegalArgumentException("Tile not found");
+        }
+        return result;
     }
 
     private String getKey(int x, int y) {
@@ -158,38 +202,51 @@ public class Map {
      * @return HashMap where the key is the tile it should move to
      *         and the value the closest enemy unit
      */
-    public HashMap<Tile, Unit> getPossibleTargets(Unit unit) {
+    public Map<Tile, Unit> getPossibleTargets(Unit unit) {
+        if(unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
         HashMap<Tile, Unit> result = new HashMap<>();
         ArrayList<Tile> checkedTiles = new ArrayList<>();
-        ArrayList<String> keysToTilesForChecking = new ArrayList<>();
+        ArrayList<Tile> tilesForChecking = new ArrayList<>();
         int[] cordinates = findUnitCordinates(unit);
-        Token tokenOfUnit = gridMap.get(getKey(cordinates[0], cordinates[1])).getToken();
-
-        keysToTilesForChecking.add(getKey(cordinates[0], cordinates[1]));
-
-        while (!keysToTilesForChecking.isEmpty() && result.isEmpty()) {
-            String key = keysToTilesForChecking.remove(0);
-
-            checkedTiles.add(gridMap.get(key));
-            int x = Integer.parseInt(key.split("-")[0]);
-            int y = Integer.parseInt(key.split("-")[1]);
-
-            for (int i = y - 1; i <= y + 1; i++) {
-                for (int j = x - 1; j <= x + 1; j = j + 2) {
-
-                    Tile tile = gridMap.get(getKey(j, i));
-
-                    if (tile != null && !checkedTiles.contains(tile)) {
-                        checkedTiles.add(tile);
-                        if (tile.getToken() == null) {
-                            keysToTilesForChecking.add(getKey(j, i));
-                        } else if (!tile.getToken().getColor().equals(tokenOfUnit.getColor())) {
-                            result.put(tile, tile.getToken().getUnit());
-                        }
+        Tile rootTile = gridMap.get(getKey(cordinates[0], cordinates[1]));
+        Token tokenOfUnit = rootTile.getToken();
+        tilesForChecking.add(rootTile);
+        while (!tilesForChecking.isEmpty() && result.isEmpty()) {
+            Tile parentTile = tilesForChecking.remove(0);
+            checkedTiles.add(parentTile);
+            ArrayList<Tile> nTiles = getNeighborTiles(parentTile);
+            for(Tile tile : nTiles){
+                if(!checkedTiles.contains(tile)){
+                    if(tile.getToken() == null){
+                        tilesForChecking.add(tile);
+                    }
+                    else if(tile.getToken().getColor().equals(tokenOfUnit.getColor())){
+                        result.put(parentTile, tile.getToken().getUnit());
                     }
                 }
             }
         }
         return result;
+    }
+
+    private ArrayList<Tile> getNeighborTiles(Tile tile) {
+        if(tile == null) {
+            throw new IllegalArgumentException("Tile cannot be null");
+        }
+        ArrayList<Tile> nTiles = new ArrayList<>();
+        int[] cords = findTileCordinates(tile);
+        int x = cords[0];
+        int y = cords[1];
+        for (int i = y - 1; i <= y + 1; i++) {
+            for (int j = x - 1; j <= x + 1; j = j + 1) {
+                Tile nTile = gridMap.get(getKey(j, i));
+                if (nTile != null && !nTile.equals(tile)) {
+                    nTiles.add(nTile);
+                }
+            }
+        }
+        return nTiles;
     }
 }

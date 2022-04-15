@@ -51,6 +51,15 @@ public class Army {
     }
 
     /**
+     * Duplicates the army given into a new army object
+     * @param army
+     */
+    public Army(Army army) {
+        this.name = army.name;
+        this.units = new ArrayList<>(army.getAllUnits());
+    }
+
+    /**
      * Adds a unit to the army
      * 
      * @param unit the unit that is being added

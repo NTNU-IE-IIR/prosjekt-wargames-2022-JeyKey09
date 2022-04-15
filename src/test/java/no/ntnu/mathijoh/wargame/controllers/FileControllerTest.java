@@ -15,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 public class FileControllerTest {
@@ -97,7 +97,7 @@ public class FileControllerTest {
     void testImportMapFromFile(){
         File terrainfFile = new File(getClass().getResource("terrains/example.txt").getPath().replace("%20", " "));
         assertDoesNotThrow(() -> {
-            Map map = FileController.importMapFromFile(terrainfFile);
+            BattleMap map = FileController.importMapFromFile(terrainfFile);
             assertNotNull(map);
         });
     }

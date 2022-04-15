@@ -5,6 +5,7 @@ import java.lang.System.Logger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.spi.CurrencyNameProvider;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
@@ -24,10 +25,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
-import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
 import no.ntnu.mathijoh.wargame.models.map.Token;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
+import no.ntnu.mathijoh.wargame.models.units.UnitList;
 
 /**
  * The main menu controller
@@ -37,8 +39,8 @@ public class MainMenuController {
 
     private ArrayList<Army> armyList;
     private int mapIndex;
-    private Map currentMap;
-    private ArrayList<Map> mapList;
+    private BattleMap currentMap;
+    private ArrayList<BattleMap> mapList;
     private Logger logger;
 
     @FXML private Text mapText;
@@ -118,11 +120,10 @@ public class MainMenuController {
         }
         createMap();
         battleGrid.setGridLinesVisible(true);
-        battleGrid.add(new HBox(), 23, 31);
         updateTableInfo();
     }
 
-    private void updateBattleGrid(int x, int y, Map map) {
+    private void updateBattleGrid(int x, int y, BattleMap map) {
         mapText.setText(map.getName()); 
         battleGrid.getChildren().clear();
         for(int i = 0; i < y; i++){
@@ -156,6 +157,9 @@ public class MainMenuController {
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
         createMap();
+        if(armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0){
+            battleButton.setDisable(false);
+        }
         updateTableInfo();
     }
 
@@ -178,10 +182,10 @@ public class MainMenuController {
     }
 
     private void createMap(){
-        currentMap = new Map(mapList.get(mapIndex));
+        currentMap = new BattleMap(mapList.get(mapIndex));
         armyList.get(0).getAllUnits().stream().forEach(unit -> currentMap.placeUnit(new Token(unit, "Red")));
         armyList.get(1).getAllUnits().stream().forEach(unit -> currentMap.placeUnit(new Token(unit, "Blue")));
-        updateBattleGrid(16, 16, currentMap);
+        updateBattleGrid(16,16, currentMap);
     }
 
     /**
@@ -189,10 +193,23 @@ public class MainMenuController {
      * 
      * @param e
      */
+    @FXML
     private void battle() {
-        ArrayList<Army> armylist = new ArrayList<>(this.armyList);
-        Battle battle = new Battle(armylist.get(0), armylist.get(1));
-        // Thread battleThread = new ThreadLocal<>();
+        Battle battle = new Battle(armyList.get(0), armyList.get(1), currentMap);
+        while(battle.isNotFinished()) {
+            battle.runStep();
+            updateBattleGrid(16, 16, currentMap);
+            army1Table.refresh();
+            army2Table.refresh();
+            army1UnitTable.refresh();
+            army2UnitTable.refresh();
+            try{Thread.sleep(100);}
+            catch(Exception e){
+                logger.log(Logger.Level.ERROR ,e.getMessage());
+            }
+        }
+        battleButton.setDisable(true);
+        resetButton.setDisable(false);
     }
 
     /**
@@ -207,7 +224,7 @@ public class MainMenuController {
 
         purgeUnitTables();
         this.armyList.get(0).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
-        this.armyList.get(1).getAllUnits().forEach(unit -> army1UnitTable.getItems().add(unit));
+        this.armyList.get(1).getAllUnits().forEach(unit -> army2UnitTable.getItems().add(unit));
 
         army1Title.setText(this.armyList.get(0).getName());
         army2Title.setText(this.armyList.get(1).getName());
