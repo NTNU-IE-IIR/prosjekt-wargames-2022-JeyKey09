@@ -11,6 +11,7 @@ module no.ntnu.mathijoh.wargame {
     opens no.ntnu.mathijoh.wargame.controllers to javafx.fxml;
     exports no.ntnu.mathijoh.wargame.controllers;
     opens no.ntnu.mathijoh.wargame.models.units;
+    exports no.ntnu.mathijoh.wargame.models;
     exports no.ntnu.mathijoh.wargame.models.units;
     opens no.ntnu.mathijoh.wargame.models.map;
     exports no.ntnu.mathijoh.wargame.models.map;

@@ -1,11 +1,11 @@
 package no.ntnu.mathijoh.wargame.models;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
+import no.ntnu.mathijoh.wargame.models.map.Token;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
@@ -27,7 +27,7 @@ public class Battle{
      * @throws IllegalArgumentException if any of the parameters is null
      */
     public Battle(Army armyOne, Army armyTwo, BattleMap map) throws IllegalArgumentException {
-        if (armyOne == null || armyTwo == null) {
+        if (armyOne == null || armyTwo == null || map == null) {
             throw new IllegalArgumentException("None of the argument can be null");
         }
         this.armyOne = armyOne;
@@ -35,6 +35,8 @@ public class Battle{
         this.map = map;
         this.victoryArmy = null;
         this.randomGenerator = new Random();
+        armyOne.getAllUnits().forEach(unit -> map.placeUnit(new Token(unit, "blue")));
+        armyTwo.getAllUnits().forEach(unit -> map.placeUnit(new Token(unit, "red")));
     }
 
     /**

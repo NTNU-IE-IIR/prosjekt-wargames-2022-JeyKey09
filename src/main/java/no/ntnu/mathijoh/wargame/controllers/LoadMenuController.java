@@ -18,19 +18,16 @@ import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
 
 public class LoadMenuController {
+    
     private List<Army> armyList;
 
-    @FXML
-    private TextField filePathBox;
+    @FXML private TextField filePathBox;
 
-    @FXML
-    private VBox root;
+    @FXML private VBox root;
 
-    @FXML
-    private TextField delimiterBox;
+    @FXML private TextField delimiterBox;
 
-    @FXML
-    private MenuButton armyButton;
+    @FXML private MenuButton armyButton;
 
     @FXML
     private void closeWindow(ActionEvent e) {

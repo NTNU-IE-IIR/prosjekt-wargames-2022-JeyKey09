@@ -19,8 +19,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
  */
 public class FileController {
 
-    private FileController() {
-    }
+    private FileController() {}
 
     /**
      * 
@@ -99,7 +98,6 @@ public class FileController {
 
     /**
      * Reads a Terrain file that contains of 16x16 character that represents the terrain
-     * 
      */
     public static BattleMap importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {

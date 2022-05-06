@@ -90,12 +90,11 @@ public class BattleMap {
             throw new IllegalArgumentException("Unit cannot be null");
         }
         Tile tile = findUnitTile(unit);
-        if(tile == null) {
+        if (tile == null) {
             throw new IllegalArgumentException("Unit not found");
         }
         return findTileCordinates(tile);
     }
-
 
     public Tile findUnitTile(Unit unit) {
         if (unit == null) {
@@ -112,6 +111,7 @@ public class BattleMap {
         }
         return result;
     }
+
     public void moveUnit(Unit unit, int x, int y) throws IllegalArgumentException {
         if (gridMap.get(getKey(x, y)).getToken() != null
                 && !gridMap.get(getKey(x, y)).getToken().getUnit().equals(unit)) {
@@ -141,7 +141,7 @@ public class BattleMap {
     }
 
     private int[] findTileCordinates(Tile tile) {
-        if(tile == null) {
+        if (tile == null) {
             throw new IllegalArgumentException("Tile cannot be null");
         }
         int[] result = new int[2];
@@ -203,7 +203,7 @@ public class BattleMap {
      *         and the value the closest enemy unit
      */
     public Map<Tile, Unit> getPossibleTargets(Unit unit) {
-        if(unit == null) {
+        if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
         }
         HashMap<Tile, Unit> result = new HashMap<>();
@@ -217,12 +217,11 @@ public class BattleMap {
             Tile parentTile = tilesForChecking.remove(0);
             checkedTiles.add(parentTile);
             ArrayList<Tile> nTiles = getNeighborTiles(parentTile);
-            for(Tile tile : nTiles){
-                if(!checkedTiles.contains(tile)){
-                    if(tile.getToken() == null){
+            for (Tile tile : nTiles) {
+                if (!checkedTiles.contains(tile)) {
+                    if (tile.getToken() == null) {
                         tilesForChecking.add(tile);
-                    }
-                    else if(tile.getToken().getColor().equals(tokenOfUnit.getColor())){
+                    } else if (!tile.getToken().getColor().equals(tokenOfUnit.getColor())) {
                         result.put(parentTile, tile.getToken().getUnit());
                     }
                 }
@@ -232,7 +231,7 @@ public class BattleMap {
     }
 
     private ArrayList<Tile> getNeighborTiles(Tile tile) {
-        if(tile == null) {
+        if (tile == null) {
             throw new IllegalArgumentException("Tile cannot be null");
         }
         ArrayList<Tile> nTiles = new ArrayList<>();
