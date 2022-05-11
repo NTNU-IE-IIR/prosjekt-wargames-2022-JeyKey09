@@ -70,21 +70,26 @@ public class Battle{
             Unit attackingUnit = attackingArmy.getRandom();
             
             Map<Tile,Unit> possibleTarget = map.getPossibleTargets(attackingUnit);
+            try{
+                Tile toMove = possibleTarget.keySet().iterator().next();
+                        
+                Unit defendingUnit = possibleTarget.get(toMove);
             
-            Tile toMove = possibleTarget.keySet().iterator().next();
-            
-            Unit defendingUnit = possibleTarget.get(toMove);
-            
-            map.moveUnit(attackingUnit, toMove);
-            
-            Tile defTile = map.findUnitTile(defendingUnit);
-            
-            attackingUnit.attack(defendingUnit, toMove.getTerrain(), defTile.getTerrain());
-            
-            if (defendingUnit.getHealth() == 0) {
-                map.removeUnit(defendingUnit);
-                defendingArmy.remove(defendingUnit);
+                map.moveUnit(attackingUnit, toMove);
+                
+                Tile defTile = map.findUnitTile(defendingUnit);
+                
+                attackingUnit.attack(defendingUnit, toMove.getTerrain(), defTile.getTerrain());
+                
+                if (defendingUnit.getHealth() == 0) {
+                    map.removeUnit(defendingUnit);
+                    defendingArmy.remove(defendingUnit);
+                }
             }
+            catch(Exception e){
+                System.out.println("No possible targets");
+            }
+
         }
 
         else if (armyOne.hasUnits()) {

@@ -3,13 +3,11 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.io.File;
 import java.lang.System.Logger;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -139,9 +137,11 @@ public class MainMenuController {
     }
 
     private void createBattle() {
-        Army army1 = armyList.get(0);
+        Army army1 = new Army(armyList.get(0));
         Army army2 = new Army(armyList.get(1));
         this.battle = new Battle(army1, army2, currentMap);
+        updateTableInfo(army1, army2);
+        resetButton.setDisable(true);
     }
 
     private void updateBattleGrid(int x, int y, BattleMap map) {
@@ -149,7 +149,7 @@ public class MainMenuController {
         battleGrid.getChildren().clear();
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                TilePane tile = new TilePane(map.getTile(i, j), battleGrid.heightProperty(),y);
+                TilePane tile = new TilePane(map.getTile(i, j), battleGrid.heightProperty(), y);
                 battleGrid.add(tile, i, j);
             }
         }
@@ -163,11 +163,8 @@ public class MainMenuController {
     @FXML
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
-        createMap();
-        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0) {
-            battleButton.setDisable(false);
-        }
-        updateTableInfo(armyList.get(0),armyList.get(1));
+        enableBattle();
+        updateTableInfo(armyList.get(0), armyList.get(1));
     }
 
     @FXML
@@ -190,10 +187,8 @@ public class MainMenuController {
 
     private void createMap() {
         currentMap = new BattleMap(mapList.get(mapIndex));
-        updateTableInfo(armyList.get(0),armyList.get(1));
-        battleButton.setDisable(false);
-        resetButton.setDisable(true);
         createBattle();
+        enableBattle();
         updateBattleGrid(16, 16, currentMap);
     }
 
@@ -204,22 +199,14 @@ public class MainMenuController {
      */
     @FXML
     private void battle() {
-
-        Thread battleThread = new Thread() {
-            @Override
-            public void run() {
-                while (battle.isNotFinished()){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-                    battle.runStep();
-                }
+        if (battle.isNotFinished()) {
+            battle.runStep();
+            updateBattleGrid(16, 16, currentMap);
+            if (!battle.isNotFinished()) {
+                battleButton.setDisable(true);
+                resetButton.setDisable(false);
             }
-        };
-        battleThread.start();
-        battleButton.setDisable(true);
-        resetButton.setDisable(false);
+        }
     }
 
     /**
@@ -269,21 +256,15 @@ public class MainMenuController {
         army2Table.getItems().clear();
     }
 
-    private Node findCellNode(int x, int y) {
-        Node result = null;
-        Iterator<Node> it = battleGrid.getChildren().iterator();
-        while (it.hasNext() && result == null) {
-            Node node = it.next();
-            if (GridPane.getRowIndex(node) == y && GridPane.getColumnIndex(node) == x) {
-                result = node;
-            }
-        }
-        return result;
-    }
-
-    private void enableBattle(){
-        if(armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0){
+    private void enableBattle() {
+        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle.isNotFinished()) {
             battleButton.setDisable(false);
         }
+    }
+
+    @FXML
+    private void reset() {
+        createMap();
+        resetButton.setDisable(true);
     }
 }

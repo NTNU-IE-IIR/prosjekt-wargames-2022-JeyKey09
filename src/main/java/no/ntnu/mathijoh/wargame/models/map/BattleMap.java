@@ -206,22 +206,36 @@ public class BattleMap {
         if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
         }
+        //Creates temporary objects to store information
         HashMap<Tile, Unit> result = new HashMap<>();
         ArrayList<Tile> checkedTiles = new ArrayList<>();
         ArrayList<Tile> tilesForChecking = new ArrayList<>();
+        //Finds the tile the unit is on
         int[] cordinates = findUnitCordinates(unit);
+        //Adds the tile the unit is on to the list of tiles to check
         Tile rootTile = gridMap.get(getKey(cordinates[0], cordinates[1]));
+        //Gets the color of the unit (What team or army it is part of)
         Token tokenOfUnit = rootTile.getToken();
+        //Adds the tile to the unit to the list of tiles to check
         tilesForChecking.add(rootTile);
+        //Loops through the list of tiles to check
         while (!tilesForChecking.isEmpty() && result.isEmpty()) {
+            //Gets the first tile in the list
             Tile parentTile = tilesForChecking.remove(0);
-            checkedTiles.add(parentTile);
+            //Gets the list of tiles that are adjacent to the tile
             ArrayList<Tile> nTiles = getNeighborTiles(parentTile);
+            //Loops through the list of tiles that are adjacent to the tile
             for (Tile tile : nTiles) {
+                //If the tile is not a checked tile
                 if (!checkedTiles.contains(tile)) {
+                    checkedTiles.add(tile);
+                    //If the tile has a unit on it
                     if (tile.getToken() == null) {
+                        //Adds the tile to the list of tiles to check becouse you can move trough it
                         tilesForChecking.add(tile);
+                        //Else if the tile has a unit on it and it is on the enemy team
                     } else if (!tile.getToken().getColor().equals(tokenOfUnit.getColor())) {
+                        //Adds it to the result
                         result.put(parentTile, tile.getToken().getUnit());
                     }
                 }
@@ -229,23 +243,34 @@ public class BattleMap {
         }
         return result;
     }
-
+    
+    /**
+     * Gets the list of tiles that are adjacent to the tile 
+     * @param tile
+     * @return
+     */
     private ArrayList<Tile> getNeighborTiles(Tile tile) {
         if (tile == null) {
             throw new IllegalArgumentException("Tile cannot be null");
         }
         ArrayList<Tile> nTiles = new ArrayList<>();
+        //Gets the cordinates of the tile
         int[] cords = findTileCordinates(tile);
         int x = cords[0];
         int y = cords[1];
+        //For every column before, after and on the tile
         for (int i = y - 1; i <= y + 1; i++) {
+            //For every row above, on and below the tile
             for (int j = x - 1; j <= x + 1; j = j + 1) {
                 Tile nTile = gridMap.get(getKey(j, i));
+                //If the tile is not the same tile and not null
                 if (nTile != null && !nTile.equals(tile)) {
+                    //Adds it to the list of tiles
                     nTiles.add(nTile);
                 }
             }
         }
+        //Returns the list of tiles
         return nTiles;
     }
 }

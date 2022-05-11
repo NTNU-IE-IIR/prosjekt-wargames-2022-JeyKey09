@@ -27,13 +27,13 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         this.drawThisTileAgainBecouseOfChangeOrCreation();  
     }
 
-    public TilePane(Tile tile, ReadOnlyDoubleProperty parentHeighProperty, int columnSize) {
+    public TilePane(Tile tile, ReadOnlyDoubleProperty parentHeightProperty, int columnSize) {
         super(); 
         this.tile = (new ReadOnlyObjectWrapper<>(tile));
         this.tile.addListener(this);
         this.getStylesheets().add("tile"); 
         this.columnSize = columnSize;
-        this.parentHeightProperty = parentHeighProperty;
+        this.parentHeightProperty = parentHeightProperty;
         this.drawThisTileAgainBecouseOfChangeOrCreation();  
     }
     
@@ -45,8 +45,12 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         this.tile = new ReadOnlyObjectWrapper<>(tile);
     }
 
+    /**
+     * Draws the tile again because of change or creation
+     */
     public void drawThisTileAgainBecouseOfChangeOrCreation() {
         this.getChildren().removeAll(this.getChildren());
+        imageView = null;
         if(getTile().getToken() != null) {
             imageView  = new ImageView(getTile().getToken().getImage());
             imageView.setPreserveRatio(true);
@@ -60,6 +64,10 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         this.setBackground(new Background(new BackgroundFill(Color.web(getTile().getTerrain().getColor()), null, null)));
     }
 
+    /**
+     * Returns the image of on the tile
+     * @return ImageView, the image on the tile or null if there is no image
+     */
     public ImageView getImageView() {
         return imageView;
     }

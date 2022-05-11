@@ -2,9 +2,12 @@ package no.ntnu.mathijoh.wargame.models;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import no.ntnu.mathijoh.wargame.factories.UnitFactory;
+import no.ntnu.mathijoh.wargame.factories.UnitFactory.UnitType;
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
 import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
@@ -56,7 +59,16 @@ public class Army {
      */
     public Army(Army army) {
         this.name = army.name;
-        this.units = new ArrayList<>(army.getAllUnits());
+        Iterator<Unit> units = army.getIterator();
+        this.units = new ArrayList<>();
+        while (units.hasNext()) {
+            Unit unit = units.next();
+            this.units.add(UnitFactory.createUnit(UnitType.valueOf(unit.getClass().getSimpleName().toUpperCase()), unit.getName(), unit.getHealth()));
+        }
+    }
+
+    private Iterator<Unit> getIterator() {
+        return units.iterator();
     }
 
     /**
