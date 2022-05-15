@@ -3,10 +3,11 @@ package no.ntnu.mathijoh.wargame.factories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.units.Unit;
-import no.ntnu.mathijoh.wargame.models.units.UnitList;
 
 public class UnitFactoryTest {
 
@@ -18,7 +19,7 @@ public class UnitFactoryTest {
 
     @Test
     void testCreateUnitList() {
-        UnitList unitList = UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "Commander", 15, 10);
+        List<Unit> unitList = UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "Commander", 15, 10);
         assertEquals(10, unitList.size());
     }
     

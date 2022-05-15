@@ -6,14 +6,15 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory.UnitType;
+import no.ntnu.mathijoh.wargame.fxmodels.UnitListDataHolder;
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
 import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
 import no.ntnu.mathijoh.wargame.models.units.RangedUnit;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
-import no.ntnu.mathijoh.wargame.models.units.UnitList;
 
 /**
  * Army is a holder for units to be later used in the battle class
@@ -161,7 +162,7 @@ public class Army {
      * @return a list of cavalry units in the army
      */
     public List<Unit> getCavalryUnits() {
-        return new UnitList("CavalryUnit", getUnits(CavalryUnit.class));
+        return getUnits(CavalryUnit.class);
     }
 
     /**
@@ -170,7 +171,7 @@ public class Army {
      * @return a list of infantry units in the army
      */
     public List<Unit> getInfantryUnits() {
-        return new UnitList("Infantry", getUnits(InfantryUnit.class));
+        return getUnits(InfantryUnit.class);
     }
 
     /**
@@ -179,7 +180,7 @@ public class Army {
      * @return a list of ranged units in the army
      */
     public List<Unit> getRangedUnits() {
-        return new UnitList("Ranged", getUnits(RangedUnit.class));
+        return getUnits(RangedUnit.class);
     }
 
     /**
@@ -188,7 +189,7 @@ public class Army {
      * @return a list of commander units in the army
      */
     public List<Unit> getCommanderUnits() {
-        return new UnitList("Commander", getUnits(CommanderUnit.class));
+        return getUnits(CommanderUnit.class);
     }
 
     /**

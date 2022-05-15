@@ -3,6 +3,8 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -98,32 +100,42 @@ public class FileController {
 
     /**
      * Reads a Terrain file that contains of 16x16 character that represents the terrain
+     * It only accepts squares 
      */
     public static BattleMap importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
             throw new IllegalArgumentException("This is not a txt file");
         }
+        int width = 0;
+        ArrayList<String> bufferList = new ArrayList<>();
         BattleMap map = new BattleMap(file.getName().split(".txt")[0]);
-        int xSize = 16;
         try (Scanner cs = new Scanner(file)) {
-            int y = 0;
             while(cs.hasNext()) {
                 String line = cs.nextLine();
-                if (line.length() != xSize) {
-                    throw new IllegalArgumentException("The file is not a valid map");
+                if (bufferList.isEmpty()){
+                    bufferList.add(line);
+                    width = line.length();
+                } else if (line.length() != width) {
+                    throw new IllegalArgumentException("The map is not a square");
+                } else {
+                    bufferList.add(line);
                 }
-                for(int x = 0; line.length() > x; x++) {
-                    map.setTerrain(x,y,Terrain.getTerrainFromName(String.format("%s", line.charAt(x))));
-                }
-                y++;
             }
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("Couldn't find the file");
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("The file contains none valid characters");
-        } catch (Exception e) {
-            throw new IllegalArgumentException("The file is not a 16x16 map");
+            throw new IllegalArgumentException("The file is not a square");
         }
+        Iterator<String> buffer = bufferList.iterator();
+        int y = 0;
+        while(buffer.hasNext()){
+            String line = buffer.next();
+            for (int i = 0; i < line.length(); i++) {
+                map.setTile(i, y, Terrain.getTerrainFromChar(line.charAt(i)));
+            }
+            y++;
+        }
+
         return map;
     }
 }

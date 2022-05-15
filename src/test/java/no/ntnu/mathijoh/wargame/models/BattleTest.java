@@ -1,15 +1,18 @@
 package no.ntnu.mathijoh.wargame.models;
-
+//TODO: Modifiy the tests and clean up the code
 import org.junit.jupiter.api.Test;
 
+import no.ntnu.mathijoh.wargame.controllers.FileController;
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,17 +38,17 @@ public class BattleTest {
     return placeholderList;
     }
 
-    // @Test
-    // public void testPosetivAndNegativConstructor() {
+    @Test
+    public void testPosetivAndNegativConstructor() {
         
-    //     assertThrows(IllegalArgumentException.class, () -> {new Battle (null, null, null)});
-    //     Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
-    //     Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));
-    //     BattleMap map = new BattleMap("name");
-    //     testBattle = new Battle(armyOne, armyTwo);
-    //     assertNotNull(testBattle);
+        assertThrows(IllegalArgumentException.class, () -> {new Battle (null, null, null);});
+        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
+        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));
+        BattleMap map = assertDoesNotThrow(() -> FileController.importMapFromFile(new File("src\\test\\resources\\no\ntnu\\mathijoh\\wargame\\controllers\\maps\\example.txt"))); 
+        Battle testBattle = new Battle(armyOne, armyTwo, map);
+        assertNotNull(testBattle);
 
-    // }
+    }
 
     // @Test
     // public void testSimulate() {

@@ -95,10 +95,16 @@ public class FileControllerTest {
 
     @Test
     void testImportMapFromFile(){
-        File terrainfFile = new File(getClass().getResource("terrains/example.txt").getPath().replace("%20", " "));
+        File terrainfFile = new File(getClass().getResource("maps/example.txt").getPath().replace("%20", " "));
         assertDoesNotThrow(() -> {
             BattleMap map = FileController.importMapFromFile(terrainfFile);
             assertNotNull(map);
         });
+    }
+
+    @Test
+    void negativeTestImportMapFromFile(){
+        File terrainfFile = new File(getClass().getResource("maps/wrongExample.txt").getPath().replace("%20", " "));
+        assertThrows(IllegalArgumentException.class, () -> {FileController.importMapFromFile(terrainfFile);});
     }
 }

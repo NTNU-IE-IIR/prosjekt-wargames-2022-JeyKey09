@@ -1,4 +1,4 @@
-package no.ntnu.mathijoh.wargame.panes;
+package no.ntnu.mathijoh.wargame.fxmodels;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -31,7 +31,6 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         super(); 
         this.tile = (new ReadOnlyObjectWrapper<>(tile));
         this.tile.addListener(this);
-        this.getStylesheets().add("tile"); 
         this.columnSize = columnSize;
         this.parentHeightProperty = parentHeightProperty;
         this.drawThisTileAgainBecouseOfChangeOrCreation();  
@@ -50,7 +49,7 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
      */
     public void drawThisTileAgainBecouseOfChangeOrCreation() {
         this.getChildren().removeAll(this.getChildren());
-        imageView = null;
+        this.imageView = null;
         if(getTile().getToken() != null) {
             imageView  = new ImageView(getTile().getToken().getImage());
             imageView.setPreserveRatio(true);

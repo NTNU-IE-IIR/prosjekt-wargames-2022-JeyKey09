@@ -3,23 +3,24 @@ package no.ntnu.mathijoh.wargame.controllers;
 import java.io.File;
 import java.lang.System.Logger;
 import java.util.ArrayList;
-import java.util.List;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import no.ntnu.mathijoh.wargame.fxmodels.ArmyTableView;
+import no.ntnu.mathijoh.wargame.fxmodels.TilePane;
+import no.ntnu.mathijoh.wargame.fxmodels.UnitListDataHolder;
+import no.ntnu.mathijoh.wargame.fxmodels.UnitsTableView;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
-import no.ntnu.mathijoh.wargame.panes.TilePane;
 
 /**
  * The main menu controller
@@ -43,50 +44,37 @@ public class MainMenuController {
     @FXML
     private Text army1Title;
 
-    @FXML
-    private TableView<List<Unit>> army1Table;
+    private TableView<UnitListDataHolder> army1Table;
 
-    @FXML
-    private TableColumn<List<Unit>, String> army1Type;
-
-    @FXML
-    private TableColumn<List<Unit>, Integer> army1Total;
-
-    @FXML
     private TableView<Unit> army1UnitTable;
-
-    @FXML
-    private TableColumn<Unit, String> army1UnitClass;
-
-    @FXML
-    private TableColumn<Unit, String> army1UnitName;
-
-    @FXML
-    private TableColumn<Unit, Integer> army1UnitHealth;
 
     @FXML
     private Text army2Title;
 
     @FXML
-    private TableView<List<Unit>> army2Table;
+    private VBox army2Box;
 
     @FXML
-    private TableColumn<List<Unit>, String> army2Type;
+    private VBox army2UnitBox;
+        
+    @FXML
+    private Tab army1Tab;
 
     @FXML
-    private TableColumn<List<Unit>, Integer> army2Total;
+    private Tab army2Tab;
 
     @FXML
+    private VBox army1Box;
+
+    @FXML
+    private VBox army1UnitBox;
+
+    @FXML
+    private Text army2UnitTitle;
+
+    private TableView<UnitListDataHolder> army2Table;
+
     private TableView<Unit> army2UnitTable;
-
-    @FXML
-    private TableColumn<Unit, String> army2UnitClass;
-
-    @FXML
-    private TableColumn<Unit, String> army2UnitName;
-
-    @FXML
-    private TableColumn<Unit, Integer> army2UnitHealth;
 
     @FXML
     private Button battleButton;
@@ -107,22 +95,17 @@ public class MainMenuController {
         armyList.add(new Army("Army 1"));
         armyList.add(new Army("Army 2"));
 
-        army1UnitClass
-                .setCellValueFactory(unit -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
-        army2UnitClass
-                .setCellValueFactory(unit -> new ReadOnlyObjectWrapper<>(unit.getValue().getClass().getSimpleName()));
+        army1Table = new ArmyTableView();
+        army2Table = new ArmyTableView();
+        army1UnitTable = new UnitsTableView();
+        army2UnitTable = new UnitsTableView();
 
-        army1UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
-        army2UnitHealth.setCellValueFactory(new PropertyValueFactory<>("health"));
+        army1Box.getChildren().add(army1Table);
+        army2Box.getChildren().add(army2Table);
+        army1UnitBox.getChildren().add(army1UnitTable);
+        army2UnitBox.getChildren().add(army2UnitTable);
 
-        army1UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        army2UnitName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        army1Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army1Total.setCellValueFactory(list -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
-
-        army2Type.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        army2Total.setCellValueFactory(list -> new ReadOnlyObjectWrapper<>(list.getValue().size()));
 
         File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
         for (File file : dir.listFiles()) {
@@ -140,7 +123,7 @@ public class MainMenuController {
         Army army1 = new Army(armyList.get(0));
         Army army2 = new Army(armyList.get(1));
         this.battle = new Battle(army1, army2, currentMap);
-        updateTableInfo(army1, army2);
+        updateInfo(army1, army2);
         resetButton.setDisable(true);
     }
 
@@ -151,6 +134,7 @@ public class MainMenuController {
             for (int j = 0; j < x; j++) {
                 TilePane tile = new TilePane(map.getTile(i, j), battleGrid.heightProperty(), y);
                 battleGrid.add(tile, i, j);
+                tile.getStylesheets().add(".tile"); 
             }
         }
     }
@@ -163,8 +147,7 @@ public class MainMenuController {
     @FXML
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
-        enableBattle();
-        updateTableInfo(armyList.get(0), armyList.get(1));
+        createMap();
     }
 
     @FXML
@@ -206,6 +189,10 @@ public class MainMenuController {
                 battleButton.setDisable(true);
                 resetButton.setDisable(false);
             }
+            army1Table.refresh();
+            army2Table.refresh();
+            army1UnitTable.refresh();
+            army2UnitTable.refresh();        
         }
     }
 
@@ -214,8 +201,12 @@ public class MainMenuController {
      * 
      * @param aList
      */
-    private void updateTableInfo(Army army1, Army army2) {
+    private void updateInfo(Army army1, Army army2) {
         purgeArmyTables();
+        
+        army1Tab.setText(army1.getName());
+        army2Tab.setText(army2.getName());
+
         injectArmyTableView(army1Table, army1);
         injectArmyTableView(army2Table, army2);
 
@@ -233,11 +224,12 @@ public class MainMenuController {
      * @param tableView its gonna inject
      * @param army      its gonna get troops from
      */
-    private void injectArmyTableView(TableView<List<Unit>> tableView, Army army) {
-        tableView.getItems().add(army.getCavalryUnits());
-        tableView.getItems().add(army.getCommanderUnits());
-        tableView.getItems().add(army.getInfantryUnits());
-        tableView.getItems().add(army.getRangedUnits());
+    private void injectArmyTableView(TableView<UnitListDataHolder> tableView, Army army) {
+        tableView.getItems().add(new UnitListDataHolder("Infantry", army.getInfantryUnits()));
+        tableView.getItems().add(new UnitListDataHolder("Cavalry", army.getCavalryUnits()));
+        tableView.getItems().add(new UnitListDataHolder("Ranger", army.getRangedUnits()));
+        tableView.getItems().add(new UnitListDataHolder("Commander", army.getCommanderUnits()));
+        tableView.getItems().add(new UnitListDataHolder("Total Units", army.getAllUnits()));
     }
 
     /**
