@@ -11,6 +11,8 @@ import no.ntnu.mathijoh.wargame.models.map.Terrain;
  * @version 2.0
  */
 public abstract class Unit {
+    
+    //TODO: Implement range and movement cost
 
     private String name;
     private int health;

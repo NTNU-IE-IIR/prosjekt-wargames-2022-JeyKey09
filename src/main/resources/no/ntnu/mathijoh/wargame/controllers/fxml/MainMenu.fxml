@@ -30,82 +30,28 @@
                <content>
                   <HBox>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
+                        <VBox fx:id="army1Box" prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
                            <children>
                               <Text fx:id="army1Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="army1Table">
-                                      <columns>
-                                        <TableColumn fx:id="army1Type" prefWidth="131.0" text="UnitType" />
-                                        <TableColumn fx:id="army1Total" prefWidth="67.0" text="Total" />
-                                      </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </TableView>
-                                 </children>
-                              </StackPane>
                            </children>
                         </VBox>
-                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
+                        <VBox fx:id="army2Box" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" styleClass="army-box">
                            <children>
                               <Text fx:id="army2Title" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TableView fx:id="army2Table" styleClass="unit-table">
-                                       <columns>
-                                          <TableColumn fx:id="army2Type" prefWidth="123.0" text="UnitType" />
-                                          <TableColumn fx:id="army2Total" prefWidth="75.0" text="Total" />
-                                       </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                    </TableView>
-                                 </children>
-                              </StackPane>
                            </children>
                         </VBox>
                      </children>
                   </HBox>
                </content>
           </Tab>
-          <Tab text="Army1">
+          <Tab fx:id="army1Tab" text="Army1">
                <content>
-                  <VBox styleClass="army-box">
-                     <children>
-                        <Text fx:id="army1TabTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 1" />
-                        <TableView fx:id="army1UnitTable">
-                          <columns>
-                            <TableColumn fx:id="army1UnitClass" prefWidth="110.0" text="Class" />
-                            <TableColumn fx:id="army1UnitName" minWidth="0.0" prefWidth="187.0" text="Name" />
-                              <TableColumn fx:id="army1UnitHealth" minWidth="0.0" prefWidth="102.0" text="Health" />
-                          </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                     </children>
-                  </VBox>
+                  <VBox fx:id="army1UnitBox" styleClass="army-box" />
                </content>
           </Tab>
-            <Tab text="Army2">
+            <Tab fx:id="army2Tab" text="Army2">
                <content>
-                  <VBox styleClass="army-box">
-                     <children>
-                        <Text fx:id="army2TabTitle" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title-army" text="Army 2" />
-                        <TableView fx:id="army2UnitTable">
-                           <columns>
-                              <TableColumn fx:id="army2UnitClass" prefWidth="110.0" text="Class" />
-                              <TableColumn fx:id="army2UnitName" minWidth="0.0" prefWidth="187.0" text="Name" />
-                              <TableColumn fx:id="army2UnitHealth" minWidth="0.0" prefWidth="102.0" text="Health" />
-                           </columns>
-                           <columnResizePolicy>
-                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                           </columnResizePolicy>
-                        </TableView>
-                     </children>
-                  </VBox>
+                  <VBox fx:id="army2UnitBox" styleClass="army-box" />
                </content>
             </Tab>
         </tabs>
@@ -123,8 +69,8 @@
             </HBox>
             <HBox styleClass="button-location">
                <children>
-                  <Button fx:id="resetButton" disable="true" mnemonicParsing="false" styleClass="reset-button" text="Reset" />
-                  <Button fx:id="battleButton1" disable="true" mnemonicParsing="false" styleClass="battle-button" text="Battle" />
+                  <Button fx:id="resetButton" disable="true" mnemonicParsing="false" onAction="#reset" styleClass="reset-button" text="Reset" />
+                  <Button fx:id="battleButton" disable="true" mnemonicParsing="false" onAction="#battle" styleClass="battle-button" text="Battle" />
                </children>
             </HBox>
          </children>

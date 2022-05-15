@@ -15,7 +15,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.map.Map;
+import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 public class FileControllerTest {
@@ -95,10 +95,16 @@ public class FileControllerTest {
 
     @Test
     void testImportMapFromFile(){
-        File terrainfFile = new File(getClass().getResource("terrains/example.txt").getPath().replace("%20", " "));
+        File terrainfFile = new File(getClass().getResource("maps/example.txt").getPath().replace("%20", " "));
         assertDoesNotThrow(() -> {
-            Map map = FileController.importMapFromFile(terrainfFile);
+            BattleMap map = FileController.importMapFromFile(terrainfFile);
             assertNotNull(map);
         });
+    }
+
+    @Test
+    void negativeTestImportMapFromFile(){
+        File terrainfFile = new File(getClass().getResource("maps/wrongExample.txt").getPath().replace("%20", " "));
+        assertThrows(IllegalArgumentException.class, () -> {FileController.importMapFromFile(terrainfFile);});
     }
 }

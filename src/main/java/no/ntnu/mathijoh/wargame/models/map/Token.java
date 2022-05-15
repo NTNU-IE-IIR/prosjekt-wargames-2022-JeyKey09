@@ -14,7 +14,7 @@ public class Token {
         this.image = new Image(getClass().getResourceAsStream(unit.getClass().getSimpleName()+".png"));
         this.color = color;
     }
-    
+
     public Unit getUnit() {
         return unit;
     }

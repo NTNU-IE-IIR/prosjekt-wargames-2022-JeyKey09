@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -17,19 +18,16 @@ import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
 
 public class LoadMenuController {
+    
     private List<Army> armyList;
 
-    @FXML
-    private TextField filePathBox;
+    @FXML private TextField filePathBox;
 
-    @FXML
-    private VBox root;
+    @FXML private VBox root;
 
-    @FXML
-    private TextField delimiterBox;
+    @FXML private TextField delimiterBox;
 
-    @FXML
-    private MenuButton armyButton;
+    @FXML private MenuButton armyButton;
 
     @FXML
     private void closeWindow(ActionEvent e) {
@@ -53,7 +51,9 @@ public class LoadMenuController {
                     }
                 }
             } catch (Exception error) {
-                // TODO: handle exception
+                Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage());
+                alert.setTitle("Error");
+                alert.showAndWait();
             }
             armyButton.setText("Select Army");
             updateMenuButton();
