@@ -1,0 +1,21 @@
+.tile{ 
+    -fx-border-radius: 1;
+    -fx-border-color: black;
+    -fx-alignment: center;
+}
+
+.tile:center {
+    -fx-alignment: center;
+}
+
+.Forest{
+    -fx-background-color: rgba(58, 77, 45, 1);
+}
+
+.Plains {
+    -fx-background-color: rgba(108, 151, 78, 1);
+}
+
+.Hill {
+    -fx-background-color: rgba(154, 156, 140, 1);
+}

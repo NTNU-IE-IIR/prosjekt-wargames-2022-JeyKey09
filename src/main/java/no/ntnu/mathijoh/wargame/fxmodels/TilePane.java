@@ -10,6 +10,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
 
 public class TilePane extends BorderPane implements ChangeListener<Tile> {
@@ -18,12 +19,14 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
     private ImageView imageView;
     private ReadOnlyDoubleProperty parentHeightProperty;    
     private int columnSize;
+    private String currentClass;
 
     public TilePane(Tile tile) {
         super(); 
         this.tile = (new ReadOnlyObjectWrapper<>(tile));
         this.tile.addListener(this);
-        this.getStylesheets().add("tile"); 
+        this.getStylesheets().add(this.getClass().getResource("TilePane.css").toExternalForm()); 
+        this.getStyleClass().add("tile");
         this.drawThisTileAgainBecouseOfChangeOrCreation();  
     }
 
@@ -33,7 +36,10 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         this.tile.addListener(this);
         this.columnSize = columnSize;
         this.parentHeightProperty = parentHeightProperty;
-        this.drawThisTileAgainBecouseOfChangeOrCreation();  
+        this.getStylesheets().add(this.getClass().getResource("TilePane.css").toExternalForm()); 
+        this.getStyleClass().add("tile");
+        this.currentClass = "";
+        this.drawThisTileAgainBecouseOfChangeOrCreation();
     }
     
     public Tile getTile() {
@@ -49,6 +55,7 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
      */
     public void drawThisTileAgainBecouseOfChangeOrCreation() {
         this.getChildren().removeAll(this.getChildren());
+        this.getStyleClass().remove(currentClass);
         this.imageView = null;
         if(getTile().getToken() != null) {
             imageView  = new ImageView(getTile().getToken().getImage());
@@ -60,7 +67,8 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
             container.maxWidthProperty().bind(imageView.fitWidthProperty());
             this.setCenter(container);
         }
-        this.setBackground(new Background(new BackgroundFill(Color.web(getTile().getTerrain().getColor()), null, null)));
+        this.currentClass = tile.getValue().getTerrain().getName();
+        this.getStyleClass().add(currentClass);
     }
 
     /**

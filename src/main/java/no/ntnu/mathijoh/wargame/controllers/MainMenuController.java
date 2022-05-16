@@ -134,7 +134,6 @@ public class MainMenuController {
             for (int j = 0; j < x; j++) {
                 TilePane tile = new TilePane(map.getTile(i, j), battleGrid.heightProperty(), y);
                 battleGrid.add(tile, i, j);
-                tile.getStylesheets().add(".tile"); 
             }
         }
     }

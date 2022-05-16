@@ -10,18 +10,16 @@ package no.ntnu.mathijoh.wargame.models.map;
  * @version 1.0
  */
 public enum Terrain {
-    PLAINS("Plains", 'P', "rgba(108, 151, 78, 1)"),
-    FOREST("Forest", 'F', "rgba(58, 77, 45, 1)"),
-    HILL("Hill", 'H', "rgba(154, 156, 140, 1)"),
-    NONE("None", 'N', "rgba(0, 0, 0, 0)");
+    PLAINS("Plains", 'P'),
+    FOREST("Forest", 'F'),
+    HILL("Hill", 'H'),
+    NONE("None", 'N');
 
     private char terrainChar;
     private String name;
-    private String color;
 
-    private Terrain(String name, char terrainChar, String color) {
+    private Terrain(String name, char terrainChar) {
         this.terrainChar = terrainChar;
-        this.color = color;
         this.name = name;
     }
 
@@ -34,14 +32,6 @@ public enum Terrain {
         return terrainChar;
     }
 
-    /**
-     * Returns the color of the terrain
-     * 
-     * @return the color of the terrain
-     */
-    public String getColor() {
-        return color;
-    }
 
     public String getName() {
         return name;
