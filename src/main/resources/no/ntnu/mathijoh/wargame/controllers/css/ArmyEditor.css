@@ -1,0 +1,58 @@
+.title {
+    -fx-font-size: 20px;
+    
+}
+
+.hbox-button, .hbox-fields {
+    -fx-spacing: 10;
+}
+
+.hbox-fields {
+    -fx-alignment: center-left;
+}
+
+.delete {
+    -fx-background-color: rgba(202, 78, 78, 0.6);
+}
+
+.text-area {
+    -fx-border-width: 10;
+    -fx-border-style: solid;
+    -fx-border-color: rgba(0,0,0,0.6);
+}
+
+.add-button {
+    -fx-background-color: rgba(77, 208, 120, 0.6);
+}
+
+.root, .blueArmyBox, .redArmyBox {
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: rgba(0,0,0,0.6);
+    -fx-padding: 10;
+    
+}
+
+.blueArmyBox, .redArmyBox {
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-margin: 2;
+    -fx-background-radius: 11;
+}
+
+.add-button, .delete {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-background-insets: 1;
+    -fx-border-color: rgba(0,0,0,0.6);
+}
+
+.blueArmyBox {
+    -fx-background-color: rgba(45, 85, 255, 0.2);
+}
+
+.redArmyBox {
+    -fx-background-color: rgba(255, 45, 45, 0.2);
+    
+}

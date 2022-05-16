@@ -25,8 +25,8 @@ public class CentralController {
      * Creation and loading of the loadMenu
      * 
      * @param armyList that is gonna be used as a reference for the load menu
-     * @param root     the parent menu or main menu to lock the window within
-     * @return List<Army> Back to Main Menu
+     * @param root     the parent menu or main menu to lock the window
+     * @return List<Army> 
      */
     public static List<Army> runLoadMenu(List<Army> armyList, Parent root) {
         try {

@@ -1,11 +1,18 @@
-# Project Assignment, WarGame 
+# Project Raport, WarGame:
 
-This project folder for IDATA2001 Wargame.
+## Introduction:
+Trough the semester of Spring 2022 was the student within IDATx2001 tasked with creating a War Game application as part of their evaluation of the subject.   
 
-It is splitted into 3 parts that is is each assignment:
--   Focus on units and simulation ciruit with the units
--   Expand the program with attention on GUI and storage files
--   Adding more funconality, and re-design the program
+The War Game was given specefication trough out the semester with PDF Files given with obligatory tasks. 
+## Specification:
+Some of the specification
+## Design:
 
-Every project-assignment can be found in the folder "Assignments" as a reference to what the assignement was covering (More will come as the teacher releases them).
+## Implementation:
+
+## Process:
+
+## Reflection:
+
+## Conclusion:
 

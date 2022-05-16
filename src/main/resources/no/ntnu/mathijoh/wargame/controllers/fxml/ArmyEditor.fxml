@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@../css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox styleClass="blueArmyBox" HBox.hgrow="ALWAYS">
+               <children>
+                  <TextField alignment="CENTER" styleClass="title" text="Army 1" />
+                  <TableView maxWidth="1.7976931348623157E308">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Name" />
+                        <TableColumn prefWidth="75.0" text="Health" />
+                     </columns>
+                  </TableView>
+                  <HBox alignment="TOP_RIGHT" styleClass="hbox">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#remvoeFromArmy1" styleClass="delete" text="Delete" />
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hbox-fields">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                        <TextField />
+                        <MenuButton mnemonicParsing="false" text="Unit Type" />
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hbox-fields">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Health" />
+                        <TextField prefHeight="25.0" prefWidth="90.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" />
+                        <TextField />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" styleClass="hbox">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addToArmy1" styleClass="add-button" text="Add" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox styleClass="redArmyBox" HBox.hgrow="ALWAYS">
+               <children>
+                  <TextField alignment="CENTER" styleClass="title" text="Army 2" />
+                  <TableView maxWidth="1.7976931348623157E308">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Name" />
+                        <TableColumn prefWidth="75.0" text="Health" />
+                     </columns>
+                  </TableView>
+                  <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#remvoeFromArmy2" styleClass="delete" text="Delete" />
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hbox-fields">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                        <TextField />
+                        <MenuButton mnemonicParsing="false" text="Unit Type" />
+                     </children>
+                  </HBox>
+                  <HBox styleClass="hbox-fields">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Health" />
+                        <TextField prefHeight="25.0" prefWidth="90.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" />
+                        <TextField />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addToArmy2" styleClass="add-button" text="Add" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
