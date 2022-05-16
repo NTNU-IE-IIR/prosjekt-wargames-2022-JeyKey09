@@ -6,11 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
 
 public class TilePane extends BorderPane implements ChangeListener<Tile> {
@@ -48,6 +44,7 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
 
     public void setTile(Tile tile) {
         this.tile = new ReadOnlyObjectWrapper<>(tile);
+        drawThisTileAgainBecouseOfChangeOrCreation();
     }
 
     /**
