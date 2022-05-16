@@ -17,7 +17,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" text="Edit Armys" />
+                <MenuItem mnemonicParsing="false" onAction="#editArmy" text="Edit Armys" />
               </items>
             </Menu>
         </menus>

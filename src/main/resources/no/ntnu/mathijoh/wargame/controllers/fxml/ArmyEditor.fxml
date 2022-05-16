@@ -6,40 +6,32 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@../css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@../css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.ArmyEditorController">
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
             <VBox styleClass="blueArmyBox" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField alignment="CENTER" styleClass="title" text="Army 1" />
-                  <TableView maxWidth="1.7976931348623157E308">
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <columns>
-                        <TableColumn prefWidth="75.0" text="Name" />
-                        <TableColumn prefWidth="75.0" text="Health" />
-                     </columns>
-                  </TableView>
+                  <TextField fx:id="nameArmy1" alignment="CENTER" onAction="#renameArmy1" styleClass="title" text="Army 1" />
+                  <BorderPane fx:id="tablePosition1" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" styleClass="hbox">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#remvoeFromArmy1" styleClass="delete" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#removeFromArmy1" styleClass="delete" text="Delete" />
                      </children>
                   </HBox>
                   <HBox styleClass="hbox-fields">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-                        <TextField />
-                        <MenuButton mnemonicParsing="false" text="Unit Type" />
+                        <TextField fx:id="nameUnit1" />
+                        <MenuButton fx:id="typeUnit1" mnemonicParsing="false" text="Unit Type" />
                      </children>
                   </HBox>
                   <HBox styleClass="hbox-fields">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Health" />
-                        <TextField prefHeight="25.0" prefWidth="90.0" />
+                        <TextField fx:id="healthUnit1" prefHeight="25.0" prefWidth="90.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" />
-                        <TextField />
+                        <TextField fx:id="amountUnit1" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" styleClass="hbox">
@@ -49,36 +41,28 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox styleClass="redArmyBox" HBox.hgrow="ALWAYS">
+            <VBox fx:id="tableArmy2" styleClass="redArmyBox" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField alignment="CENTER" styleClass="title" text="Army 2" />
-                  <TableView maxWidth="1.7976931348623157E308">
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                     <columns>
-                        <TableColumn prefWidth="75.0" text="Name" />
-                        <TableColumn prefWidth="75.0" text="Health" />
-                     </columns>
-                  </TableView>
+                  <TextField fx:id="nameArmy2" alignment="CENTER" onAction="#renameArmy2" styleClass="title" text="Army 2" />
+                  <BorderPane fx:id="tablePosition2" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#remvoeFromArmy2" styleClass="delete" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#removeFromArmy2" styleClass="delete" text="Delete" />
                      </children>
                   </HBox>
                   <HBox styleClass="hbox-fields">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-                        <TextField />
-                        <MenuButton mnemonicParsing="false" text="Unit Type" />
+                        <TextField fx:id="nameUnit2" />
+                        <MenuButton fx:id="typeUnit2" mnemonicParsing="false" text="Unit Type" />
                      </children>
                   </HBox>
                   <HBox styleClass="hbox-fields">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Health" />
-                        <TextField prefHeight="25.0" prefWidth="90.0" />
+                        <TextField fx:id="healthUnit2" prefHeight="25.0" prefWidth="90.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" />
-                        <TextField />
+                        <TextField fx:id="amountUnit2" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
