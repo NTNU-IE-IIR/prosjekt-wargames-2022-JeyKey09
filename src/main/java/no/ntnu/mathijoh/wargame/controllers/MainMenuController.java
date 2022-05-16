@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
@@ -122,7 +123,16 @@ public class MainMenuController {
     private void createBattle() {
         Army army1 = new Army(armyList.get(0));
         Army army2 = new Army(armyList.get(1));
-        this.battle = new Battle(army1, army2, currentMap);
+        try{
+            this.battle = new Battle(army1, army2, currentMap);
+        }catch(Exception e){
+            logger.log(Logger.Level.ERROR, e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(e.getMessage());
+        }
+        
         updateInfo(army1, army2);
         resetButton.setDisable(true);
     }
@@ -146,6 +156,12 @@ public class MainMenuController {
     @FXML
     private void loadArmy(ActionEvent e) {
         this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
+        createMap();
+    }
+
+    @FXML
+    private void editArmy(ActionEvent e){
+        this.armyList = new ArrayList<>(CentralController.runArmyEditor(armyList, root));
         createMap();
     }
 

@@ -51,4 +51,31 @@ public class CentralController {
     private static URL getResource(String filePath) {
         return CentralController.class.getResource(filePath);
     }
+
+        /**
+     * Creation and loading of the loadMenu
+     * 
+     * @param armyList that is gonna be used as a reference for the load menu
+     * @param root     the parent menu or main menu to lock the window
+     * @return List<Army> 
+     */
+    public static List<Army> runArmyEditor(List<Army> armyList, Parent root) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getResource("fxml/ArmyEditor.fxml"));
+            Parent newRoot = loader.load();
+            ArmyEditorController armyEditor = loader.getController();
+            armyEditor.setArmyList(armyList);
+            Scene scene = new Scene(newRoot);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initOwner(root.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle("Edit army");
+            stage.showAndWait();
+        } catch (Exception exception) {
+            Alert popup = new Alert(Alert.AlertType.ERROR, exception.getMessage());
+            popup.showAndWait();
+        }
+        return armyList;
+    }
 }

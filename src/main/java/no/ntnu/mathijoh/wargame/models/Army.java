@@ -6,10 +6,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import javafx.util.Callback;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory.UnitType;
-import no.ntnu.mathijoh.wargame.fxmodels.UnitListDataHolder;
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
 import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
@@ -60,10 +58,10 @@ public class Army {
      */
     public Army(Army army) {
         this.name = army.name;
-        Iterator<Unit> units = army.getIterator();
+        Iterator<Unit> unitsIterator = army.getIterator();
         this.units = new ArrayList<>();
-        while (units.hasNext()) {
-            Unit unit = units.next();
+        while (unitsIterator.hasNext()) {
+            Unit unit = unitsIterator.next();
             this.units.add(UnitFactory.createUnit(UnitType.valueOf(unit.getClass().getSimpleName().toUpperCase()), unit.getName(), unit.getHealth()));
         }
     }
@@ -209,6 +207,13 @@ public class Army {
      */
     public String getName() {
         return name;
+    }
+
+    public void setName(String newName) throws IllegalArgumentException {
+        if(newName == null || newName.isEmpty()) {
+            throw new IllegalArgumentException("Name can't be null or empty");
+        }
+        this.name = newName;
     }
 
     @Override
