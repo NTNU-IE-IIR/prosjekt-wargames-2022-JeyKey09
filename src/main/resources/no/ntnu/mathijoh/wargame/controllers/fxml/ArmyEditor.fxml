@@ -44,7 +44,7 @@
             <VBox fx:id="tableArmy2" styleClass="redArmyBox" HBox.hgrow="ALWAYS">
                <children>
                   <TextField fx:id="nameArmy2" alignment="CENTER" onAction="#renameArmy2" styleClass="title" text="Army 2" />
-                  <BorderPane fx:id="tablePosition2" prefHeight="200.0" prefWidth="200.0" />
+                  <BorderPane fx:id="tablePosition2" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
                      <children>
                         <Button mnemonicParsing="false" onAction="#removeFromArmy2" styleClass="delete" text="Delete" />
