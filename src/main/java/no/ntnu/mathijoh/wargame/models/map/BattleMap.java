@@ -23,21 +23,8 @@ public class BattleMap {
     private HashMap<String, Tile> gridMap;
 
     private String name;
-
-    /**
-     * Creates a empty BattleMap with a name    
-     * 
-     * @param name The name of the map
-     * @throws IllegalArgumentException if the name is null or empty
-     */
-    public BattleMap(String name) throws IllegalArgumentException {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name can't be null or empty");
-        }
-        this.name = name;
-        gridMap = new HashMap<>();
-    }
-
+    private int width;
+    private int height;
 
     /**
      * Creates a BattleMap with x*y tiles
@@ -46,15 +33,23 @@ public class BattleMap {
      * @param y The height of the map
      * @param name The name of the map
      */
-    public BattleMap(String name, int rows, int columns) throws IllegalArgumentException {
+    public BattleMap(String name, int width, int height) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be null or empty");
         }
+        
+        if (width <= 0 || height <= 0) {
+            throw new IllegalArgumentException("Rows and columns can't be negative or 0");
+        }
+
         this.name = name;
+        this.height = height;
+        this.width = width;
+        
         gridMap = new HashMap<>();
-        for (int y = 0; y < rows; y++) {
-            for (int x = 0; x < columns; x++) {
-                setTile(x, y);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                gridMap.put(x + "-" + y, new Tile(Terrain.NONE));
             }
         }
     }
@@ -67,6 +62,8 @@ public class BattleMap {
     public BattleMap(BattleMap map) {
         this.name = map.getName();
         this.gridMap = new HashMap<>();
+        this.height = map.getHeight();
+        this.width = map.getWidth();
         for (String key : map.getGridMap().keySet()) {
             this.gridMap.put(key, new Tile(map.getGridMap().get(key).getTerrain()));
         }
@@ -91,15 +88,14 @@ public class BattleMap {
      * @param terrain the terrain in that conrdinate
      * @throws IllegalArgumentException if the key is invalid or the terrain is null
      */
-    public void setTile(int x, int y, Terrain terrain) throws IllegalArgumentException {
-        if (terrain == null) {
+    public void setTile(int x, int y, Tile tile) throws IllegalArgumentException {
+        if (tile == null) {
             throw new IllegalArgumentException("Terrain cannot be null");
         }
-        if(gridMap.containsKey(getKey(x, y))){
-            changeTerrain(x, y, terrain);
-        } else {
-            gridMap.put(getKey(x, y), new Tile(terrain));
-        }
+        if(!gridMap.containsKey(getKey(x, y))){
+            throw new IllegalArgumentException("This position does not exist on the map");
+        } 
+        gridMap.put(getKey(x, y), tile);
     }
 
 
@@ -110,29 +106,13 @@ public class BattleMap {
      * @param terrain the terrain to be changed to
      */
     public void changeTerrain(int x, int y, Terrain terrain){
-        if(gridMap.get(getKey(x, y)) == null){
+        if(!gridMap.containsKey(getKey(x, y))){
             throw new IllegalArgumentException("Tile does not exist");
         }
         if(terrain == null){
             throw new IllegalArgumentException("Terrain cannot be null");
         }
         gridMap.get(getKey(x, y)).setTerrain(terrain);
-    }
-
-    /**
-     * Creates a blank tile with no terrain
-     * Will return a error if the tile already exists
-     * 
-     * @param x the x coordinate of the tile
-     * @param y the y coordinate of the tile
-     * @throws IllegalArgumentException if the tile already exists
-     */
-    public void setTile(int x, int y) throws IllegalArgumentException {
-        if(gridMap.containsKey(getKey(x, y))){
-            throw new IllegalArgumentException("The tile already exists");
-        } else {
-            setTile(x,y,Terrain.NONE);
-        }
     }
 
     /**
@@ -409,5 +389,17 @@ public class BattleMap {
         }
         // Returns the list of tiles
         return nTiles;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
     }
 }

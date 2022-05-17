@@ -101,6 +101,9 @@ public class FileController {
     /**
      * Reads a Terrain file that contains of 16x16 character that represents the terrain
      * It only accepts squares 
+     * 
+     * @param file a file object that contains a multiple terrain chars
+     * @return a BattleMap with the terrain
      */
     public static BattleMap importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
@@ -108,7 +111,6 @@ public class FileController {
         }
         int width = 0;
         ArrayList<String> bufferList = new ArrayList<>();
-        BattleMap map = new BattleMap(file.getName().split(".txt")[0]);
         try (Scanner cs = new Scanner(file)) {
             while(cs.hasNext()) {
                 String line = cs.nextLine();
@@ -127,11 +129,12 @@ public class FileController {
             throw new IllegalArgumentException("The file is not a square");
         }
         Iterator<String> buffer = bufferList.iterator();
+        BattleMap map = new BattleMap(file.getName().split(".txt")[0], width, bufferList.size());
         int y = 0;
         while(buffer.hasNext()){
             String line = buffer.next();
             for (int i = 0; i < line.length(); i++) {
-                map.setTile(i, y, Terrain.getTerrainFromChar(line.charAt(i)));
+                map.changeTerrain(i, y, Terrain.getTerrainFromChar(line.charAt(i)));
             }
             y++;
         }

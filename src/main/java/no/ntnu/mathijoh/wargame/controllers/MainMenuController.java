@@ -146,12 +146,12 @@ public class MainMenuController {
         resetButton.setDisable(true);
     }
 
-    private void updateBattleGrid(int x, int y, BattleMap map) {
-        mapText.setText(map.getName());
+    private void updateBattleGrid() {
+        mapText.setText(currentMap.getName());
         battleGrid.getChildren().clear();
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                TilePane tile = new TilePane(map.getTile(i, j), battleGrid.heightProperty(), y);
+        for (int i = 0; i < currentMap.getHeight(); i++) {
+            for (int j = 0; j < currentMap.getWidth(); j++) {
+                TilePane tile = new TilePane(currentMap.getTile(i, j), battleGrid.heightProperty(), currentMap.getHeight());
                 battleGrid.add(tile, i, j);
             }
         }
@@ -211,7 +211,7 @@ public class MainMenuController {
         currentMap = new BattleMap(mapList.get(mapIndex));
         createBattle();
         enableBattle();
-        updateBattleGrid(16, 16, currentMap);
+        updateBattleGrid();
     }
 
     /**
