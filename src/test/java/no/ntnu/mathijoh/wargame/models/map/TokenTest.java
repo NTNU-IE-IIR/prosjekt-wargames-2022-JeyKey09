@@ -16,13 +16,6 @@ public class TokenTest {
         assertEquals("red", token.getColor());
     }
 
-    // @Test
-    // void testGetImage() {
-    //     Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
-    //     Token token = new Token(unit, "red");
-    //     assertNotNull(token.getImage());
-    // }
-
     @Test
     void testGetUnit() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
@@ -36,7 +29,6 @@ public class TokenTest {
         Token token = new Token(unit, "red");
         token.setColor("blue");
         assertEquals("blue", token.getColor());
-
     }
 
     @Test
