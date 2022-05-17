@@ -4,11 +4,6 @@ import org.junit.jupiter.api.Test;
 
 public class TerrainTest {
     @Test
-    void testGetColor() {
-
-    }
-
-    @Test
     void testGetName() {
 
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -12,7 +13,15 @@
          <children>
             <VBox styleClass="blueArmyBox" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="nameArmy1" alignment="CENTER" onAction="#renameArmy1" styleClass="title" text="Army 1" />
+                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="nameArmy1" alignment="CENTER" disable="true" onAction="#renameArmy1" styleClass="title" text="Army 1" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="changeNameButton1" alignment="CENTER" mnemonicParsing="false" onAction="#openNameField1" text="Change name" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
                   <BorderPane fx:id="tablePosition1" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" styleClass="hbox">
                      <children>
@@ -43,7 +52,12 @@
             </VBox>
             <VBox fx:id="tableArmy2" styleClass="redArmyBox" HBox.hgrow="ALWAYS">
                <children>
-                  <TextField fx:id="nameArmy2" alignment="CENTER" onAction="#renameArmy2" styleClass="title" text="Army 2" />
+                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TextField fx:id="nameArmy2" alignment="CENTER" disable="true" onAction="#renameArmy2" styleClass="title" text="Army 2" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="changeNameButton2" mnemonicParsing="false" onAction="#openNameField2" text="Change Name" />
+                     </children>
+                  </HBox>
                   <BorderPane fx:id="tablePosition2" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="TOP_RIGHT" styleClass="hbox-button">
                      <children>

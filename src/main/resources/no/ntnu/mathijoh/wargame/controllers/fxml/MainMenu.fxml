@@ -70,7 +70,7 @@
             <HBox styleClass="button-location">
                <children>
                   <Button fx:id="resetButton" disable="true" mnemonicParsing="false" onAction="#reset" styleClass="reset-button" text="Reset" />
-                  <Button fx:id="battleButton" disable="true" mnemonicParsing="false" onAction="#battle" styleClass="battle-button" text="Run Battle Step" />
+                  <Button fx:id="battleButton" disable="true" mnemonicParsing="false" onAction="#battle" styleClass="battle-button" text="Run Battle" />
                </children>
             </HBox>
          </children>

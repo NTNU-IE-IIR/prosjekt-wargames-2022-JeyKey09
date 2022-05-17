@@ -5,6 +5,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import no.ntnu.mathijoh.wargame.models.map.Tile;
@@ -55,7 +56,8 @@ public class TilePane extends BorderPane implements ChangeListener<Tile> {
         this.getStyleClass().remove(currentClass);
         this.imageView = null;
         if(getTile().getToken() != null) {
-            imageView  = new ImageView(getTile().getToken().getImage());
+            imageView  = new ImageView();
+            imageView.setImage( new Image(TilePane.class.getResource("images/tokens/" + getTile().getToken().getUnit().getClass().getSimpleName() + ".png").toExternalForm()));
             imageView.setPreserveRatio(true);
             BorderPane container = new BorderPane(imageView);
             container.getStyleClass().add("token-"+tile.getValue().getToken().getColor().toLowerCase());
