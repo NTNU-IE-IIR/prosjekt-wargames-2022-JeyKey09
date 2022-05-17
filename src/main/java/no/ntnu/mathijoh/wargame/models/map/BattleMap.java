@@ -298,7 +298,7 @@ public class BattleMap {
             }
         }
         if (!finished) {
-            throw new IllegalArgumentException("No free space on the map");
+            throw new IllegalArgumentException("There is not enough free space on the map");
         }
     }
 

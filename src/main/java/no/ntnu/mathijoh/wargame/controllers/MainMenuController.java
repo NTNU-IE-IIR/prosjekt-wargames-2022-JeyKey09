@@ -4,6 +4,11 @@ import java.io.File;
 import java.lang.System.Logger;
 import java.util.ArrayList;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import no.ntnu.mathijoh.wargame.fxmodels.ArmyTableView;
 import no.ntnu.mathijoh.wargame.fxmodels.TilePane;
 import no.ntnu.mathijoh.wargame.fxmodels.UnitListDataHolder;
@@ -35,6 +41,7 @@ public class MainMenuController {
     private ArrayList<BattleMap> mapList;
     private Logger logger;
     private Battle battle;
+    private Timeline battleTimeLine;
 
     @FXML
     private Text mapText;
@@ -121,6 +128,7 @@ public class MainMenuController {
     }
 
     private void createBattle() {
+        battle = null;
         Army army1 = new Army(armyList.get(0));
         Army army2 = new Army(armyList.get(1));
         try{
@@ -131,6 +139,7 @@ public class MainMenuController {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText(e.getMessage());
+            alert.show();
         }
         
         updateInfo(army1, army2);
@@ -155,32 +164,47 @@ public class MainMenuController {
      */
     @FXML
     private void loadArmy(ActionEvent e) {
-        this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
-        createMap();
+        if(!isBattlerunning()){
+            this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
+            createMap();
+        }
+
+    }
+
+    private boolean isBattlerunning() {
+        return battleTimeLine != null && battleTimeLine.getStatus() == Timeline.Status.RUNNING;
     }
 
     @FXML
     private void editArmy(ActionEvent e){
-        this.armyList = new ArrayList<>(CentralController.runArmyEditor(armyList, root));
-        createMap();
+        if(!isBattlerunning()){
+            armyList = new ArrayList<>(CentralController.runArmyEditor(armyList, root));
+            createMap();
+        }
+
     }
 
     @FXML
     private void nextTerrain(ActionEvent e) {
-        mapIndex++;
-        if (mapIndex >= mapList.size()) {
-            mapIndex = 0;
+        if(!isBattlerunning()){
+            mapIndex++;
+            if (mapIndex >= mapList.size()) {
+                mapIndex = 0;
+            }
+            createMap();
         }
-        createMap();
     }
 
     @FXML
     private void previousTerrain(ActionEvent e) {
-        mapIndex--;
-        if (mapIndex < 0) {
-            mapIndex = mapList.size() - 1;
+        if(!isBattlerunning()){
+            mapIndex--;
+            if (mapIndex < 0) {
+                mapIndex = mapList.size() - 1;
+            }
+            createMap();
         }
-        createMap();
+
     }
 
     private void createMap() {
@@ -197,12 +221,21 @@ public class MainMenuController {
      */
     @FXML
     private void battle() {
+        SimpleIntegerProperty turns = new SimpleIntegerProperty(0);
+        battleButton.setDisable(true);
+        turns.addListener(((observable, oldValue, newValue) -> newTurn()));
+        battleTimeLine = new Timeline(
+                new KeyFrame(Duration.seconds(Integer.MAX_VALUE), new KeyValue(turns, Integer.MAX_VALUE)));
+        battleTimeLine.playFromStart();
+    }
+
+    private void newTurn() {
         if (battle.isNotFinished()) {
             battle.runStep();
-            updateBattleGrid(16, 16, currentMap);
+            battleGrid.getChildren().forEach(tile -> ((TilePane)tile).drawThisTileAgainBecouseOfChangeOrCreation());
             if (!battle.isNotFinished()) {
-                battleButton.setDisable(true);
                 resetButton.setDisable(false);
+                battleTimeLine.stop();
             }
             army1Table.refresh();
             army2Table.refresh();
@@ -242,7 +275,7 @@ public class MainMenuController {
     private void injectArmyTableView(TableView<UnitListDataHolder> tableView, Army army) {
         tableView.getItems().add(new UnitListDataHolder("Infantry", army.getInfantryUnits()));
         tableView.getItems().add(new UnitListDataHolder("Cavalry", army.getCavalryUnits()));
-        tableView.getItems().add(new UnitListDataHolder("Ranger", army.getRangedUnits()));
+        tableView.getItems().add(new UnitListDataHolder("Ranged", army.getRangedUnits()));
         tableView.getItems().add(new UnitListDataHolder("Commander", army.getCommanderUnits()));
         tableView.getItems().add(new UnitListDataHolder("Total Units", army.getAllUnits()));
     }
@@ -264,7 +297,7 @@ public class MainMenuController {
     }
 
     private void enableBattle() {
-        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle.isNotFinished()) {
+        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle != null && battle.isNotFinished()) {
             battleButton.setDisable(false);
         }
     }
@@ -272,6 +305,5 @@ public class MainMenuController {
     @FXML
     private void reset() {
         createMap();
-        resetButton.setDisable(true);
     }
 }
