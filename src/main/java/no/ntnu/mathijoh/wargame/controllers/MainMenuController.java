@@ -235,6 +235,9 @@ public class MainMenuController {
             if (!battle.isNotFinished()) {
                 resetButton.setDisable(false);
                 battleTimeLine.stop();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, String.format("The winner is %s", battle.getVictoryArmy().getName()));
+                alert.setTitle("Victory");
+                alert.show();
             }
             army1Table.refresh();
             army2Table.refresh();
