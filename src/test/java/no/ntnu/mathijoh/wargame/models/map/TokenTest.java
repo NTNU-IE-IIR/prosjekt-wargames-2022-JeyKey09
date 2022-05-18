@@ -1,6 +1,7 @@
 package no.ntnu.mathijoh.wargame.models.map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +39,12 @@ public class TokenTest {
         Unit unit2 = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         token.setUnit(unit2);
         assertEquals(unit2, token.getUnit());
+    }
+
+    @Test
+    void negativeTestSetUnit() {
+        Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
+        Token token = new Token(unit, "red");
+        assertThrows(IllegalArgumentException.class, () -> token.setUnit(null));
     }
 }

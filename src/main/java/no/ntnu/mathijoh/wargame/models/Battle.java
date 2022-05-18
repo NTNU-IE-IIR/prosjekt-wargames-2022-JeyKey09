@@ -11,13 +11,12 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 /**
  * This class is used to simulate a battle between 2 armies
  */
-public class Battle{
+public class Battle {
     private Army armyOne;
     private Army armyTwo;
     private BattleMap map;
     private Army victoryArmy;
     private Random randomGenerator;
-
 
     /**
      * Constructor for the Batte class
@@ -29,6 +28,9 @@ public class Battle{
     public Battle(Army armyOne, Army armyTwo, BattleMap map) throws IllegalArgumentException {
         if (armyOne == null || armyTwo == null || map == null) {
             throw new IllegalArgumentException("None of the argument can be null");
+        }
+        if (armyOne == armyTwo) {
+            throw new IllegalArgumentException("The armies can't be the same");
         }
         this.armyOne = armyOne;
         this.armyTwo = armyTwo;
@@ -45,7 +47,7 @@ public class Battle{
      * @return the army that still has units after the battle
      */
     public Army simulate() {
-        while(victoryArmy == null){
+        while (isNotFinished()) {
             runStep();
         }
         return victoryArmy;
@@ -66,45 +68,44 @@ public class Battle{
                 attackingArmy = this.armyTwo;
                 defendingArmy = this.armyOne;
             }
-            
+
             Unit attackingUnit = attackingArmy.getRandom();
-            
-            Map<Tile,Unit> possibleTarget = map.getPossibleTargets(attackingUnit);
-            try{
+
+            Map<Tile, Unit> possibleTarget = map.getPossibleTargets(attackingUnit);
+
+            if (!possibleTarget.isEmpty()) {
+
                 Tile toMove = possibleTarget.keySet().iterator().next();
-                        
+
                 Unit defendingUnit = possibleTarget.get(toMove);
-            
+
                 map.moveUnit(attackingUnit, toMove);
-                
+
                 Tile defTile = map.findUnitTile(defendingUnit);
-                
+
                 attackingUnit.attack(defendingUnit, toMove.getTerrain(), defTile.getTerrain());
-                
+
                 if (defendingUnit.getHealth() == 0) {
                     map.removeUnit(defendingUnit);
                     defendingArmy.remove(defendingUnit);
                 }
             }
-            catch(Exception e){
-                System.out.println("No possible targets");
-            }
-
         }
 
-        else if (armyOne.hasUnits()) {
-            this.victoryArmy = armyOne;
-        } else {
+        if (!armyOne.hasUnits()) {
             this.victoryArmy = armyTwo;
+        } else if (!armyTwo.hasUnits()) {
+            this.victoryArmy = armyOne;
         }
+
     }
 
     public boolean isNotFinished() {
-        return armyOne.hasUnits() && armyTwo.hasUnits();
+        return (armyOne.hasUnits() && armyTwo.hasUnits());
     }
 
     public Army getVictoryArmy() throws IllegalStateException {
-        if(victoryArmy == null){
+        if (victoryArmy == null) {
             throw new IllegalStateException("Battle has not been finished yet");
         }
         return victoryArmy;
@@ -114,6 +115,5 @@ public class Battle{
     public String toString() {
         return "Battle [armyOne=" + armyOne + ", armyTwo=" + armyTwo + ", map=" + map + "]";
     }
-
 
 }

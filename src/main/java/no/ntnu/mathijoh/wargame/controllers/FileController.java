@@ -52,7 +52,7 @@ public class FileController {
                     String unitName = info[1];
                     String healthString = info[2]; 
                     int unitHealth = Integer.parseInt(healthString);
-                    placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.getTypeFromName(unittype), unitName, unitHealth));
+                    placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.getUnitTypeFromName(unittype), unitName, unitHealth));
                 } else {
                     throw new IllegalArgumentException("This file contains none valid arguments");
                 }

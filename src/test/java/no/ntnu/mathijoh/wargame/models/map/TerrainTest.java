@@ -23,13 +23,4 @@ public class TerrainTest {
 
     }
 
-    @Test
-    void testValueOf() {
-
-    }
-
-    @Test
-    void testValues() {
-
-    }
 }

@@ -48,7 +48,7 @@ public class UnitFactory {
          * @return the unit type with the given name or null if no unit type with the given name exists
          * @throws IllegalArgumentException if the name is null or empty
          */
-        public static UnitType getTypeFromName(String name) throws IllegalArgumentException{
+        public static UnitType getUnitTypeFromName(String name) throws IllegalArgumentException{
             if(name == null || name.isEmpty()) {
                 throw new IllegalArgumentException("Name cannot be null or empty");
             }

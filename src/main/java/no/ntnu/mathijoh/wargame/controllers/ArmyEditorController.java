@@ -109,7 +109,7 @@ public class ArmyEditorController {
                 int healthValue = Integer.parseInt(health.getText());
                 int amountValue = Integer.parseInt(amount.getText());
                 List<Unit> newUnits = UnitFactory.createUnitList(
-                        UnitFactory.UnitType.getTypeFromName(type.getText()), name.getText(), healthValue,
+                        UnitFactory.UnitType.getUnitTypeFromName(type.getText()), name.getText(), healthValue,
                         amountValue);
                 army.addAll(newUnits);
                 unitTable.getItems().addAll(newUnits);

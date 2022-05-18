@@ -62,7 +62,7 @@ public class Army {
         this.units = new ArrayList<>();
         while (unitsIterator.hasNext()) {
             Unit unit = unitsIterator.next();
-            this.units.add(UnitFactory.createUnit(UnitType.getTypeFromName(unit.getClass().getSimpleName()), unit.getName(), unit.getHealth()));
+            this.units.add(UnitFactory.createUnit(UnitType.getUnitTypeFromName(unit.getClass().getSimpleName()), unit.getName(), unit.getHealth()));
         }
     }
 

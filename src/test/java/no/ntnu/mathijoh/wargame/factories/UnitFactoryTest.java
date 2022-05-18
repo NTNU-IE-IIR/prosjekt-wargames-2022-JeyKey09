@@ -22,7 +22,6 @@ public class UnitFactoryTest {
         List<Unit> unitList = UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "Commander", 15, 10);
         assertEquals(10, unitList.size());
     }
-    
 
     @Test
     void negativeTestCreateUnit() {
@@ -35,5 +34,19 @@ public class UnitFactoryTest {
         assertThrows(IllegalArgumentException.class, () ->  {UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "", 15, 10);});
         assertThrows(IllegalArgumentException.class, () ->  {UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "Commander", 15, 0);});
         assertThrows(IllegalArgumentException.class, () ->  {UnitFactory.createUnitList(UnitFactory.UnitType.COMMANDERUNIT, "Infantry", -15, 10);});
+    }
+
+    @Test
+    void testGetUnitTypeFromName() {
+        assertEquals(UnitFactory.UnitType.COMMANDERUNIT, UnitFactory.UnitType.getUnitTypeFromName("CommanderUnit"));
+        assertEquals(UnitFactory.UnitType.COMMANDERUNIT, UnitFactory.UnitType.getUnitTypeFromName("ComMANderUnit"));
+    }
+
+    @Test
+    void negativeTestGetUnitTypeFromName() {
+        assertThrows(IllegalArgumentException.class, () -> UnitFactory.UnitType.getUnitTypeFromName(""));
+        assertThrows(IllegalArgumentException.class, () -> UnitFactory.UnitType.getUnitTypeFromName(null));
+        assertEquals(null, UnitFactory.UnitType.getUnitTypeFromName("AUnitType"));
+
     }
 }
