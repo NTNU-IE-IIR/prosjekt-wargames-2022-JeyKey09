@@ -41,6 +41,26 @@ public class UnitFactory {
         public String getName() {
             return name;
         }
+
+        /**
+         * Returns the unit type with the given name
+         * @param name the name of the unit type
+         * @return the unit type with the given name or null if no unit type with the given name exists
+         * @throws IllegalArgumentException if the name is null or empty
+         */
+        public static UnitType getTypeFromName(String name) throws IllegalArgumentException{
+            if(name == null || name.isEmpty()) {
+                throw new IllegalArgumentException("Name cannot be null or empty");
+            }
+            UnitType[] types = UnitType.values();
+            UnitType type = null;
+            for(int i = 0; i < types.length && type == null; i++) {
+                if(types[i].getName().equalsIgnoreCase(name)){
+                    type = types[i];
+                }
+            }
+            return type;
+        }
     }
 
     /**
