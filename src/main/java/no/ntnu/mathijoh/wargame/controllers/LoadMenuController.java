@@ -101,4 +101,7 @@ public class LoadMenuController {
             armyButton.getItems().add(menuItem);
         }
     }
+
+
+
 }

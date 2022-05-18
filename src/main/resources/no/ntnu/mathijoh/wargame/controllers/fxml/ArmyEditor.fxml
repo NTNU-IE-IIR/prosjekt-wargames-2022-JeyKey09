@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@../css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.ArmyEditorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@./css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.ArmyEditorController">
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -16,7 +16,7 @@
                   <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
                         <TextField fx:id="nameArmy1" alignment="CENTER" disable="true" onAction="#renameArmy1" styleClass="title" text="Army 1" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="changeNameButton1" alignment="CENTER" mnemonicParsing="false" onAction="#openNameField1" text="Change name" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="changeNameButton1" alignment="CENTER" mnemonicParsing="false" onAction="#openNameField1" text="Change Name" HBox.hgrow="ALWAYS" />
                      </children>
                      <VBox.margin>
                         <Insets />

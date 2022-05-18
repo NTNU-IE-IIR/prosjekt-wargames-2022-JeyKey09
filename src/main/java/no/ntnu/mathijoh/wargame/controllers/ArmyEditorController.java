@@ -1,11 +1,12 @@
 package no.ntnu.mathijoh.wargame.controllers;
+
 import java.util.Arrays;
 import java.util.List;
-
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -17,23 +18,39 @@ import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class ArmyEditorController {
-    
+
     private List<Army> armyList;
     private UnitsTableView tableArmy1;
     private UnitsTableView tableArmy2;
 
-    @FXML private TextField nameArmy1;
-    @FXML private TextField nameArmy2;
-    @FXML private BorderPane tablePosition1;
-    @FXML private BorderPane tablePosition2;
-    @FXML private TextField nameUnit1;
-    @FXML private TextField nameUnit2;
-    @FXML private TextField healthUnit1;
-    @FXML private TextField healthUnit2;
-    @FXML private MenuButton typeUnit1;
-    @FXML private MenuButton typeUnit2;
-    @FXML private TextField amountUnit1;
-    @FXML private TextField amountUnit2;
+    @FXML
+    private TextField nameArmy1;
+    @FXML
+    private TextField nameArmy2;
+    @FXML
+    private BorderPane tablePosition1;
+    @FXML
+    private BorderPane tablePosition2;
+    @FXML
+    private TextField nameUnit1;
+    @FXML
+    private TextField nameUnit2;
+    @FXML
+    private TextField healthUnit1;
+    @FXML
+    private TextField healthUnit2;
+    @FXML
+    private MenuButton typeUnit1;
+    @FXML
+    private MenuButton typeUnit2;
+    @FXML
+    private TextField amountUnit1;
+    @FXML
+    private TextField amountUnit2;
+    @FXML
+    private Button changeNameButton1;
+    @FXML
+    private Button changeNameButton2;
 
     @FXML
     public void initialize() {
@@ -75,38 +92,39 @@ public class ArmyEditorController {
 
     @FXML
     private void addToArmy1(ActionEvent e) {
-        addToArmy(armyList.get(0),tableArmy1, nameUnit1, healthUnit1, typeUnit1, amountUnit1);
+        addToArmy(armyList.get(0), tableArmy1, nameUnit1, healthUnit1, typeUnit1, amountUnit1);
     }
 
-    private void addToArmy(Army army,UnitsTableView unitTable, TextField name, TextField health, MenuButton type, TextField amount) {
-        if (name.getText().isEmpty() || health.getText().isEmpty() || type.getText().equals("Unit Type") || amount.getText().isEmpty()) {
+    private void addToArmy(Army army, UnitsTableView unitTable, TextField name, TextField health, MenuButton type,
+            TextField amount) {
+        if (name.getText().isEmpty() || health.getText().isEmpty() || type.getText().equals("Unit Type")
+                || amount.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Missing information");
             alert.setContentText("Please fill in all the fields");
             alert.showAndWait();
-        }
-        else {
+        } else {
             try {
                 int healthValue = Integer.parseInt(health.getText());
                 int amountValue = Integer.parseInt(amount.getText());
-                List<Unit> newUnits = UnitFactory.createUnitList(UnitFactory.UnitType.valueOf(type.getText().toUpperCase()), name.getText(), healthValue, amountValue);
+                List<Unit> newUnits = UnitFactory.createUnitList(
+                        UnitFactory.UnitType.valueOf(type.getText().toUpperCase()), name.getText(), healthValue,
+                        amountValue);
                 army.addAll(newUnits);
                 unitTable.getItems().addAll(newUnits);
                 name.clear();
                 health.clear();
                 type.setText("Unit Type");
                 amount.clear();
-               
-            }
-            catch (NumberFormatException e) {
+
+            } catch (NumberFormatException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Invalid input");
                 alert.setContentText("Please enter a valid number");
                 alert.showAndWait();
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText(e.getMessage());
@@ -114,24 +132,24 @@ public class ArmyEditorController {
             }
         }
     }
-    
+
     @FXML
     private void addToArmy2(ActionEvent e) {
-        addToArmy(armyList.get(1),tableArmy2, nameUnit2, healthUnit2, typeUnit2, amountUnit2);
+        addToArmy(armyList.get(1), tableArmy2, nameUnit2, healthUnit2, typeUnit2, amountUnit2);
     }
 
     @FXML
     private void removeFromArmy1(ActionEvent e) {
-        if(tableArmy1.getSelectionModel().getSelectedItem() != null ){
+        if (tableArmy1.getSelectionModel().getSelectedItem() != null) {
             armyList.get(0).remove(tableArmy1.getSelectionModel().getSelectedItem());
             tableArmy1.getItems().remove(tableArmy1.getSelectionModel().getSelectedItem());
         }
         tableArmy1.refresh();
     }
-    
+
     @FXML
     public void removeFromArmy2(ActionEvent e) {
-        if(tableArmy2.getSelectionModel().getSelectedItem() != null ){
+        if (tableArmy2.getSelectionModel().getSelectedItem() != null) {
             armyList.get(1).remove(tableArmy2.getSelectionModel().getSelectedItem());
             tableArmy2.getItems().remove(tableArmy2.getSelectionModel().getSelectedItem());
         }
@@ -140,20 +158,39 @@ public class ArmyEditorController {
 
     @FXML
     private void renameArmy1(ActionEvent e) {
-        if(!nameArmy1.getText().isEmpty()){
+        if (!nameArmy1.getText().isEmpty()) {
             armyList.get(0).setName(nameArmy1.getText());
         } else {
             nameArmy1.setText(armyList.get(0).getName());
         }
+        changeNameButton1.setOnAction(this::renameArmy1);
+        changeNameButton1.setText("Change Name");
+        
     }
-    
+
     @FXML
     private void renameArmy2(ActionEvent e) {
-        if(!nameArmy2.getText().isEmpty()){
-        armyList.get(1).setName(nameArmy1.getText());
-    } else {
-        nameArmy2.setText(armyList.get(1).getName());
+        if (!nameArmy2.getText().isEmpty()) {
+            armyList.get(1).setName(nameArmy1.getText());
+        } else {
+            nameArmy2.setText(armyList.get(1).getName());
+        }
+        changeNameButton2.setOnAction(this::openNameField2);
+        changeNameButton2.setText("Change Name");
     }
+
+    @FXML
+    private void openNameField1(ActionEvent e) {
+        nameArmy1.setDisable(false);
+        changeNameButton1.setText("Apply");
+        changeNameButton1.setOnAction(this::renameArmy1);
+    }
+
+    @FXML
+    private void openNameField2(ActionEvent e) {
+        nameArmy2.setDisable(false);
+        changeNameButton2.setText("Apply");
+        changeNameButton2.setOnAction(this::renameArmy2);
     }
 
 }

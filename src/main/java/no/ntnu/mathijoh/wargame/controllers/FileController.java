@@ -50,7 +50,7 @@ public class FileController {
                         && ParameterChecker.checkValidParameter(Integer.parseInt(info[2]))) {
                     String unittype = info[0];
                     String unitName = info[1];
-                    String healthString = info[2];          
+                    String healthString = info[2]; 
                     int unitHealth = Integer.parseInt(healthString);
                     placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.valueOf(unittype.toUpperCase()), unitName, unitHealth));
                 } else {

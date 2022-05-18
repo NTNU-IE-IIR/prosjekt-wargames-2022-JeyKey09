@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="231.0" prefWidth="600.0" styleClass="root" stylesheets="@../css/FileLoader.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.LoadMenuController">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="231.0" prefWidth="600.0" styleClass="root" stylesheets="@./css/FileLoader.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.LoadMenuController">
    <children>
       <HBox prefHeight="12.0" prefWidth="600.0" styleClass="path-box">
          <children>

@@ -20,6 +20,7 @@ public class UnitFactory {
     }
 
     // The different types of units that can be created
+    //TODO: Add getFromName() method to UnitType
     public enum UnitType {
         INFANTRYUNIT("InfantryUnit"),
         RANGEDUNIT("RangedUnit"),
