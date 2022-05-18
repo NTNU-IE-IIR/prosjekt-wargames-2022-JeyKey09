@@ -7,6 +7,7 @@ package no.ntnu.mathijoh.wargame.models.map;
  * @version 1.0
  */
 
+//TODO: 400 lines is to much, split some functions to a separate class
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,15 +30,15 @@ public class BattleMap {
     /**
      * Creates a BattleMap with x*y tiles
      * 
-     * @param x The width of the map
-     * @param y The height of the map
+     * @param x    The width of the map
+     * @param y    The height of the map
      * @param name The name of the map
      */
     public BattleMap(String name, int width, int height) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name can't be null or empty");
         }
-        
+
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Rows and columns can't be negative or 0");
         }
@@ -45,7 +46,7 @@ public class BattleMap {
         this.name = name;
         this.height = height;
         this.width = width;
-        
+
         gridMap = new HashMap<>();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -79,49 +80,50 @@ public class BattleMap {
     }
 
     /**
-     * Adds a new tile to the gridMap
-     * If the tile already exists, it will only change the terrain within that tile
-     * using the changeTerrain method
+     * Sets the tile to the given cordinates
      * 
-     * @param x the x coordinate of the tile
-     * @param y the y coordinate of the tile
-     * @param terrain the terrain in that conrdinate
-     * @throws IllegalArgumentException if the key is invalid or the terrain is null
+     * @param x    the x coordinate of the tile
+     * @param y    the y coordinate of the tile
+     * @param tile the tile to be set
+     * @throws IllegalArgumentException if the position is out of bounds or the tile
+     *                                  is null
      */
     public void setTile(int x, int y, Tile tile) throws IllegalArgumentException {
         if (tile == null) {
             throw new IllegalArgumentException("Terrain cannot be null");
         }
-        if(!gridMap.containsKey(getKey(x, y))){
+        if (!gridMap.containsKey(getKey(x, y))) {
             throw new IllegalArgumentException("This position does not exist on the map");
-        } 
+        }
         gridMap.put(getKey(x, y), tile);
     }
 
-
     /**
      * Changes a terrain in a tile
-     * @param x the x coordinate of the tile
-     * @param y the y coordinate of the tile
+     * 
+     * @param x       the x coordinate of the tile
+     * @param y       the y coordinate of the tile
      * @param terrain the terrain to be changed to
      */
-    public void changeTerrain(int x, int y, Terrain terrain){
-        if(!gridMap.containsKey(getKey(x, y))){
-            throw new IllegalArgumentException("Tile does not exist");
-        }
-        if(terrain == null){
+    public void changeTerrain(int x, int y, Terrain terrain) {
+        if (terrain == null) {
             throw new IllegalArgumentException("Terrain cannot be null");
         }
-        gridMap.get(getKey(x, y)).setTerrain(terrain);
+        getTile(x, y).setTerrain(terrain);
     }
 
     /**
-     * Gets the Terrain at that position
+     * Gets the åtile at the given cordinates
      * 
-     * @param key the cordinates of the terrain type, in the format of X-Y
-     * @return the terrain at that position
+     * @param x the x coordinate of the tile
+     * @param y the y coordinate of the tile
+     * @return the tile at the given cordinates
+     * @throws IllegalArgumentException if the position is out of bounds
      */
-    public Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) throws IllegalArgumentException {
+        if (!gridMap.containsKey(getKey(x, y))) {
+            throw new IllegalArgumentException("Tile does not exist");
+        }
         return gridMap.get(getKey(x, y));
     }
 
@@ -139,7 +141,7 @@ public class BattleMap {
      * 
      * @param unit the unit to find the cordinates of
      * @return the cordinates of the unit
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if the unit is not on the map
      */
     public int[] findUnitCordinates(Unit unit) throws IllegalArgumentException {
         if (unit == null) {
@@ -165,37 +167,38 @@ public class BattleMap {
         Tile result = null;
         Iterator<String> it = gridMap.keySet().iterator();
         while (it.hasNext() && result == null) {
-            String key = it.next();
-            Tile tile = gridMap.get(key);
+            Tile tile = gridMap.get(it.next());
             if (tile.getToken() != null && tile.getToken().getUnit() == unit) {
                 result = tile;
             }
+        }
+        if (result == null) {
+            throw new IllegalArgumentException("Unit is not on the map");
         }
         return result;
     }
 
     /**
      * Removes a unit and places it on the tile
+     * If the unit is already in that position it does nothing
      * 
      * @param unit the unit to be moved
      * @param x    the x cordinate of the tile
      * @param y    the y cordinate of the tile
-     * @throws IllegalArgumentException if the unit is null or if the cordinatesis
-     *                                  nowhere
+     * @throws IllegalArgumentException if the unit is null or if the cordinates are
+     *                                  out of bounds
      */
     public void moveUnit(Unit unit, int x, int y) throws IllegalArgumentException {
-        if (gridMap.get(getKey(x, y)).getToken() != null
-                && !gridMap.get(getKey(x, y)).getToken().getUnit().equals(unit)) {
-            throw new IllegalArgumentException("There is already a unit at that position");
+        if (this.getTile(x, y).getToken() != null
+                && !getTile(x, y).getToken().getUnit().equals(unit)) {
+            throw new IllegalArgumentException("There is already another unit at that position");
         }
-        try {
-            int[] cords = findUnitCordinates(unit);
-            Token token = gridMap.get(getKey(cords[0], cords[1])).getToken();
-            gridMap.get(String.format("%s-%s", cords[0], cords[1])).setToken(null);
-            gridMap.get(getKey(x, y)).setToken(token);
-        } catch (IllegalArgumentException e) {
-            throw e;
+        if(this.getTile(x, y).getToken() == null || !getTile(x, y).getToken().getUnit().equals(unit)){
+            Tile tile = findUnitTile(unit);
+            getTile(x, y).setToken(tile.getToken());
+            tile.setToken(null);
         }
+
     }
 
     /**
@@ -213,13 +216,8 @@ public class BattleMap {
         if (tile.getToken() != null && !tile.getToken().getUnit().equals(unit)) {
             throw new IllegalArgumentException("There is already a unit at that position");
         }
-        try {
-            int[] destination = findTileCordinates(tile);
-            moveUnit(unit, destination[0], destination[1]);
-        } catch (IllegalArgumentException e) {
-            throw e;
-        }
-
+        int[] destination = findTileCordinates(tile);
+        moveUnit(unit, destination[0], destination[1]);
     }
 
     /**
@@ -230,14 +228,14 @@ public class BattleMap {
      */
     private int[] findTileCordinates(Tile tile) {
         if (tile == null) {
-            throw new IllegalArgumentException("Tile can not be null");
+            throw new IllegalArgumentException("Tile can't not be null");
         }
         int[] result = new int[2];
         boolean notFound = true;
         Iterator<String> it = gridMap.keySet().iterator();
         while (it.hasNext() && notFound) {
             String key = it.next();
-            if (gridMap.get(key).equals(tile)) {
+            if (gridMap.get(key) == tile) {
                 notFound = false;
                 String[] cords = key.split("-");
                 result[0] = Integer.parseInt(cords[0]);
@@ -256,14 +254,19 @@ public class BattleMap {
      * @param x the x cordinate
      * @param y the y cordinate
      * @return the key for the tile
+     * @throws IllegalArgumentException if the cordinates are negative
      */
-    private String getKey(int x, int y) {
+    private String getKey(int x, int y) throws IllegalArgumentException {
+        if (x < 0 || y < 0) {
+            throw new IllegalArgumentException("Cordinates can't be negative");
+        }
         return String.format("%s-%s", x, y);
     }
 
     /**
      * Places a unit on the map.
-     * TODO: Implement a better placement system, Now it just places the unit on the first tile it finds
+     * TODO: Implement a better placement system, Now it just places the unit on the
+     * first tile it finds
      * 
      * @param token the token to place on the map
      */
@@ -287,27 +290,25 @@ public class BattleMap {
      * 
      * @param x the row of the unit
      * @param y the coulmn of the unit
+     * @throws IllegalArgumentException if its out of bounds
      */
-    public void removeUnit(int x, int y) {
-        gridMap.get(getKey(x, y)).setToken(null);
+    public void removeTokenFromTile(int x, int y) throws IllegalArgumentException {
+        getTile(x, y).setToken(null);
     }
 
     /**
      * Removes a unit based based on the unit given
      * 
      * @param unit the unit to remove
-     * @throws IllegalArgumentException if the unit is null or if the unit is not on the map
+     * @throws IllegalArgumentException if the unit is null or if the unit is not on
+     *                                  the map
      */
     public void removeUnit(Unit unit) throws IllegalArgumentException {
-        if(unit == null){
+        if (unit == null) {
             throw new IllegalArgumentException("Unit can't be null");
         }
-        try {
-            int[] cords = findUnitCordinates(unit);
-            gridMap.get(getKey(cords[0], cords[1])).setToken(null);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Unit not found");
-        }
+        int[] cords = findUnitCordinates(unit);
+        removeTokenFromTile(cords[0], cords[1]);
     }
 
     /**
@@ -377,28 +378,38 @@ public class BattleMap {
         int y = cords[1];
         // For every column before, after and on the tile
         for (int i = y - 1; i <= y + 1; i++) {
-            // For every row above, on and below the tile
-            for (int j = x - 1; j <= x + 1; j = j + 1) {
-                Tile nTile = gridMap.get(getKey(j, i));
-                // If the tile is not the same tile and not null
-                if (nTile != null && !nTile.equals(tile)) {
-                    // Adds it to the list of tiles
-                    nTiles.add(nTile);
+            if (i > 0) {
+                for (int j = x - 1; j <= x + 1; j = j + 1) {
+                    if (j > 0) {
+                        Tile nTile = gridMap.get(getKey(j, i));
+                        // If the tile is not the same tile and not null
+                        if (nTile != null && !nTile.equals(tile)) {
+                            // Adds it to the list of tiles
+                            nTiles.add(nTile);
+                        }
+                    }
                 }
             }
+
         }
         // Returns the list of tiles
         return nTiles;
     }
 
     /**
+     * Gets the width of the map
      * 
-     * @return
+     * @return the width of the map
      */
     public int getWidth() {
         return this.width;
     }
 
+    /**
+     * Gets the height of the map
+     * 
+     * @return the height of the map
+     */
     public int getHeight() {
         return this.height;
     }
