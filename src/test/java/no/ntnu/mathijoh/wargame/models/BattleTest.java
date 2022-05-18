@@ -2,18 +2,15 @@ package no.ntnu.mathijoh.wargame.models;
 //TODO: Modifiy the tests and clean up the code
 import org.junit.jupiter.api.Test;
 
-import no.ntnu.mathijoh.wargame.controllers.FileController;
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

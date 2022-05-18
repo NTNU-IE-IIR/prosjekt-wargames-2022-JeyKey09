@@ -1,5 +1,4 @@
 package no.ntnu.mathijoh.wargame.models.map;
-//TODD: Add a test for the Tile class
 
 //TODD: Add movemnt cost for the terrain
 
@@ -32,7 +31,10 @@ public enum Terrain {
         return terrainChar;
     }
 
-
+    /**
+     * Returns the name of the terrain
+     * @return the name of the terrain
+     */
     public String getName() {
         return name;
     }
@@ -48,7 +50,7 @@ public enum Terrain {
         Terrain[] values = Terrain.values();
 
         for (int i = 0; result == null && i < values.length; i++) {
-            if (values[i].getName().equals(name)) {
+            if (values[i].getName().equalsIgnoreCase(name)) {
                 result = values[i];
             }
         }
@@ -68,7 +70,7 @@ public enum Terrain {
         Terrain[] values = Terrain.values();
 
         for (int i = 0; result == null && i < values.length; i++) {
-            if (values[i].getTerrainCharacter() == name) {
+            if (values[i].getTerrainCharacter() == Character.toUpperCase(name)) {
                 result = values[i];
             }
         }

@@ -17,6 +17,14 @@ import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
+//TODO: Refactor this to be more readable and less repetitive. Probably can use tabs pane to add more functionality.
+
+/**
+ * Army editor controller
+ * The Controller is responsible for adding modifcation ability to the army.
+ * @author Mathias J. Kirkeby
+ * @version 1.0
+ */
 public class ArmyEditorController {
 
     private List<Army> armyList;
@@ -60,7 +68,12 @@ public class ArmyEditorController {
         tablePosition2.setCenter(tableArmy2);
     }
 
-    public void setArmyList(List<Army> armyList) {
+    /**
+     * Sets the army list
+     * @param armyList the army list
+     * @throws IllegalArgumentException if armylist is null
+     */
+    public void setArmyList(List<Army> armyList) throws IllegalArgumentException{
         if (!ParameterChecker.checkValidParameter(armyList)) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
@@ -77,6 +90,11 @@ public class ArmyEditorController {
         injectArmyToTable(armyList.get(1), tableArmy2);
     }
 
+    /**
+     * Adds units from a army to a table
+     * @param army the army to add
+     * @param table the table to add to
+     */
     private void injectArmyToTable(Army army, UnitsTableView table) {
         table.getItems().clear();
         army.getAllUnits().forEach(unit -> table.getItems().add(unit));
@@ -99,10 +117,7 @@ public class ArmyEditorController {
             TextField amount) {
         if (name.getText().isEmpty() || health.getText().isEmpty() || type.getText().equals("Unit Type")
                 || amount.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Missing information");
-            alert.setContentText("Please fill in all the fields");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill in all the fields");
             alert.showAndWait();
         } else {
             try {
@@ -119,20 +134,19 @@ public class ArmyEditorController {
                 amount.clear();
 
             } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Invalid input");
-                alert.setContentText("Please enter a valid number");
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a valid number");
                 alert.showAndWait();
             } catch (IllegalArgumentException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText(e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
                 alert.showAndWait();
             }
         }
     }
 
+    /**
+     * 
+     * @param e
+     */
     @FXML
     private void addToArmy2(ActionEvent e) {
         addToArmy(armyList.get(1), tableArmy2, nameUnit2, healthUnit2, typeUnit2, amountUnit2);
@@ -165,7 +179,7 @@ public class ArmyEditorController {
         }
         changeNameButton1.setOnAction(this::renameArmy1);
         changeNameButton1.setText("Change Name");
-        
+
     }
 
     @FXML

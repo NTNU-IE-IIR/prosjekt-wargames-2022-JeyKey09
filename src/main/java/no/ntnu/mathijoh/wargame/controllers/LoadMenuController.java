@@ -52,7 +52,6 @@ public class LoadMenuController {
                 }
             } catch (Exception error) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage());
-                alert.setTitle("Error");
                 alert.showAndWait();
             }
             armyButton.setText("Select Army");

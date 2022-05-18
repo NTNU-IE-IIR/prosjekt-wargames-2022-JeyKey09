@@ -1,5 +1,5 @@
 package no.ntnu.mathijoh.wargame.models.map;
-//TODO: Add tests for Tile class
+//TODO: Add tests for BattleMap class
 import org.junit.jupiter.api.Test;
 
 public class BattleMapTest {

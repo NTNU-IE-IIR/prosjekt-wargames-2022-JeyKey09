@@ -100,10 +100,19 @@ public class Battle {
 
     }
 
+    /**
+     * Checks if the battle isn't finished
+     * @return true if the battle is not finished, else false
+     */
     public boolean isNotFinished() {
         return (armyOne.hasUnits() && armyTwo.hasUnits());
     }
 
+    /**
+     * Gets the army that won the battle
+     * @return the army that won the battle
+     * @throws IllegalStateException if the battle is not finished
+     */
     public Army getVictoryArmy() throws IllegalStateException {
         if (victoryArmy == null) {
             throw new IllegalStateException("Battle has not been finished yet");
