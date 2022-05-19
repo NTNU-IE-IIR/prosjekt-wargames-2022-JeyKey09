@@ -3,7 +3,6 @@ import javafx.event.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -100,11 +99,7 @@ public class LoadMenuController {
         if (!armyButton.getItems().isEmpty()) {
             armyButton.getItems().removeAll(armyButton.getItems());
         }
-        EventHandler<ActionEvent> eventHandler = new EventHandler<>() {
-            public void handle(ActionEvent e) {
-                armyButton.setText(((MenuItem) e.getTarget()).getText());
-            }
-        };
+        EventHandler<ActionEvent> eventHandler = e -> armyButton.setText(((MenuItem) e.getTarget()).getText());
         for (Army army : armyList) {
             MenuItem menuItem = (new MenuItem(army.getName()));
             menuItem.setOnAction(eventHandler);
