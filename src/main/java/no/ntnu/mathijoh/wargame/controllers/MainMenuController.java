@@ -186,6 +186,10 @@ public class MainMenuController {
 
     }
 
+    /**
+     * Cycles to the next map
+     * @param e
+     */
     @FXML
     private void nextTerrain(ActionEvent e) {
         if(!isBattlerunning()){
@@ -197,6 +201,10 @@ public class MainMenuController {
         }
     }
 
+    /**
+     * Cycles to the previous map
+     * @param e 
+     */
     @FXML
     private void previousTerrain(ActionEvent e) {
         if(!isBattlerunning()){
@@ -209,6 +217,10 @@ public class MainMenuController {
 
     }
 
+    /**
+     * Creates a the map choosen
+     * 
+     */
     private void createMap() {
         currentMap = new BattleMap(mapList.get(mapIndex));
         createBattle();

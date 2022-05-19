@@ -39,9 +39,9 @@ public class BattleTest {
     @Test
     public void testConstructor() {
         assertThrows(IllegalArgumentException.class, () -> {new Battle (null, null, null);});
-        Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
-        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));
-        BattleMap map = new BattleMap("TestMap", 100, 100);
+        Army armyOne = new Army("name", sampleUnitList(10, "inf", 10, "ran", 10, "cav", 1, "commander"));
+        Army armyTwo = new Army("name", sampleUnitList(0, "inf", 10, "ran", 0, "cav", 1, "commander"));
+        BattleMap map = new BattleMap("TestMap", 10, 10);
         Battle testBattle = new Battle(armyOne, armyTwo, map);
         assertNotNull(testBattle);
     }
