@@ -7,11 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;
-//TODO: Finish the tests for the map class
 public class BattleMapTest {
     
     @Test
-    void testGetTile() {
+    public void testGetTile() {
         BattleMap map = new BattleMap("Testmap",10, 10);
         assertDoesNotThrow(() -> map.getTile(0, 0));
         assertThrows(IllegalArgumentException.class, () -> map.getTile(-1, 0));
@@ -20,14 +19,14 @@ public class BattleMapTest {
 
 
     @Test
-    void testChangeTerrain() {
+    public void testChangeTerrain() {
         BattleMap map = new BattleMap("Testmap",10, 10);
         assertDoesNotThrow(() -> map.changeTerrain(0, 0, Terrain.FOREST));
-        assertEquals(map.getTile(0, 0).getTerrain(), Terrain.FOREST);
+        assertEquals(Terrain.FOREST, map.getTile(0, 0).getTerrain());
     }
 
     @Test
-    void testPlaceUnit() {
+    public void testPlaceUnit() {
         BattleMap map = new BattleMap("Testmap",10, 10);
         Token token = new Token(new InfantryUnit("TestUnit", 10), "Red");
         assertDoesNotThrow(() -> map.placeToken(token, 0, 0));
@@ -36,7 +35,7 @@ public class BattleMapTest {
     }
 
     @Test
-    void testFindUnitCordinates() {
+    public void testFindUnitCordinates() {
         BattleMap map = new BattleMap("Testmap",10, 10);
         InfantryUnit unit = new InfantryUnit("TestUnit", 10);
         Token token = new Token(unit, "Red");
@@ -45,48 +44,72 @@ public class BattleMapTest {
     }
 
     @Test
-    void testFindUnitTile() {
-
+    public void testFindUnitTile() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        Token token = new Token(unit, "Red");
+        assertDoesNotThrow(() -> map.placeToken(token, 0, 0));
+        assertEquals(token,map.findUnitTile(unit).getToken());
     }
 
     @Test
-    void testGetName() {
-
+    public void testGetName() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        assertEquals("Testmap", map.getName());
     }
 
     @Test
-    void testGetPossibleTargets() {
-
+    public void testGetPossibleTargets() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        InfantryUnit unit2 = new InfantryUnit("TestUnit", 10);
+        map.placeToken(new Token(unit, "red"), 0, 0);
+        map.placeToken(new Token(unit2, "blue"), 6, 0);
+        assertEquals(1, map.getPossibleTargets(unit).size());
     }
 
 
     @Test
-    void testMoveUnit() {
-
+    public void testMoveUnit() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        map.placeToken(new Token(unit, "red"), 0, 0);
+        assertDoesNotThrow(() -> map.moveUnit(unit, 1, 0));
+        assertEquals(map.getTile(1, 0).getToken().getUnit(), unit);
     }
 
     @Test
-    void testMoveUnit2() {
-
+    public void testMoveUnit2() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        map.placeToken(new Token(unit, "red"), 0, 0);
+        assertDoesNotThrow(() -> map.moveUnit(unit,map.getTile(1,9)));
+        assertEquals(map.getTile(1, 9).getToken().getUnit(), unit);
     }
 
     @Test
-    void testRemoveUnit() {
-
+    public void testRemoveUnit() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        map.placeToken(new Token(unit, "red"), 0, 0);
+        assertDoesNotThrow(() -> map.removeUnit(unit));
+        assertEquals(null, map.getTile(0, 0).getToken());
     }
 
     @Test
-    void testRemoveUnit2() {
-
+    public void testRemoveTokenFromTile() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        InfantryUnit unit = new InfantryUnit("TestUnit", 10);
+        map.placeToken(new Token(unit, "red"), 0, 0);
+        assertDoesNotThrow(() -> map.removeTokenFromTile(0,0));
+        assertEquals(null, map.getTile(0, 0).getToken());
     }
 
     @Test
-    void testSetTile() {
-
-    }
-
-    @Test
-    void testSetTile2() {
-
+    public void testSetTile() {
+        BattleMap map = new BattleMap("Testmap",10, 10);
+        Tile tile = new Tile(Terrain.FOREST);
+        assertDoesNotThrow(() -> map.setTile(0, 0, tile));
+        assertEquals(map.getTile(0, 0), tile);
     }
 }

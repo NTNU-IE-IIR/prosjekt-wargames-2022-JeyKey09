@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
 import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
@@ -54,9 +53,9 @@ public class FileController {
             placeholderArmy = new Army(cs.nextLine());
             while (cs.hasNext()) {
                 String[] info = cs.nextLine().split(pattern);
-                if (info.length == 3 && ParameterChecker.checkValidParameter(info[0])
-                        && ParameterChecker.checkValidParameter(info[1])
-                        && ParameterChecker.checkValidParameter(Integer.parseInt(info[2]))) {
+                if (info.length == 3 && !info[0].isEmpty()
+                        && !info[1].isEmpty()
+                        && Integer.parseInt(info[2]) > 0 ) {
                     String unittype = info[0];
                     String unitName = info[1];
                     String healthString = info[2];

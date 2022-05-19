@@ -1,5 +1,4 @@
 package no.ntnu.mathijoh.wargame.models;
-//TODO: Modifiy the tests and clean up the code
 import org.junit.jupiter.api.Test;
 
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class BattleTest {
 
-    public List<Unit> sampleUnitList(int infantryNumber, String infantryName, int rangedNumber, String rangedName, 
+    List<Unit> sampleUnitList(int infantryNumber, String infantryName, int rangedNumber, String rangedName, 
     int cavalryNumber, String cavalryName, int commanderNumber, String commanderName)  {
     
     List<Unit> placeholderList = new ArrayList<>();
@@ -46,9 +45,6 @@ public class BattleTest {
         assertNotNull(testBattle);
     }
 
-    /**
-     * The test has a a really low probability of failing, but it is still a good idea to test for the correct behavior.
-     */
     @Test
     public void testSimulate() {
         Army armyOne = new Army("name", sampleUnitList(1, "inf", 1, "ran", 1, "cav", 1, "commander"));
@@ -85,7 +81,7 @@ public class BattleTest {
     }
 
     @Test
-    void testGetVictoryArmy() {
+    public void testGetVictoryArmy() {
         Army armyOne = new Army("name", sampleUnitList(1, "inf", 1, "ran", 1, "cav", 1, "commander"));
         Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 90, "commander"));
         BattleMap map = new BattleMap("Test",10,10);
@@ -97,7 +93,7 @@ public class BattleTest {
     }
 
     @Test
-    void testIsNotFinished() {
+    public void testIsNotFinished() {
         Army armyOne = new Army("name", sampleUnitList(1, "inf", 1, "ran", 1, "cav", 1, "commander"));
         Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 90, "commander"));
         BattleMap map = new BattleMap("Test",10,10);
@@ -107,11 +103,8 @@ public class BattleTest {
         assertFalse(testBattle.isNotFinished());
     }
 
-    /**
-     * Does a negativ and a posetiv test.
-     */
     @Test
-    void getVictoryArmy() {
+    public void getVictoryArmy() {
         Army armyOne = new Army("name", sampleUnitList(1, "inf", 1, "ran", 1, "cav", 1, "commander"));
         Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 90, "commander"));
         BattleMap map = new BattleMap("Test",10,10);
@@ -122,7 +115,7 @@ public class BattleTest {
 
 
     @Test
-    void testRunStep() {
+    public void testRunStep() {
         Army armyOne = new Army("name", sampleUnitList(1, "inf", 1, "ran", 1, "cav", 1, "commander"));
         Army armyTwo = new Army("name", sampleUnitList(0, "inf", 0, "ran", 0, "cav", 90, "commander"));
         BattleMap map = new BattleMap("Test",10,10);

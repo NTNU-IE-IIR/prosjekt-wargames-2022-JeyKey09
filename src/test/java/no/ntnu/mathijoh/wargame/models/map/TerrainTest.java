@@ -6,23 +6,23 @@ import org.junit.jupiter.api.Test;
 public class TerrainTest {
 
     @Test
-    void testGetName() {
+    public void testGetName() {
         assertEquals("Forest", Terrain.FOREST.getName());
     }
 
     @Test
-    void testGetTerrainCharacter() {
+    public void testGetTerrainCharacter() {
         assertEquals('F', Terrain.FOREST.getTerrainCharacter());
     }
 
     @Test
-    void testGetTerrainFromChar() {
+    public void testGetTerrainFromChar() {
         assertEquals(Terrain.FOREST, Terrain.getTerrainFromChar('F'));
         assertEquals(Terrain.FOREST, Terrain.getTerrainFromChar('f'));
     }
 
     @Test
-    void testGetTerrainFromName() {
+    public void testGetTerrainFromName() {
         assertEquals(Terrain.FOREST, Terrain.getTerrainFromName("Forest"));
         assertEquals(Terrain.FOREST, Terrain.getTerrainFromName("FoREst"));
     }

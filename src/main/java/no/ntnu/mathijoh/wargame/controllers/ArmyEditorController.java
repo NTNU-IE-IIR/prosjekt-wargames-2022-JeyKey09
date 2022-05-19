@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
 import no.ntnu.mathijoh.wargame.fxmodels.UnitsTableView;
 import no.ntnu.mathijoh.wargame.models.Army;
-import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 //TODO: Refactor this to be more readable and less repetitive. Probably can use tabs pane to add functionlity for more armies.
@@ -79,8 +78,8 @@ public class ArmyEditorController {
      * @throws IllegalArgumentException if armylist is null
      */
     public void setArmyList(List<Army> armyList) throws IllegalArgumentException {
-        if (!ParameterChecker.checkValidParameter(armyList)) {
-            throw new IllegalArgumentException("Army is not a valid type");
+        if (armyList == null || armyList.isEmpty()) {
+            throw new IllegalArgumentException("ArmyList is null or empty");
         }
         this.armyList = armyList;
         Arrays.stream(UnitFactory.UnitType.values()).forEach(unitType -> {

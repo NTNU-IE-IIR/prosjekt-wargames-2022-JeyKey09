@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class UnitTest {
 
     @Test
-    void posetivTestConstructor() {
+    public void posetivTestConstructor() {
         Unit testObject = null;
 
         try {
@@ -36,7 +36,7 @@ public class UnitTest {
     }
 
     @Test
-    void negativTestConstructor() {
+    public void negativTestConstructor() {
         Unit testObject = null;
 
         try {
@@ -59,7 +59,7 @@ public class UnitTest {
     }
 
     @Test
-    void testAttack() {
+    public void testAttack() {
 
         Unit testObject = new Unit("name", 10, 2, 1) {
             @Override
@@ -91,7 +91,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetArmor() {
+    public void testGetArmor() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -108,7 +108,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetAttack() {
+    public void testGetAttack() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -125,7 +125,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetAttackBonus() {
+    public void testGetAttackBonus() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -141,7 +141,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetAndSetHealth() {
+    public void testGetAndSetHealth() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -161,7 +161,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetName() {
+    public void testGetName() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -177,7 +177,7 @@ public class UnitTest {
     }
 
     @Test
-    void testGetResistBonus() {
+    public void testGetResistBonus() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -193,7 +193,7 @@ public class UnitTest {
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         Unit testObjUnit = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -210,7 +210,7 @@ public class UnitTest {
 
     // Can't test equals in this class since the reference point between the 2 testunit classes is "different"
     @Test
-    void testHashcode() {
+    public void testHashcode() {
         Unit testUnit1 = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -238,7 +238,7 @@ public class UnitTest {
     }
 
     @Test
-    void testAttackWithTerraint() {
+    public void testAttackWithTerraint() {
         Unit testUnit1 = new Unit("name", 10, 2, 1) {
             @Override
             public int getAttackBonus() {
@@ -267,22 +267,22 @@ public class UnitTest {
     }
 
     @Test
-    void testGetTerrainAttackBonus() {
+    public void testGetTerrainAttackBonus() {
         
     }
 
     @Test
-    void testGetTerrainDefenseBonus() {
+    public void testGetTerrainDefenseBonus() {
         
     }
 
     @Test
-    void testPutTerrainAttackBonus() {
+    public void testPutTerrainAttackBonus() {
         
     }
 
     @Test
-    void testPutTerrainDefenceBonus() {
+    public void testPutTerrainDefenceBonus() {
         
     }
 }

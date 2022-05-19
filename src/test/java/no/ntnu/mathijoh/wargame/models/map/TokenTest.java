@@ -11,21 +11,21 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class TokenTest {
     @Test
-    void testGetColor() {
+    public void testGetColor() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         Token token = new Token(unit, "red");
         assertEquals("red", token.getColor());
     }
 
     @Test
-    void testGetUnit() {
+    public void testGetUnit() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         Token token = new Token(unit, "red");
         assertEquals(unit, token.getUnit());
     }
 
     @Test
-    void testSetColor() {
+    public void testSetColor() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         Token token = new Token(unit, "red");
         token.setColor("blue");
@@ -33,7 +33,7 @@ public class TokenTest {
     }
 
     @Test
-    void testSetUnit() {
+    public void testSetUnit() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         Token token = new Token(unit, "red");
         Unit unit2 = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
@@ -42,7 +42,7 @@ public class TokenTest {
     }
 
     @Test
-    void negativeTestSetUnit() {
+    public void negativeTestSetUnit() {
         Unit unit = UnitFactory.createUnit(UnitType.INFANTRYUNIT, "Testy Mc Testylot", 20);
         Token token = new Token(unit, "red");
         assertThrows(IllegalArgumentException.class, () -> token.setUnit(null));

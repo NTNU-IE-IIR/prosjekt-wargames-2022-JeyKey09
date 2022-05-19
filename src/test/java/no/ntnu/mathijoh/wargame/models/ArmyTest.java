@@ -1,6 +1,5 @@
 package no.ntnu.mathijoh.wargame.models;
 
-
 import org.junit.jupiter.api.Test;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class ArmyTest {
 
-    public List<Unit> sampleUnitList(int infantryNumber, int rangedNumber, 
+    List<Unit> sampleUnitList(int infantryNumber, int rangedNumber, 
         int cavalryNumber, int commanderNumber)  {
         
         List<Unit> placeholderList = new ArrayList<>();

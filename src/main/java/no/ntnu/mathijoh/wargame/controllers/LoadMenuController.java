@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
 /**
  * Army Loads controller
@@ -85,7 +84,7 @@ public class LoadMenuController {
      * @param armyList object
      */
     public void setArmyList(List<Army> armyList) {
-        if (!ParameterChecker.checkValidParameter(armyList)) {
+        if (armyList == null) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
         this.armyList = armyList;

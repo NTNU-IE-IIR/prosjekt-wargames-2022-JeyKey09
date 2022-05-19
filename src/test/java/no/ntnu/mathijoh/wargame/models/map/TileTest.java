@@ -13,18 +13,18 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 public class TileTest {
 
     @Test
-    void negativeTestConstructor() {
+    public void negativeTestConstructor() {
         assertThrows(IllegalArgumentException.class, () -> new Tile(null));
         assertThrows(IllegalArgumentException.class, () -> new Tile(null, null));
     }
     @Test
-    void testGetTerrain() {
+    public void testGetTerrain() {
         Tile tile = new Tile(Terrain.PLAINS);
         assertEquals(Terrain.PLAINS, tile.getTerrain());
     }
 
     @Test
-    void testGetAndSetToken() {
+    public void testGetAndSetToken() {
         Tile tile = new Tile(Terrain.PLAINS);
         assertEquals(null, tile.getToken());
         Unit unit = UnitFactory.createUnit(UnitType.CAVALRYUNIT, "Testy mc Testylot", 20);
@@ -34,7 +34,7 @@ public class TileTest {
     }
 
     @Test
-    void testSetTerrain() {
+    public void testSetTerrain() {
         Tile tile = new Tile(Terrain.PLAINS);
         tile.setTerrain(Terrain.FOREST);
         assertEquals(Terrain.FOREST, tile.getTerrain());

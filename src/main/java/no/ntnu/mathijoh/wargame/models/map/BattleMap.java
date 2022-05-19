@@ -293,7 +293,7 @@ public class BattleMap {
     }
 
     /**
-     * Removes a unit specefied by the cordinates on the map
+     * Removes token on the tile
      * 
      * @param x the row of the unit
      * @param y the coulmn of the unit
