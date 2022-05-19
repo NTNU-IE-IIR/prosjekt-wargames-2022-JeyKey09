@@ -56,7 +56,7 @@ public class Token {
     /**
      * Gets the color
      * 
-     * @return
+     * @return the color
      */
     public String getColor() {
         return color;

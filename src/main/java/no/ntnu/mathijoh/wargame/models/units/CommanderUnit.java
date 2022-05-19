@@ -1,12 +1,15 @@
 package no.ntnu.mathijoh.wargame.models.units;
-
+/**
+ * This is the class for the CommanderUnit. 
+ * It is a extension of the CavalryUnit class
+ */
 public class CommanderUnit extends CavalryUnit {
 
     /**
      * Constructor for CommanderUnit class
      * 
      * @param name   of the Unit
-     * @param health how much health it had
+     * @param health how much health it has
      * @param attack of the Unit
      * @param armor  of the Unit
      * @throws IllegalArgumentException if any arguments are null

@@ -7,11 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * Main class for the game.
+ */
 public class App extends Application {
-
-    int xSize = 1000;
-    int ySize = 700;
 
     @Override
     public void start(Stage stage) throws IOException {    
@@ -26,7 +25,7 @@ public class App extends Application {
     
     /**
      * Launches the application
-     * @param args
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch();

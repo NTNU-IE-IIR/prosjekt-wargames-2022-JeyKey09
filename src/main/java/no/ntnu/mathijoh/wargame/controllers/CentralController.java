@@ -26,7 +26,7 @@ public class CentralController {
      * 
      * @param armyList that is gonna be used as a reference for the load menu
      * @param root     the parent menu or main menu to lock the window
-     * @return List<Army> 
+     * @return List of armies that is loaded from the file
      */
     public static List<Army> runLoadMenu(List<Army> armyList, Parent root) {
         try {
@@ -48,16 +48,21 @@ public class CentralController {
         return armyList;
     }
 
+    /**
+     * Fetches the resource from the resources folder
+     * @param filePath the path to the file
+     * @return the resource
+     */
     private static URL getResource(String filePath) {
         return CentralController.class.getResource(filePath);
     }
 
-        /**
+    /**
      * Creation and loading of the loadMenu
      * 
      * @param armyList that is gonna be used as a reference for the load menu
      * @param root     the parent menu or main menu to lock the window
-     * @return List<Army> 
+     * @return A list of armies that has been modified 
      */
     public static List<Army> runArmyEditor(List<Army> armyList, Parent root) {
         try {

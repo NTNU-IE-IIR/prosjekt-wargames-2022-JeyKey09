@@ -23,7 +23,8 @@ public class Battle {
      * 
      * @param armyOne First Army
      * @param armyTwo Second Army
-     * @throws IllegalArgumentException if any of the parameters is null
+     * @param map     BattleMap for the armies to battle on
+     * @throws IllegalArgumentException if any of the parameters is null or if the armies are the same
      */
     public Battle(Army armyOne, Army armyTwo, BattleMap map) throws IllegalArgumentException {
         if (armyOne == null || armyTwo == null || map == null) {
@@ -37,8 +38,8 @@ public class Battle {
         this.map = map;
         this.victoryArmy = null;
         this.randomGenerator = new Random();
-        armyOne.getAllUnits().forEach(unit -> map.placeUnit(new Token(unit, "blue")));
-        armyTwo.getAllUnits().forEach(unit -> map.placeUnit(new Token(unit, "red")));
+        armyOne.getAllUnits().forEach(unit -> map.placeToken(new Token(unit, "blue")));
+        armyTwo.getAllUnits().forEach(unit -> map.placeToken(new Token(unit, "red")));
     }
 
     /**

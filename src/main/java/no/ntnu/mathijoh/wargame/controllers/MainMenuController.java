@@ -92,6 +92,9 @@ public class MainMenuController {
     @FXML
     private GridPane battleGrid;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     */
     @FXML
     public void initialize() {
         mapIndex = 0;
@@ -138,7 +141,7 @@ public class MainMenuController {
             alert.setTitle("Error");
             alert.setHeaderText("Error");
             alert.setContentText(e.getMessage());
-            alert.show();
+            alert.showAndWait();
         }
         
         updateInfo(army1, army2);
@@ -231,13 +234,13 @@ public class MainMenuController {
     private void newTurn() {
         if (battle.isNotFinished()) {
             battle.runStep();
-            battleGrid.getChildren().forEach(tile -> ((TilePane)tile).drawThisTileAgainBecouseOfChangeOrCreation());
+            battleGrid.getChildren().forEach(tile -> ((TilePane)tile).drawTile());
             if (!battle.isNotFinished()) {
                 resetButton.setDisable(false);
                 battleTimeLine.stop();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, String.format("The winner is %s", battle.getVictoryArmy().getName()));
                 alert.setTitle("Victory");
-                alert.show();
+                alert.showAndWait();
             }
             army1Table.refresh();
             army2Table.refresh();

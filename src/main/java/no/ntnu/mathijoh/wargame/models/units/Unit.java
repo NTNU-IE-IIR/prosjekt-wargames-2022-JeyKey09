@@ -23,13 +23,15 @@ public abstract class Unit {
 
     /**
      * Constructor of the Unit Class
+     * Takes in the name, health, attack and armor of the unit
+     * Also 2 HashMaps with the terrain and the bonus for attack and defense
      * 
      * @param name                of the unit
      * @param health              to the unit
      * @param attack              power of the unit
      * @param armor               of the unit
-     * @param terrainAttackBonus  of the unit
-     * @param terrainDefenseBonus of the unit
+     * @param unitTerrainAttackBonus  of the unit
+     * @param unitTerrainDefenceBonus of the unit
      * @throws IllegalArgumentException if any of the parameters is null
      */
     protected Unit(String name, int health, int attack, int armor, HashMap<Terrain, Integer> unitTerrainAttackBonus,
@@ -62,6 +64,8 @@ public abstract class Unit {
 
     /**
      * Constructor of the Unit Class
+     * Takes in the name, health, attack and armor of the unit
+     * Creates 2 blank hashmap for the terrain attack and defense bonus
      * 
      * @param name   of the unit
      * @param health to the unit
@@ -211,7 +215,8 @@ public abstract class Unit {
      * Calculates the damage done to the opponent and sets the health to it
      * 
      * @param opponent the opponent getting attacked
-     * @param terrain  the terrain the unit is on
+     * @param unitsTerrain  the terrain the unit is on
+     * @param opponentsTerrains the terrain the opponent is on
      * @throws IllegalArgumentException if opponent is null or the terrain is null
      */
     public void attack(Unit opponent, Terrain unitsTerrain, Terrain opponentsTerrains) throws IllegalArgumentException {
@@ -246,7 +251,6 @@ public abstract class Unit {
      * Calculates the damage done to the opponent and sets the health to it
      * 
      * @param opponent the opponent getting attacked
-     * @param terrain  the terrain the unit is on
      * @throws IllegalArgumentException if opponent is null
      */
     public void attack(Unit opponent) throws IllegalArgumentException {

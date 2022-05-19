@@ -5,8 +5,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
+/**
+ * A table view that shows all units with their type, name and health
+ * @author Mathias J. Kirkeby
+ * @version 1.0
+ */
 public class UnitsTableView extends TableView<Unit> {
 
+    /**
+     * Constructor for the UnitsTableView
+     */
     public UnitsTableView() {
         super();
         setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

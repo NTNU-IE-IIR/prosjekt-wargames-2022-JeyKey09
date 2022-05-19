@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import no.ntnu.mathijoh.wargame.models.units.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -62,11 +63,7 @@ public class ArmyTest {
         List<Unit> sampleList = sampleUnitList(10, 3,  6, 3);
         testArmy.addAll(sampleList);
         assertEquals(testArmy.getAllUnits(), sampleList);
-        try {
-            testArmy.addAll(null);
-        } catch (IllegalArgumentException e) {
-            assertEquals("Unit list can't be null", e.getMessage());
-        }
+        assertThrows(IllegalArgumentException.class, () -> testArmy.addAll(null));
         assertEquals(testArmy.getAllUnits(), sampleList);
     }
 

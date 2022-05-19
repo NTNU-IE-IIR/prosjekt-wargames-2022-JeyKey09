@@ -16,7 +16,11 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.Army;
-
+/**
+ * Army Loads controller
+ * The Controller is responsible for fetching the information on what file to load and what army to load to.
+ * 
+ */
 public class LoadMenuController {
     
     private List<Army> armyList;
@@ -42,6 +46,9 @@ public class LoadMenuController {
         String replacingArmy = armyButton.getText();
         if (file.exists() && !replacingArmy.equals("Select Army")) {
             try {
+                if(delimiter.isEmpty()){
+                    delimiter = ";";         
+                }
                 Army csvArmy = FileController.getArmyOfCSVFile(file, delimiter);
                 boolean switchedArmy = false;
                 for (int i = 0; i < armyList.size() && !switchedArmy; i++) {
@@ -57,6 +64,10 @@ public class LoadMenuController {
             armyButton.setText("Select Army");
             updateMenuButton();
         }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "File does not exist or army is not selected");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -70,9 +81,9 @@ public class LoadMenuController {
     }
 
     /**
-     * Sets the first army within the controller
+     * Sets the armyList within the controller
      * 
-     * @param Army object
+     * @param armyList object
      */
     public void setArmyList(List<Army> armyList) {
         if (!ParameterChecker.checkValidParameter(armyList)) {

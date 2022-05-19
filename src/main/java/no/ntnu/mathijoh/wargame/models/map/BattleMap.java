@@ -1,20 +1,20 @@
 package no.ntnu.mathijoh.wargame.models.map;
 
-/**
- * This is a class meant for keeping the different tiles in the game
- * and allowing for units to move and "see" within the map.
- * @author Mathias J. Kirkeby
- * @version 1.0
- */
-
-//TODO: 400 lines is to much, split some functions to a separate class
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import no.ntnu.mathijoh.wargame.models.units.Unit;
+//TODO: 400 lines is to much, split some functions to a separate class
 
+/**
+ * This is a class meant for keeping the different tiles in the game
+ * and allowing for units to move and "see" within the map.
+ * 
+ * @author Mathias J. Kirkeby
+ * @version 1.0
+ */
 public class BattleMap {
 
     /**
@@ -30,9 +30,9 @@ public class BattleMap {
     /**
      * Creates a BattleMap with x*y tiles
      * 
-     * @param x    The width of the map
-     * @param y    The height of the map
-     * @param name The name of the map
+     * @param width  The width of the map
+     * @param height The height of the map
+     * @param name   The name of the map
      */
     public BattleMap(String name, int width, int height) throws IllegalArgumentException {
         if (name == null || name.isEmpty()) {
@@ -193,12 +193,12 @@ public class BattleMap {
                 && !getTile(x, y).getToken().getUnit().equals(unit)) {
             throw new IllegalArgumentException("There is already another unit at that position");
         }
-        if(this.getTile(x, y).getToken() == null || !getTile(x, y).getToken().getUnit().equals(unit)){
-            Tile tile = findUnitTile(unit);
-            getTile(x, y).setToken(tile.getToken());
-            tile.setToken(null);
+        if (this.getTile(x, y).getToken() == null || !getTile(x, y).getToken().getUnit().equals(unit)) {
+            Tile unitTile = findUnitTile(unit);
+            Token token = unitTile.getToken();
+            unitTile.setToken(null);
+            placeToken(token, x, y);
         }
-
     }
 
     /**
@@ -266,18 +266,25 @@ public class BattleMap {
     /**
      * Places a unit on the map.
      * TODO: Implement a better placement system, Now it just places the unit on the
-     * first tile it finds
+     * first tile. It also takes to long to place with really big maps and armies
      * 
      * @param token the token to place on the map
      */
-    public void placeUnit(Token token) {
+    public void placeToken(Token token) throws IllegalArgumentException {
+        if (token == null) {
+            throw new IllegalArgumentException("Token can't be null");
+        }
         Iterator<String> it = gridMap.keySet().iterator();
         boolean finished = false;
         while (it.hasNext() && !finished) {
             String key = it.next();
-            if (gridMap.get(key).getToken() == null) {
+            try {
+                placeToken(token, Integer.parseInt(key.split("-")[0]), Integer.parseInt(key.split("-")[1]));
                 finished = true;
-                gridMap.get(key).setToken(token);
+            } catch (IllegalArgumentException e) {
+                if (!e.getMessage().equals("There is already a unit on this tile")) {
+                    throw e;
+                }
             }
         }
         if (!finished) {
@@ -378,19 +385,18 @@ public class BattleMap {
         int y = cords[1];
         // For every column before, after and on the tile
         for (int i = y - 1; i <= y + 1; i++) {
-            if (i > 0) {
-                for (int j = x - 1; j <= x + 1; j = j + 1) {
-                    if (j > 0) {
-                        Tile nTile = gridMap.get(getKey(j, i));
-                        // If the tile is not the same tile and not null
-                        if (nTile != null && !nTile.equals(tile)) {
-                            // Adds it to the list of tiles
-                            nTiles.add(nTile);
-                        }
+            for (int j = x - 1; j <= x + 1; j = j + 1) {
+                try {
+                    Tile nTile = getTile(j, i);
+                    // If the tile is not the same tile and not null
+                    if (nTile != null && !nTile.equals(tile)) {
+                        // Adds it to the list of tiles
+                        nTiles.add(nTile);
                     }
+                } catch (IllegalArgumentException e) {
+                    // Do nothing becouse it is out of bounds
                 }
             }
-
         }
         // Returns the list of tiles
         return nTiles;
@@ -412,5 +418,31 @@ public class BattleMap {
      */
     public int getHeight() {
         return this.height;
+    }
+    /**
+     * Places the token on the specified tile on the map
+     * @param token the token to place
+     * @param x the row of the tile
+     * @param y the column of the tile
+     * @throws IllegalArgumentException if the token is null, the tile is't on the map or the tile is already occupied
+     */
+    public void placeToken(Token token, int x, int y) throws IllegalArgumentException {
+        if (token == null) {
+            throw new IllegalArgumentException("Unit can't be null");
+        }
+        boolean unitAlreadExist = false;
+        try {
+            findUnitCordinates(token.getUnit());
+            unitAlreadExist = true;
+        } catch (IllegalArgumentException e) {
+            Tile tile = getTile(x, y);
+            if (tile.getToken() != null) {
+                throw new IllegalArgumentException("There is already a unit on this tile");
+            }
+            tile.setToken(token);
+        }
+        if (unitAlreadExist) {
+            throw new IllegalArgumentException("There is already a unit on this tile");
+        }
     }
 }

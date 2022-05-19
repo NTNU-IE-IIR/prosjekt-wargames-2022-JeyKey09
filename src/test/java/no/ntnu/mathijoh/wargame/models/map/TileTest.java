@@ -1,6 +1,8 @@
 package no.ntnu.mathijoh.wargame.models.map;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +11,12 @@ import no.ntnu.mathijoh.wargame.factories.UnitFactory.UnitType;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 public class TileTest {
+
+    @Test
+    void negativeTestConstructor() {
+        assertThrows(IllegalArgumentException.class, () -> new Tile(null));
+        assertThrows(IllegalArgumentException.class, () -> new Tile(null, null));
+    }
     @Test
     void testGetTerrain() {
         Tile tile = new Tile(Terrain.PLAINS);
@@ -22,6 +30,7 @@ public class TileTest {
         Unit unit = UnitFactory.createUnit(UnitType.CAVALRYUNIT, "Testy mc Testylot", 20);
         tile.setToken(new Token(unit, "red"));
         assertEquals(unit, tile.getToken().getUnit());
+        assertDoesNotThrow(() -> tile.setToken(null));
     }
 
     @Test
@@ -29,5 +38,6 @@ public class TileTest {
         Tile tile = new Tile(Terrain.PLAINS);
         tile.setTerrain(Terrain.FOREST);
         assertEquals(Terrain.FOREST, tile.getTerrain());
+        assertThrows(IllegalArgumentException.class, () -> tile.setTerrain(null));
     }
 }

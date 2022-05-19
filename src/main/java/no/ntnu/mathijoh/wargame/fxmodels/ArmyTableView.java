@@ -5,7 +5,18 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Army table view
+ * The view is responsible for displaying the amount of units in an army.
+ * It uses the unitlistDataHolder to get the data from the model.
+ * @author Mathias J. Kirkeby
+ * @version 1.0
+ */
 public class ArmyTableView extends TableView<UnitListDataHolder>{
+    
+    /**
+     * Constructor of the army table view
+     */
     public ArmyTableView() {
         super();
         setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);       

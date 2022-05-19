@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class FileControllerTest {
     void testGetArmyOfFile() {
         File file = new File(getClass().getResource("test.csv").getPath().replace("%20", " "));
         assertDoesNotThrow(() -> {
-            Army placeholderArmy = FileController.getArmyOfCSVFile(file, "");
+            Army placeholderArmy = FileController.getArmyOfCSVFile(file);
             assertEquals("Human-army", placeholderArmy.getName());
             assertEquals(true, placeholderArmy.hasUnits());
             assertEquals(2, placeholderArmy.getCavalryUnits().size());
@@ -72,16 +71,17 @@ public class FileControllerTest {
     }
 
     @Test
-    void testSaveArmyToFile() throws FileNotFoundException, IllegalArgumentException, UnknownError {
+    void testSaveArmyToFile() {
         File folder = new File(getClass().getResource("").getPath().replace("%20", " "));
         File savelocation = new File(folder.getAbsolutePath() + "/save.csv");
         Army testArmy = new Army("Army1", sampleUnitList(10, 20, 30, 1));
 
         assertDoesNotThrow(() -> FileController.saveArmyInCSV(savelocation, testArmy));
         assertTrue(savelocation.exists());
-
-        Army loadedArmy = FileController.getArmyOfCSVFile(savelocation, "");
-        assertEquals(testArmy, loadedArmy);
+        assertDoesNotThrow(() -> {
+            Army loadedArmy = FileController.getArmyOfCSVFile(savelocation);
+            assertEquals(testArmy, loadedArmy);
+        });
     }
 
     @Test
@@ -94,7 +94,7 @@ public class FileControllerTest {
     }
 
     @Test
-    void testImportMapFromFile(){
+    void testImportMapFromFile() {
         File terrainfFile = new File(getClass().getResource("maps/example.txt").getPath().replace("%20", " "));
         assertDoesNotThrow(() -> {
             BattleMap map = FileController.importMapFromFile(terrainfFile);
@@ -103,8 +103,10 @@ public class FileControllerTest {
     }
 
     @Test
-    void negativeTestImportMapFromFile(){
+    void negativeTestImportMapFromFile() {
         File terrainfFile = new File(getClass().getResource("maps/wrongExample.txt").getPath().replace("%20", " "));
-        assertThrows(IllegalArgumentException.class, () -> {FileController.importMapFromFile(terrainfFile);});
+        assertThrows(IllegalArgumentException.class, () -> {
+            FileController.importMapFromFile(terrainfFile);
+        });
     }
 }

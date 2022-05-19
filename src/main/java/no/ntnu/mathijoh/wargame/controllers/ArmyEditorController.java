@@ -17,11 +17,12 @@ import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.ParameterChecker;
 import no.ntnu.mathijoh.wargame.models.units.Unit;
 
-//TODO: Refactor this to be more readable and less repetitive. Probably can use tabs pane to add more functionality.
+//TODO: Refactor this to be more readable and less repetitive. Probably can use tabs pane to add functionlity for more armies.
 
 /**
  * Army editor controller
  * The Controller is responsible for adding modifcation ability to the army.
+ * 
  * @author Mathias J. Kirkeby
  * @version 1.0
  */
@@ -60,6 +61,9 @@ public class ArmyEditorController {
     @FXML
     private Button changeNameButton2;
 
+    /**
+     * Initialize method
+     */
     @FXML
     public void initialize() {
         tableArmy1 = new UnitsTableView();
@@ -70,10 +74,11 @@ public class ArmyEditorController {
 
     /**
      * Sets the army list
+     * 
      * @param armyList the army list
      * @throws IllegalArgumentException if armylist is null
      */
-    public void setArmyList(List<Army> armyList) throws IllegalArgumentException{
+    public void setArmyList(List<Army> armyList) throws IllegalArgumentException {
         if (!ParameterChecker.checkValidParameter(armyList)) {
             throw new IllegalArgumentException("Army is not a valid type");
         }
@@ -92,7 +97,8 @@ public class ArmyEditorController {
 
     /**
      * Adds units from a army to a table
-     * @param army the army to add
+     * 
+     * @param army  the army to add
      * @param table the table to add to
      */
     private void injectArmyToTable(Army army, UnitsTableView table) {
@@ -100,19 +106,46 @@ public class ArmyEditorController {
         army.getAllUnits().forEach(unit -> table.getItems().add(unit));
     }
 
+    /**
+     * Changes the new unit type for army 1 when creating a new unit
+     * 
+     * @param event menu item event
+     */
     private void changeNewUnitType1(ActionEvent event) {
         typeUnit1.setText(((MenuItem) event.getSource()).getText());
     }
 
+    /**
+     * Changes the new unit type for army 2 when creating a new unit
+     * 
+     * @param event menu item event
+     */
     private void changeNewUnitType2(ActionEvent event) {
         typeUnit2.setText(((MenuItem) event.getSource()).getText());
     }
 
+    /**
+     * Creates the unit and adds it to army 1
+     * 
+     * @param e button event
+     */
     @FXML
     private void addToArmy1(ActionEvent e) {
         addToArmy(armyList.get(0), tableArmy1, nameUnit1, healthUnit1, typeUnit1, amountUnit1);
     }
 
+    /**
+     * Used in both addToArmy1 and addToArmy2
+     * Empties the text fields and adds the unit to the army
+     * Creates a popup if it is missing parameters
+     * 
+     * @param army      the army to add to
+     * @param unitTable the table to add to
+     * @param name      the name of the unit
+     * @param health    the health of the unit
+     * @param type      the type of the unit
+     * @param amount    the amount of the units with these parameters
+     */
     private void addToArmy(Army army, UnitsTableView unitTable, TextField name, TextField health, MenuButton type,
             TextField amount) {
         if (name.getText().isEmpty() || health.getText().isEmpty() || type.getText().equals("Unit Type")
@@ -144,14 +177,20 @@ public class ArmyEditorController {
     }
 
     /**
+     * Creates the unit and adds it to army 2
      * 
-     * @param e
+     * @param e button event
      */
     @FXML
     private void addToArmy2(ActionEvent e) {
         addToArmy(armyList.get(1), tableArmy2, nameUnit2, healthUnit2, typeUnit2, amountUnit2);
     }
 
+    /**
+     * Removes the selected unit from army 1
+     * 
+     * @param e button event
+     */
     @FXML
     private void removeFromArmy1(ActionEvent e) {
         if (tableArmy1.getSelectionModel().getSelectedItem() != null) {
@@ -161,6 +200,11 @@ public class ArmyEditorController {
         tableArmy1.refresh();
     }
 
+    /**
+     * Removes the selected unit from army 2
+     * 
+     * @param e button event
+     */
     @FXML
     public void removeFromArmy2(ActionEvent e) {
         if (tableArmy2.getSelectionModel().getSelectedItem() != null) {
@@ -170,6 +214,11 @@ public class ArmyEditorController {
         tableArmy2.refresh();
     }
 
+    /**
+     * Changes the name of army 1 and locks the textfield
+     * 
+     * @param e button event or key event "enter" in the textfield
+     */
     @FXML
     private void renameArmy1(ActionEvent e) {
         if (!nameArmy1.getText().isEmpty()) {
@@ -182,6 +231,11 @@ public class ArmyEditorController {
 
     }
 
+    /**
+     * Changes the name of army 1 and locks the textfield
+     * 
+     * @param e button event or key event "enter" in the textfield
+     */
     @FXML
     private void renameArmy2(ActionEvent e) {
         if (!nameArmy2.getText().isEmpty()) {
@@ -193,6 +247,11 @@ public class ArmyEditorController {
         changeNameButton2.setText("Change Name");
     }
 
+    /**
+     * Opens up the textfield for army's 1 name
+     * 
+     * @param e button event
+     */
     @FXML
     private void openNameField1(ActionEvent e) {
         nameArmy1.setDisable(false);
@@ -200,6 +259,11 @@ public class ArmyEditorController {
         changeNameButton1.setOnAction(this::renameArmy1);
     }
 
+    /**
+     * Opens up the textfield for army's 2 name
+     * 
+     * @param e button event
+     */
     @FXML
     private void openNameField2(ActionEvent e) {
         nameArmy2.setDisable(false);

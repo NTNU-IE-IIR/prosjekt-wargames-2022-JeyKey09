@@ -21,23 +21,32 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
  */
 public class FileController {
 
-    private FileController() {}
+    private FileController() {
+    }
 
     /**
+     * A loader to fetch a Army from a CSV file.
      * 
-     * @param file a file object of a CSV file. Defualt Delimiter used is ";"
+     * @param file    a file object of a CSV file.
+     * @param pattern the pattern or symbol used to seperate the values in the CSV
+     *                file
      * @return a Army with every soldier from the CSV
      * @throws FileNotFoundException    if the file couldn't be found
-     * @throws IllegalArgumentException if the CSV file contained invalid parameters
-     *                                  or it is not a CSV file
+     * @throws IllegalArgumentException if any of the parameters are null, if a
+     *                                  delimiter is not set, if the file is not a
+     *                                  CSV file or if the file contains none valid
+     *                                  parameters
      */
     public static Army getArmyOfCSVFile(File file, String pattern)
             throws FileNotFoundException, IllegalArgumentException, UnknownError {
-        if (!file.getAbsolutePath().matches("^.*\\.(csv)$")) {
-            throw new IllegalArgumentException("This is not a CSV file");
+        if (file == null) {
+            throw new IllegalArgumentException("Need to specify a file to be used");
         }
-        if (pattern.isEmpty()) {
-            pattern = ";";
+        if (pattern == null || pattern.isEmpty()) {
+            throw new IllegalArgumentException("Need to specify a pattern to seperate the values");
+        }
+        if (!file.getAbsolutePath().matches("^.*\\.(csv)$") || !file.exists()) {
+            throw new IllegalArgumentException("This is not a CSV file or the file doesn't exist");
         }
         Army placeholderArmy = null;
         try (Scanner cs = new Scanner(file)) {
@@ -50,9 +59,10 @@ public class FileController {
                         && ParameterChecker.checkValidParameter(Integer.parseInt(info[2]))) {
                     String unittype = info[0];
                     String unitName = info[1];
-                    String healthString = info[2]; 
+                    String healthString = info[2];
                     int unitHealth = Integer.parseInt(healthString);
-                    placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.getUnitTypeFromName(unittype), unitName, unitHealth));
+                    placeholderArmy.add(UnitFactory.createUnit(UnitFactory.UnitType.getUnitTypeFromName(unittype),
+                            unitName, unitHealth));
                 } else {
                     throw new IllegalArgumentException("This file contains none valid arguments");
                 }
@@ -62,9 +72,25 @@ public class FileController {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("The file contains none valid arguments");
         } catch (Exception e) {
-            placeholderArmy = null;
+            throw new UnknownError("We are unsure about what happened, please try again");
         }
         return placeholderArmy;
+    }
+
+    /**
+     * A loader to fetch a Army from a CSV file.
+     * Uses the default pattern ";"
+     * 
+     * @param file a file object of a CSV file.
+     * @return a Army with every soldier from the CSV
+     * @throws FileNotFoundException    if the file couldn't be found
+     * @throws IllegalArgumentException if the CSV file contained invalid parameters
+     *                                  or it is not a CSV file
+     */
+    public static Army getArmyOfCSVFile(File file)
+            throws FileNotFoundException, IllegalArgumentException, UnknownError {
+        return getArmyOfCSVFile(file, ";");
+
     }
 
     /**
@@ -99,11 +125,14 @@ public class FileController {
     }
 
     /**
-     * Reads a Terrain file that contains of 16x16 character that represents the terrain
-     * It only accepts squares 
+     * Reads a Terrain file that contains of 16x16 character that represents the
+     * terrain
+     * It only accepts squares
      * 
      * @param file a file object that contains a multiple terrain chars
      * @return a BattleMap with the terrain
+     * @throws FileNotFoundException    if the file couldn't be found
+     * @throws IllegalArgumentException if the file is not a valid map file
      */
     public static BattleMap importMapFromFile(File file) throws IllegalArgumentException, FileNotFoundException {
         if (!file.getAbsolutePath().matches("^.*\\.(txt)$")) {
@@ -112,9 +141,9 @@ public class FileController {
         int width = 0;
         ArrayList<String> bufferList = new ArrayList<>();
         try (Scanner cs = new Scanner(file)) {
-            while(cs.hasNext()) {
+            while (cs.hasNext()) {
                 String line = cs.nextLine();
-                if (bufferList.isEmpty()){
+                if (bufferList.isEmpty()) {
                     bufferList.add(line);
                     width = line.length();
                 } else if (line.length() != width) {
@@ -131,7 +160,7 @@ public class FileController {
         Iterator<String> buffer = bufferList.iterator();
         BattleMap map = new BattleMap(file.getName().split(".txt")[0], width, bufferList.size());
         int y = 0;
-        while(buffer.hasNext()){
+        while (buffer.hasNext()) {
             String line = buffer.next();
             for (int i = 0; i < line.length(); i++) {
                 map.changeTerrain(i, y, Terrain.getTerrainFromChar(line.charAt(i)));

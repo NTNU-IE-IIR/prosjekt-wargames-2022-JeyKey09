@@ -7,7 +7,7 @@ import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
+//TODO: Finish the tests for unit classes
 public class UnitTest {
 
     @Test

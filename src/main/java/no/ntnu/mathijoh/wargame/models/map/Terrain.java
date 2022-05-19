@@ -9,14 +9,33 @@ package no.ntnu.mathijoh.wargame.models.map;
  * @version 1.0
  */
 public enum Terrain {
+    /**
+     * The grass terrain
+     */
     PLAINS("Plains", 'P'),
+    /**
+     * The forest terrain
+     */
     FOREST("Forest", 'F'),
+    /**
+     * The mountain terrain
+     */
     HILL("Hill", 'H'),
+    /**
+     * A none terrain. Used for testing or if none of the terrain types are
+     * applicable.
+     */
     NONE("None", 'N');
 
     private char terrainChar;
     private String name;
 
+    /**
+     * Constructor for the terrain
+     * 
+     * @param name        the name of the terrain
+     * @param terrainChar the character representation of the terrain
+     */
     private Terrain(String name, char terrainChar) {
         this.terrainChar = terrainChar;
         this.name = name;
@@ -33,6 +52,7 @@ public enum Terrain {
 
     /**
      * Returns the name of the terrain
+     * 
      * @return the name of the terrain
      */
     public String getName() {
@@ -40,12 +60,16 @@ public enum Terrain {
     }
 
     /**
-     * Returns the terrain based on the char representation
+     * Returns the terrain based on the name
+     * It is not case sensitive
      * 
-     * @param name
+     * @param name the name of the terrain
      * @return the terrain that is the
      */
-    public static Terrain getTerrainFromName(String name) {
+    public static Terrain getTerrainFromName(String name) throws IllegalArgumentException {
+        if (name == null) {
+            throw new IllegalArgumentException("Name is not valid");
+        }
         Terrain result = null;
         Terrain[] values = Terrain.values();
 
@@ -54,13 +78,12 @@ public enum Terrain {
                 result = values[i];
             }
         }
-
         return result;
-
     }
 
     /**
      * Returns the terrain based on the char representation
+     * Not case sensitive
      * 
      * @param name the char representation of the terrain
      * @return the terrain

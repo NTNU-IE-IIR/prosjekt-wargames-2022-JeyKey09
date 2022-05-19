@@ -37,8 +37,7 @@ public class BattleTest {
     }
 
     @Test
-    public void testPosetivAndNegativConstructor() {
-        
+    public void testConstructor() {
         assertThrows(IllegalArgumentException.class, () -> {new Battle (null, null, null);});
         Army armyOne = new Army("name", sampleUnitList(100, "inf", 100, "ran", 100, "cav", 1, "commander"));
         Army armyTwo = new Army("name", sampleUnitList(0, "inf", 100, "ran", 0, "cav", 1, "commander"));

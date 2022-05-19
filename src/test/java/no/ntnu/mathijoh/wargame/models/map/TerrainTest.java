@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 public class TerrainTest {
+
     @Test
     void testGetName() {
         assertEquals("Forest", Terrain.FOREST.getName());
