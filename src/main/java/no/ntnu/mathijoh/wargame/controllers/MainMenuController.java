@@ -19,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import no.ntnu.mathijoh.wargame.fxmodels.ArmyTableView;
 import no.ntnu.mathijoh.wargame.fxmodels.TilePane;
@@ -241,8 +242,8 @@ public class MainMenuController {
         battleButton.setDisable(true);
         turns.addListener(((observable, oldValue, newValue) -> newTurn()));
         battleTimeLine = new Timeline(
-                new KeyFrame(Duration.seconds(Integer.MAX_VALUE), new KeyValue(turns, Integer.MAX_VALUE)));
-            
+                new KeyFrame(Duration.seconds(1), new KeyValue(turns, 1)));
+        battleTimeLine.setCycleCount(Animation.INDEFINITE);
         battleTimeLine.playFromStart();
     }
 
@@ -253,7 +254,11 @@ public class MainMenuController {
             if (!battle.isNotFinished()) {
                 resetButton.setDisable(false);
                 battleTimeLine.stop();
-                alertVictory(battle.getVictoryArmy());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Victory");
+                alert.setHeaderText("Victory");
+                alert.setContentText(battle.getVictoryArmy().getName() + " has won the battle!");
+                alert.show();               
             }
         }
         army1Table.refresh();
@@ -298,6 +303,12 @@ public class MainMenuController {
         tableView.getItems().add(new UnitListDataHolder("Total Units", army.getAllUnits()));
     }
 
+    @FXML
+    private void closeWindow(ActionEvent e) {
+        Stage stage = (Stage)root.getScene().getWindow();
+        stage.close();
+    }
+
     /**
      * Cleans the UnitTables
      */
@@ -314,20 +325,14 @@ public class MainMenuController {
         army2Table.getItems().clear();
     }
 
+    /**
+     * Checks if a battle can be enabled
+     */
     private void enableBattle() {
         if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle != null
                 && battle.isNotFinished()) {
             battleButton.setDisable(false);
         }
-    }
-
-    private void alertVictory(Army army) {
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Victory");
-        alert.setHeaderText("Victory");
-        alert.setContentText(army.getName() + " has won the battle!");
-        alert.showAndWait();
     }
 
     @FXML

@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import no.ntnu.mathijoh.wargame.factories.UnitFactory;
-import no.ntnu.mathijoh.wargame.factories.UnitFactory.UnitType;
 import no.ntnu.mathijoh.wargame.models.units.CavalryUnit;
 import no.ntnu.mathijoh.wargame.models.units.CommanderUnit;
 import no.ntnu.mathijoh.wargame.models.units.InfantryUnit;

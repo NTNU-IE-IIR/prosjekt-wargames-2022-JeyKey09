@@ -54,13 +54,12 @@ public class LoadMenuController {
                         armyList.set(i, csvArmy);
                         switchedArmy = true;
                     }
+                    closeWindow(e);
                 }
             } catch (Exception error) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, error.getMessage());
                 alert.showAndWait();
             }
-            armyButton.setText("Select Army");
-            updateMenuButton();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "File does not exist or army is not selected");

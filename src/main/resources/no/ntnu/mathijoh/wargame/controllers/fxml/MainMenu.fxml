@@ -12,7 +12,7 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#loadArmy" text="Load Army From CSV" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" text="Close" onAction="#close" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
