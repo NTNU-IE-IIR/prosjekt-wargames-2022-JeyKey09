@@ -56,7 +56,7 @@
           <artifactId>javafx-maven-plugin</artifactId>
           <version>${javafx.maven.plugin.version}</version>
               <configuration>
-                <mainClass>no.ntnu.mathijoh.wargame.App</mainClass>
+                <mainClass>no.ntnu.mathijoh.wargame/no.ntnu.mathijoh.wargame.App</mainClass>
               </configuration>
         </plugin>
 
