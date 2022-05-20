@@ -140,4 +140,16 @@ public class UnitFactory {
         }
         return unitList;
     }
+
+    /**
+     * Copies a unit
+     * @param unit the unit to copy
+     * @return a copy of the unit
+     */
+    public static Unit copyUnit(Unit unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit can't be null");
+        }
+        return createUnit(UnitType.getUnitTypeFromName(unit.getClass().getSimpleName()), unit.getName(), unit.getHealth());
+    }
 }

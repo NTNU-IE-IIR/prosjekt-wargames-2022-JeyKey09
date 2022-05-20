@@ -62,12 +62,8 @@ public class Army {
             throw new IllegalArgumentException("Army can't be null");
         }
         this.name = army.name;
-        Iterator<Unit> unitsIterator = army.getIterator();
         this.units = new ArrayList<>();
-        while (unitsIterator.hasNext()) {
-            Unit unit = unitsIterator.next();
-            this.units.add(UnitFactory.createUnit(UnitType.getUnitTypeFromName(unit.getClass().getSimpleName()), unit.getName(), unit.getHealth()));
-        }
+        army.getAllUnits().forEach(unit -> this.units.add(UnitFactory.copyUnit(unit)));
     }
 
     private Iterator<Unit> getIterator() {

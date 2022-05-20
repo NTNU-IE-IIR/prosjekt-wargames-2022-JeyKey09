@@ -1,6 +1,6 @@
 package no.ntnu.mathijoh.wargame.models.units;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 
 import no.ntnu.mathijoh.wargame.models.map.Terrain;
 
@@ -18,8 +18,8 @@ public abstract class Unit {
     private int health;
     private int attack;
     private int armor;
-    private HashMap<Terrain, Integer> terrainAttackBonus;
-    private HashMap<Terrain, Integer> terrainDefenseBonus;
+    private EnumMap<Terrain, Integer> terrainAttackBonus;
+    private EnumMap<Terrain, Integer> terrainDefenseBonus;
 
     /**
      * Constructor of the Unit Class
@@ -34,8 +34,8 @@ public abstract class Unit {
      * @param unitTerrainDefenceBonus of the unit
      * @throws IllegalArgumentException if any of the parameters is null
      */
-    protected Unit(String name, int health, int attack, int armor, HashMap<Terrain, Integer> unitTerrainAttackBonus,
-            HashMap<Terrain, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
+    protected Unit(String name, int health, int attack, int armor, EnumMap<Terrain, Integer> unitTerrainAttackBonus,
+            EnumMap<Terrain, Integer> unitTerrainDefenceBonus) throws IllegalArgumentException {
         if (!checkValidParameter(name)) {
             throw new IllegalArgumentException("Name can't be null or nothing");
         }
@@ -58,8 +58,8 @@ public abstract class Unit {
         this.attack = attack;
         this.armor = armor;
         this.health = health;
-        this.terrainAttackBonus = new HashMap<>(unitTerrainAttackBonus);
-        this.terrainDefenseBonus = new HashMap<>(unitTerrainDefenceBonus);
+        this.terrainAttackBonus = new EnumMap<>(unitTerrainAttackBonus);
+        this.terrainDefenseBonus = new EnumMap<>(unitTerrainDefenceBonus);
     }
 
     /**
@@ -90,8 +90,8 @@ public abstract class Unit {
         this.attack = attack;
         this.armor = armor;
         this.health = health;
-        this.terrainAttackBonus = new HashMap<>();
-        this.terrainDefenseBonus = new HashMap<>();
+        this.terrainAttackBonus = new EnumMap<>(Terrain.class);
+        this.terrainDefenseBonus = new EnumMap<>(Terrain.class);
     }
 
     /**
@@ -256,6 +256,7 @@ public abstract class Unit {
     public void attack(Unit opponent) throws IllegalArgumentException {
         attack(opponent, Terrain.NONE, Terrain.NONE);
     }
+
 
     @Override
     public String toString() {
