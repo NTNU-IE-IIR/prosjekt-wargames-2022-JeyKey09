@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@./css/ArmyEditor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.mathijoh.wargame.controllers.ArmyEditorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root" stylesheets="@./css/ArmyEditor.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/" fx:controller="no.ntnu.mathijoh.wargame.controllers.ArmyEditorController">
    <center>
       <HBox BorderPane.alignment="CENTER">
          <children>
