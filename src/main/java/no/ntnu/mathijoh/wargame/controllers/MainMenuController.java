@@ -304,7 +304,7 @@ public class MainMenuController {
     }
 
     @FXML
-    private void closeWindow(ActionEvent e) {
+    private void close(ActionEvent e) {
         Stage stage = (Stage)root.getScene().getWindow();
         stage.close();
     }
