@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.Animation;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,7 +64,7 @@ public class MainMenuController {
 
     @FXML
     private VBox army2UnitBox;
-        
+
     @FXML
     private Tab army1Tab;
 
@@ -115,8 +116,6 @@ public class MainMenuController {
         army1UnitBox.getChildren().add(army1UnitTable);
         army2UnitBox.getChildren().add(army2UnitTable);
 
-
-
         File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
         for (File file : dir.listFiles()) {
             try {
@@ -133,9 +132,9 @@ public class MainMenuController {
         battle = null;
         Army army1 = new Army(armyList.get(0));
         Army army2 = new Army(armyList.get(1));
-        try{
+        try {
             this.battle = new Battle(army1, army2, currentMap);
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.log(Logger.Level.ERROR, e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -143,7 +142,7 @@ public class MainMenuController {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-        
+
         updateInfo(army1, army2);
         resetButton.setDisable(true);
     }
@@ -153,7 +152,8 @@ public class MainMenuController {
         battleGrid.getChildren().clear();
         for (int i = 0; i < currentMap.getHeight(); i++) {
             for (int j = 0; j < currentMap.getWidth(); j++) {
-                TilePane tile = new TilePane(currentMap.getTile(i, j), battleGrid.heightProperty(), currentMap.getHeight());
+                TilePane tile = new TilePane(currentMap.getTile(i, j), battleGrid.heightProperty(),
+                        currentMap.getHeight());
                 battleGrid.add(tile, i, j);
             }
         }
@@ -166,7 +166,7 @@ public class MainMenuController {
      */
     @FXML
     private void loadArmy(ActionEvent e) {
-        if(!isBattlerunning()){
+        if (!isBattlerunning()) {
             this.armyList = new ArrayList<>(CentralController.runLoadMenu(armyList, root));
             createMap();
         }
@@ -174,12 +174,12 @@ public class MainMenuController {
     }
 
     private boolean isBattlerunning() {
-        return battleTimeLine != null && battleTimeLine.getStatus() == Timeline.Status.RUNNING;
+        return battleTimeLine != null && battleTimeLine.getStatus() == Animation.Status.RUNNING;
     }
 
     @FXML
-    private void editArmy(ActionEvent e){
-        if(!isBattlerunning()){
+    private void editArmy(ActionEvent e) {
+        if (!isBattlerunning()) {
             armyList = new ArrayList<>(CentralController.runArmyEditor(armyList, root));
             createMap();
         }
@@ -188,11 +188,12 @@ public class MainMenuController {
 
     /**
      * Cycles to the next map
+     * 
      * @param e
      */
     @FXML
     private void nextTerrain(ActionEvent e) {
-        if(!isBattlerunning()){
+        if (!isBattlerunning()) {
             mapIndex++;
             if (mapIndex >= mapList.size()) {
                 mapIndex = 0;
@@ -203,11 +204,12 @@ public class MainMenuController {
 
     /**
      * Cycles to the previous map
-     * @param e 
+     * 
+     * @param e
      */
     @FXML
     private void previousTerrain(ActionEvent e) {
-        if(!isBattlerunning()){
+        if (!isBattlerunning()) {
             mapIndex--;
             if (mapIndex < 0) {
                 mapIndex = mapList.size() - 1;
@@ -240,25 +242,24 @@ public class MainMenuController {
         turns.addListener(((observable, oldValue, newValue) -> newTurn()));
         battleTimeLine = new Timeline(
                 new KeyFrame(Duration.seconds(Integer.MAX_VALUE), new KeyValue(turns, Integer.MAX_VALUE)));
+            
         battleTimeLine.playFromStart();
     }
 
     private void newTurn() {
         if (battle.isNotFinished()) {
             battle.runStep();
-            battleGrid.getChildren().forEach(tile -> ((TilePane)tile).drawTile());
+            battleGrid.getChildren().forEach(tile -> ((TilePane) tile).drawTile());
             if (!battle.isNotFinished()) {
                 resetButton.setDisable(false);
                 battleTimeLine.stop();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, String.format("The winner is %s", battle.getVictoryArmy().getName()));
-                alert.setTitle("Victory");
-                alert.showAndWait();
+                alertVictory(battle.getVictoryArmy());
             }
-            army1Table.refresh();
-            army2Table.refresh();
-            army1UnitTable.refresh();
-            army2UnitTable.refresh();        
         }
+        army1Table.refresh();
+        army2Table.refresh();
+        army1UnitTable.refresh();
+        army2UnitTable.refresh();
     }
 
     /**
@@ -268,7 +269,7 @@ public class MainMenuController {
      */
     private void updateInfo(Army army1, Army army2) {
         purgeArmyTables();
-        
+
         army1Tab.setText(army1.getName());
         army2Tab.setText(army2.getName());
 
@@ -314,9 +315,19 @@ public class MainMenuController {
     }
 
     private void enableBattle() {
-        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle != null && battle.isNotFinished()) {
+        if (armyList.get(0).getSize() > 0 && armyList.get(1).getSize() > 0 && battle != null
+                && battle.isNotFinished()) {
             battleButton.setDisable(false);
         }
+    }
+
+    private void alertVictory(Army army) {
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Victory");
+        alert.setHeaderText("Victory");
+        alert.setContentText(army.getName() + " has won the battle!");
+        alert.showAndWait();
     }
 
     @FXML
