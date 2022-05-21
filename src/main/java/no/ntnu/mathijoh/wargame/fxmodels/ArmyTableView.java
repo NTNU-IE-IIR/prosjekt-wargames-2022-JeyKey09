@@ -4,7 +4,7 @@ package no.ntnu.mathijoh.wargame.fxmodels;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+//TODO: Want to change from tableview to a TreeTableView
 /**
  * Army table view
  * The view is responsible for displaying the amount of units in an army.
