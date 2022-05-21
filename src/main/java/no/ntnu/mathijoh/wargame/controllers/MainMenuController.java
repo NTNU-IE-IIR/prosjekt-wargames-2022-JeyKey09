@@ -125,6 +125,11 @@ public class MainMenuController {
                 logger.log(Logger.Level.ERROR, e.getMessage());
             }
         }
+        if(mapList.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No maps were found. Creating a default map.");
+            alert.showAndWait();
+            mapList.add(new BattleMap("map", 16, 16));
+        }
         createMap();
         battleGrid.setGridLinesVisible(true);
     }
