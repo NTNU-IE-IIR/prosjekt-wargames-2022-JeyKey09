@@ -6,13 +6,25 @@ Trough the semester of Spring 2022 was the student within IDATx2001 tasked with 
 The War Game was given specification trough out the semester with PDF Files given with obligatory tasks. Every assignment can be found within the git repository within the "docs\Assignment" folder.
 ## Specification:
 The features this application support is:
--Loading files:
--Editing armies
--Running a battle between armies
--Giving a animation when the battle is running
--Tables that updates as the armies losses or gets soldiers
+- Loading files:
+- Editing armies
+- Running a battle between armies
+- Giving a animation when the battle is running
+- Tables that updates as the armies losses or gets soldiers
 ## Design:
-I have split the code in mostly two parts, Front/back-end. This makes it so I can easily copy the backend code and build it a new application with another framework.
+This project has used a maven architecture with javaFX as a application framework. The GUI is designed with a main menu as the central component: ![](docs%5CApplication%20pictures%5CMain%20menu.png) 
+That contains the ability to call to other windows within the top menu to other feature like: 
+- Editing armies:  
+![](docs%5CApplication%20pictures%5CEdit%20Armies.png)
+- Loading armies from files:  
+![](docs%5CApplication%20pictures%5CLoad%20Army.png)
+
+This is to make it simpler to add other features that may require another design then what the main window allows. It is also to ensure that the main window does not get manipulated.
+
+As for the backend, class diagram looks like this:
+
+## Implementation:
+I have split the code in mostly two parts, Front/back-end. This makes it so I can easily copy the backend code and build it a new application with another framework. 
 ### Front-End
 The front-end is a combination of java, css, png and map txt files. The application loads up FXML files and where it is necessary creates and places objects. These are objects that may require to be specified like the columns in a TableView or like a TilePane.  
 
@@ -26,9 +38,6 @@ The back-end is pure java code. It consist of multiple packages.
 - Models: Consist of mostly all back end objects split into multiple categories. Within the first layer lies the battle and army classes. 
     - Maps: This consist of what a map is created by: BattleMap, Terrain, Tokens and Tile. 
     - Units: The different units that the game was required trough assignment part 1.
-
-
-## Implementation:
 
 ## Process:
 Trough the semester I have actively worked with this project when other assignment or subjects had a priority.
