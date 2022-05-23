@@ -56,6 +56,8 @@ The front-end or gui is designed with a main menu as the central component. This
 - Models: Here lies most of the back-end code/objects like the units, army, battle and map. 
 ![](docs%5CDesign%5CPictures%5Cno.ntnu.mathijoh.wargame.models.png)
 
+- Handlers: Here lies the different handlers that serves as a mediator to things outside of the application  
+![](docs%5CDesign%5CPictures%5Cno.ntnu.mathijoh.wargame.handlers.png)
 ## Implementation
 ### Front-End
 The front-end is a combination of java, css, png and map txt files. The application loads up FXML files that is linked to a CSS and a java controller file and if necessary creates and places objects. These are objects are mostly imported from the fxmodels package that consist of manipulated javaFX models like TableViews and BorderPane. The reason for why these objects are not just manipulated within the controllers is to ensure more readability within the controller and make it easier to access and/or modify for other controllers. As an example the edit army window uses 2 UnitListTableViews to allow for removing of selected units:  
