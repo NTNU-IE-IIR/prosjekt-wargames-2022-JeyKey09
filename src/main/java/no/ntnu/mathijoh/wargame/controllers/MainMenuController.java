@@ -25,6 +25,7 @@ import no.ntnu.mathijoh.wargame.fxmodels.ArmyTableView;
 import no.ntnu.mathijoh.wargame.fxmodels.TilePane;
 import no.ntnu.mathijoh.wargame.fxmodels.UnitListDataHolder;
 import no.ntnu.mathijoh.wargame.fxmodels.UnitsTableView;
+import no.ntnu.mathijoh.wargame.handlers.FileHandler;
 import no.ntnu.mathijoh.wargame.models.Army;
 import no.ntnu.mathijoh.wargame.models.Battle;
 import no.ntnu.mathijoh.wargame.models.map.BattleMap;
@@ -120,7 +121,7 @@ public class MainMenuController {
         File dir = new File(getClass().getResource("maps").getPath().replace("%20", " "));
         for (File file : dir.listFiles()) {
             try {
-                mapList.add(FileController.importMapFromFile(file));
+                mapList.add(FileHandler.importMapFromFile(file));
             } catch (Exception e) {
                 logger.log(Logger.Level.ERROR, e.getMessage());
             }

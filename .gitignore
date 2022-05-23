@@ -1,3 +1,5 @@
 /target
 .vscode
 .idea
+#To Remove the backup files from the Visual Pardigm project
+/docs/Design/*.bak*

@@ -154,7 +154,7 @@ public class Army {
     }
 
     /**
-     * Gets the every cavalary unit the army
+     * Gets the every cavalry unit the army
      * 
      * @return a list of cavalry units in the army
      */
@@ -172,7 +172,7 @@ public class Army {
     }
 
     /**
-     * Gets the every cavalary unit the army
+     * Gets the every cavalry unit the army
      * 
      * @return a list of ranged units in the army
      */

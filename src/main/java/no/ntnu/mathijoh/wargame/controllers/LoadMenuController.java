@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import no.ntnu.mathijoh.wargame.handlers.FileHandler;
 import no.ntnu.mathijoh.wargame.models.Army;
 /**
  * Army Loads controller
@@ -47,7 +48,7 @@ public class LoadMenuController {
                 if(delimiter.isEmpty()){
                     delimiter = ";";         
                 }
-                Army csvArmy = FileController.getArmyOfCSVFile(file, delimiter);
+                Army csvArmy = FileHandler.getArmyOfCSVFile(file, delimiter);
                 boolean switchedArmy = false;
                 for (int i = 0; i < armyList.size() && !switchedArmy; i++) {
                     if (armyList.get(i).getName().equals(replacingArmy)) {

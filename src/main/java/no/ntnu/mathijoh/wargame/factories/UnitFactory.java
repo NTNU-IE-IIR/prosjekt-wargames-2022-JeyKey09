@@ -7,7 +7,7 @@ import no.ntnu.mathijoh.wargame.models.units.Unit;
 
 /**
  * UnitFactory is a class that creates units.
- * It is used by FileController to create units from a file.
+ * It is used by File Handler to create units from a file.
  * 
  * 
  * @author Mathias Johansen

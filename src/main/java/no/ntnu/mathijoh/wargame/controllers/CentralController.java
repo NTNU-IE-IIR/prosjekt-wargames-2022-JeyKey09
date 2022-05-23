@@ -15,7 +15,7 @@ import no.ntnu.mathijoh.wargame.models.Army;
  * A class that main premise is to work as a communication and creation tool for
  * the MainMenuController
  * All code that creates a new instance of a scene are within this class for
- * better readabilty as if they would be normally in the MainMenuController
+ * better readability as if they would be normally in the MainMenuController
  */
 public class CentralController {
 
