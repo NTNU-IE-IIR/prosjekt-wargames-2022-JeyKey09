@@ -1,8 +1,8 @@
-# Project Rapport, WarGame:
+# Project Rapport Mathias J. Kirkeby, WarGame:
 
 ## Table of content:
 
-- [Project Rapport, WarGame:](#project-rapport-wargame)
+- [Project Rapport Mathias J. Kirkeby, WarGame:](#project-rapport-mathias-j-kirkeby-wargame)
   - [Table of content:](#table-of-content)
   - [Introduction](#introduction)
   - [Specification](#specification)
@@ -21,7 +21,7 @@
   - [Reflection](#reflection)
   - [Conclusion](#conclusion)
 ## Introduction
-Trough the semester of Spring 2022 was the student within IDATx2001 tasked with creating a War Game application as part of their evaluation of the subject.   
+Trough the semester of Spring 2022 was the students within IDATx2001 tasked with creating a War Game application as part of their evaluation of the subject.   
 
 The War Game was given specification trough out the semester with PDF Files given trough obligatory tasks. Every assignment can be found within the git repository within the "docs\Assignment" folder.
 ## Specification

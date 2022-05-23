@@ -7,7 +7,6 @@ import no.ntnu.mathijoh.wargame.models.map.Terrain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-//TODO: Finish the tests for unit classes
 public class UnitTest {
 
     @Test
@@ -264,25 +263,5 @@ public class UnitTest {
         };
         testUnit1.attack(testUnit2,Terrain.FOREST);
         assertEquals(7, testUnit2.getHealth());
-    }
-
-    @Test
-    public void testGetTerrainAttackBonus() {
-        
-    }
-
-    @Test
-    public void testGetTerrainDefenseBonus() {
-        
-    }
-
-    @Test
-    public void testPutTerrainAttackBonus() {
-        
-    }
-
-    @Test
-    public void testPutTerrainDefenceBonus() {
-        
     }
 }
