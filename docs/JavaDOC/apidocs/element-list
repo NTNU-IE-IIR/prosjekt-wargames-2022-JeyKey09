@@ -1,6 +1,7 @@
 module:no.ntnu.mathijoh.wargame
 no.ntnu.mathijoh.wargame
 no.ntnu.mathijoh.wargame.controllers
+no.ntnu.mathijoh.wargame.handlers
 no.ntnu.mathijoh.wargame.models
 no.ntnu.mathijoh.wargame.models.map
 no.ntnu.mathijoh.wargame.models.units

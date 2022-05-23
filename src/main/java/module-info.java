@@ -20,4 +20,7 @@ module no.ntnu.mathijoh.wargame {
     
     opens no.ntnu.mathijoh.wargame.factories;
 
+    opens no.ntnu.mathijoh.wargame.controllers;
+    exports no.ntnu.mathijoh.wargame.controllers;
+
 }
