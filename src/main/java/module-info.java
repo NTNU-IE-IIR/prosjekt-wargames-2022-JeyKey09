@@ -6,8 +6,8 @@ module no.ntnu.mathijoh.wargame {
     opens no.ntnu.mathijoh.wargame;
     exports no.ntnu.mathijoh.wargame;
     
-    opens no.ntnu.mathijoh.wargame.controllers;
-    exports no.ntnu.mathijoh.wargame.controllers;
+    opens no.ntnu.mathijoh.wargame.handlers;
+    exports no.ntnu.mathijoh.wargame.handlers;
     
     opens no.ntnu.mathijoh.wargame.models;
     exports no.ntnu.mathijoh.wargame.models;
