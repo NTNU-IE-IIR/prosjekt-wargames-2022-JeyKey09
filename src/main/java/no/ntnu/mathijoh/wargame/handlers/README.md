@@ -1,0 +1,2 @@
+# Handlers
+This is where the handlers is placed. These are object that serves as a medium everything outside the application. As per date it only consist of the FileHandler given in assignment part 2.  

@@ -16,14 +16,14 @@
       - [Army](#army)
       - [Battle](#battle)
       - [Terrain (Map Package)](#terrain-map-package)
-      - [FileController](#filecontroller)
+      - [FileHandler](#filehandler)
   - [Process:](#process)
   - [Reflection](#reflection)
   - [Conclusion](#conclusion)
 ## Introduction
 Trough the semester of Spring 2022 was the student within IDATx2001 tasked with creating a War Game application as part of their evaluation of the subject.   
 
-The War Game was given specification trough out the semester with PDF Files given with obligatory tasks. Every assignment can be found within the git repository within the "docs\Assignment" folder.
+The War Game was given specification trough out the semester with PDF Files given trough obligatory tasks. Every assignment can be found within the git repository within the "docs\Assignment" folder.
 ## Specification
 The features this application support is:
 - Loading files:
@@ -112,8 +112,8 @@ As the final part on assignment part 1, was the creation of the battle class. Th
 As part the Assignment part 3, Terrain was introduced as a factor within battle. This also gave me a excuse to work on it as part of a bigger project "BattleMaps".
 
 A BattleMap contains several Tiles that consist of a Token (a "visualized" unit) and a Terrain. The map is always created with the mind of a grid in the form of squares much like a board game. BattleMap ended up as a meditator for battle class to the tile class to allowing for placing, moving and removing units from those. 
-#### FileController
-
+#### FileHandler
+The FileHandler was a part of assignment part 2, to add functionality for loading and saving a army to or from a CSV file. As the assignment specific used commas for splitting the elements, I found it to be simplistic. While many application saves a CSV with commas, like Excel, it could ruin a import if a name of unit contain several titles, with a splitting at commas like one of the unit within the test.csv: "Petter the almighty, demon slayer, master of mystical magic and gods messenger". While this is a really extreme example it also serves as a valid point to use a more rare character like semicolon.   
 
 ## Process:
 Trough the semester I have actively worked with this project when other assignment or subjects had a priority. With the first priority in the project always to finish the assignments given out as it was obligatory. After each assignment I could allow myself to implement methods or features that would fulfill some of my vision of the game.
@@ -126,6 +126,7 @@ Under the process I had SonarLint installed within my IDE to reinforce good code
 ## Reflection
 Trough this period I have had many ideas on how to implement or add more functionality into the project. While this has worked in my favor to work with the project, it has also reflected negative towards me with creating documentation and tests. It has also made that some of my work seems "rushed" in the hope of it being finished. This can be mostly been seen in the Map package where I did not have a clear idea how I would want object to interact with each other.  
 
-While I have made many choices trough the project, many of them has been created trough instinct or because I was lacking a functionality I wanted. This also means that much of my code does not follow proper design pattern as it should. Much of my code or the model of package has been refactored and been trough a couple iteration before it became this final product, that could have been avoided with proper planning. 
+While I have made many choices trough the project, many of them has been created trough instinct or because I was lacking a functionality I wanted. This also means that much of my code does not follow proper design pattern as it should. Much of my code or the model of package has been refactored and been trough a couple iteration before it became this final product, that could have been avoided with proper planning or using more to time to reflect on the code. 
 
 ## Conclusion
+I have in conclusion fulfilled with the best of ability the requirements of this project. The project has been both a fun and a good learning experience as it provides some points that I can be better at. Given more time I am sure the I would have added more features within the application. If this task was given with a team in mind, github tasks would have been used more efficiently. 
