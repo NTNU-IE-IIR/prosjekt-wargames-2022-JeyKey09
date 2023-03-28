@@ -77,7 +77,7 @@ Every Unit within the application is a subclass of the Unit superclass. This was
 #### UnitFactory
 The units also have a UnitFactory created with the requirement given in part 3. With its implementation a ENUM called UnitType was created. This was to hinder the use of String or another type of object as it provided static "variables" of the different unitTypes, and made the implementation easier. This also means that every time a new Unit is introduced, the a new type needs to be created in the unitFactory. This UnitFactory was also given one extra method: CopyUnit(Unit unit).  
 
-```
+```java
     /**
      * Copies a unit
      * @param unit the unit to copy
@@ -95,7 +95,7 @@ The reason this is within the factory is because it allowed the units to be copi
 
 #### Army
 Within the assignment part 1 the requirement of a army class that will hold every unit was given. This class was to be used later within battle to simulate a battle between two armies. The army needed to contain a list of units and a name for the army as specified by the requirements. As a part of assignment part 2, the army class was to be implement 4 new methods. Every new method was supposed to get every type of a specific unit within the list. As part of this a 5th method was created to be used by these methods: getUnits(Class unitClass).
-```
+```java
     /**
      * A private function meant to filter out some units
      * 
